@@ -6,7 +6,7 @@ paginate: true
 backgroundColor: #f8fafc
 color: #1e293b
 header: "Lab 01 : Comprendre Laravel"
-footer: "Lab 01 - Comprendre Laravel | Solicode Tanger"
+footer: "by oussama bekkali"
 ---
 
 <style>
@@ -45,8 +45,7 @@ code {
 # Lab 01 : Comprendre Laravel
 ### Rôle, Architecture, Avantages et Utilisation
 
-**Formation Développeur Web**  
-*Solicode Tanger*
+by oussama bekkali
 
 ---
 

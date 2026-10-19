@@ -9,6 +9,7 @@ Bienvenue dans le depot central des travaux pratiques et des laboratoires pedago
 | N° | Sujet | Description | Lien du Lab |
 | :---: | :--- | :--- | :---: |
 | **01** | **Comprendre Laravel** | Decouverte et comprehension approfondie du framework PHP Laravel : role, architecture MVC, composants cles (Artisan, Eloquent, Blade), avantages et ecosysteme web. | [Consulter le Lab 01](./lab-01-comprendre-laravel/README.md) |
+| **02** | **Comprendre l'Architecture MVC** | Decouverte du patron MVC (Model-View-Controller) et comprehension du role de chaque composant (Modele, Vue, Controleur) dans une application Laravel. | [Consulter le Lab 02](./lab-02-architecture-mvc/README.md) |
 
 ---
 

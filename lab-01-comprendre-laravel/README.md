@@ -9,7 +9,7 @@ Ce lab fait partie du cursus d'apprentissage du développement web back-end. Il 
 - **Numéro du lab** : 01
 - **Sujet** : Comprendre Laravel (Rôle, architecture, avantages et cas d'usage)
 - **Niveau** : Débutant / Intermédiaire
-- **Public cible** : Développeurs web en formation (Solicode / Web Developers)
+- **Auteur** : by oussama bekkali
 - **Durée estimée** : 2 à 3 heures
 
 ---
