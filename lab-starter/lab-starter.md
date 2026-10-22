@@ -1,199 +1,143 @@
 ---
 marp: true
 theme: default
-paginate: true
 size: 16:9
+paginate: true
 style: |
-  @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-
   section {
-    background: #70020f;
-    color: #ffe0e3;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 26px;
-    padding: 50px 60px;
-    text-transform: uppercase;
-    justify-content: flex-start;
-  }
-
-  h1, h2 {
-    font-family: 'Anton', Impact, 'Arial Narrow', sans-serif;
-    font-weight: 400;
-    color: #ffe0e3;
-    line-height: 0.98;
-    letter-spacing: -1px;
-    margin: 0 0 28px 0;
-  }
-
-  h1 { font-size: 100px; }
-  h2 { font-size: 68px; }
-
-  h3 {
-    font-size: 28px;
-    margin: 0 0 10px 0;
-    color: #e6d9dc;
-  }
-
-  p { margin: 0 0 12px 0; }
-
-  section.light {
-    background: #ffdde0;
-    color: #70020f;
-  }
-
-  section.light h1,
-  section.light h2,
-  section.light h3 {
-    color: #70020f;
-  }
-
-  section.light p,
-  section.light li {
-    color: #111;
-  }
-
-  section.title {
-    justify-content: space-between;
-  }
-
-  section.title h1 {
-    font-size: 116px;
-    margin-top: 8px;
-  }
-
-  section.title::before {
-    content: "DEV\\A ENV";
-    white-space: pre;
-    position: absolute;
-    right: -15px;
-    bottom: 10px;
-    font-family: 'Anton', Impact, sans-serif;
-    font-size: 250px;
-    line-height: 0.85;
-    color: #5f0010;
-    z-index: 0;
-  }
-
-  section.title h1,
-  section.title .by {
-    position: relative;
-    z-index: 1;
-  }
-
-  .by {
-    font-size: 20px;
-    text-transform: none;
-    margin-top: 20px;
-  }
-
-  .by strong {
-    font-family: 'Anton', Impact, sans-serif;
-    font-weight: 400;
-    text-transform: uppercase;
-    font-size: 27px;
-    display: block;
-  }
-
-  ul, ol {
-    font-size: 30px;
-    line-height: 1.35;
-  }
-
-  li { margin-bottom: 12px; }
-
-  code {
-    background: rgba(255, 224, 227, 0.13);
-    padding: 2px 7px;
-    border-radius: 4px;
-    text-transform: none;
-  }
-
-  section.light code {
-    background: rgba(112, 2, 15, 0.09);
-  }
-
-  .subtitle {
+    font-family: Arial, sans-serif;
+    background: #f8fafc;
+    color: #202938;
+    padding: 48px 64px;
     font-size: 25px;
-    color: #e6d9dc;
-    text-transform: none;
   }
-
-  .small {
-    font-size: 21px;
-    line-height: 1.35;
-    text-transform: none;
+  h1, h2 {
+    color: #1769aa;
   }
-
-  .step {
-    font-family: 'Anton', Impact, sans-serif;
-    font-size: 31px;
-    color: #ffe0e3;
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 0.65em;
   }
-
-  section.light .step {
-    color: #70020f;
+  h2 {
+    font-size: 1.25em;
+  }
+  strong {
+    color: #1769aa;
+  }
+  code {
+    background: #e8f1f8;
+    color: #143b5d;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  a {
+    color: #1769aa;
+  }
+  table {
+    font-size: 0.82em;
+  }
+  th {
+    background: #e8f1f8;
+  }
+  blockquote {
+    border-left: 5px solid #1769aa;
+    color: #35445a;
+    padding-left: 1em;
   }
 ---
 
-<!-- _class: title -->
+<!-- _class: lead -->
 
-# Development<br>Environment
+# Lab-Starter
 
-<div class="by">
-  <strong>Mohammed Yassir Mesbahi</strong>
-  Development Environment Lab
-</div>
+## Set Up Your Development Environment
 
----
-
-<!-- _class: light -->
-
-## Lab Plan
-
-1. Problems encountered during the lab
-2. Showing hidden files and folders
-3. Making `README.md` visible
-4. Using Todo Highlight for code reminders
-5. Installing and using Live Server
-6. Configuring Marp Markdown Preview
+**Git · Windows · Visual Studio Code**
 
 ---
 
-## Problems Encountered
+# Plan
 
-- Hidden files and folders, such as `.git`, were not visible in the file explorer.
-- The `README.md` file was not displayed as expected.
-- We sometimes forgot which lines of code needed to be modified.
-- Marp presentation files did not open in the expected preview.
-
----
-
-<!-- _class: light -->
-
-## Solutions Implemented
-
-### 01 — Show hidden files
-
-Enabled the relevant file-explorer setting so hidden files and folders, including `.git`, could be seen.
-
-### 02 — Display README.md
-
-Adjusted the relevant VS Code option/extension setting so `README.md` appeared in the explorer.
-
-### 03 — Remember code changes
-
-Installed **Todo Highlight** to highlight important comments and reminders in the code.
+1. The problems
+2. The solutions
+3. Step-by-step setup instructions
 
 ---
 
-<!-- _class: light -->
+# Common Setup Problems
 
-## Solutions Implemented
+| Challenge                                  | Tool or setting                                                                                          |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| Project changes are not tracked            | Git                                                                                                      |
+| Files such as `.gitignore` are not visible | Hidden items in File Explorer                                                                            |
+| A file’s full name is unclear              | File name extensions in File Explorer                                                                    |
+| Tasks are hard to find in the code         | [Better Todo Tree](https://marketplace.visualstudio.com/items?itemName=FanaticPythoner.better-todo-tree) |
+| HTML changes require manual refresh        | [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)                 |
 
-### 04 — Preview web pages
+---
 
-Installed **Live Server** to launch a local development server and automatically refresh web pages after changes.
+# Initialize a Git Repository
 
-### 05 — Preview Marp slides
+1. Open your project folder in VS Code.
+2. Open **Source Control** with `Ctrl + Shift + G`.
+3. Select **Initialize Repository**.
 
-Installed/configured the **Marp extension** so Markdown presentation files could be viewed in slide preview.
+Or run this command in the project folder:
+
+```bash
+git init
+```
+
+Git can now track changes in the project. You still need to create commits to save snapshots.
+
+---
+
+# Show Hidden Files
+
+Use this to find files such as `.gitignore` or `.env`:
+
+1. Open File Explorer with `Win + E`.
+2. Select **View** → **Show**.
+3. Turn on **Hidden items**.
+
+Hidden files will now appear in the project folder.
+
+---
+
+# Show File Name Extensions
+
+File extensions help distinguish `README.md` from `README.md.txt`.
+
+1. Open File Explorer with `Win + E`.
+2. Select **View** → **Show**.
+3. Turn on **File name extensions**.
+4. Check the full file name, for example, `README.md`.
+
+---
+
+# Find TODOs with Better Todo Tree
+
+Better Todo Tree searches code comments such as `TODO` and `FIXME` and displays them in a tree.
+
+1. Open **Extensions** with `Ctrl + Shift + X`.
+2. Search for [**Better Todo Tree**](https://marketplace.visualstudio.com/items?itemName=FanaticPythoner.better-todo-tree) by FanaticPythoner and install it.
+3. Add task comments where work remains:
+
+```js
+// TODO: add input validation
+// FIXME: correct this error
+```
+
+4. Open the Better Todo Tree view and select an item to jump to its line.
+
+---
+
+# Preview HTML with Live Server
+
+1. Open **Extensions** with `Ctrl + Shift + X`.
+2. Search for [**Live Server**](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) by Ritwick Dey and install it.
+3. Open the project folder containing `index.html`.
+4. Select **Go Live** in the VS Code status bar.
+5. Save an edit and check the browser preview.
+
+> Live Server serves static files; it does not run PHP code.
