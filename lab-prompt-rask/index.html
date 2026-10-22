@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube Clone Skeleton</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Configuration for smooth scrollbar and custom colors -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            yt: {
+              black: '#0f0f0f',
+              card: '#1e1e1e',
+              hover: '#272727',
+              border: '#303030',
+              text: '#f1f1f1',
+              muted: '#aaaaaa',
+              red: '#ff0000',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom thin scrollbar for category chips and sidebar */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+</head>
+<body class="bg-yt-black text-yt-text font-sans antialiased h-screen flex flex-col overflow-hidden">
+
+  <!-- ========================================================= -->
+  <!-- 1. TOP NAVIGATION BAR                                     -->
+  <!-- ========================================================= -->
+  <header class="h-14 px-4 flex items-center justify-between bg-yt-black sticky top-0 z-50 border-b border-yt-border/40 select-none">
+    
+    <!-- Left Section: Menu Toggle & Logo -->
+    <div class="flex items-center gap-4">
+      <!-- Sidebar Toggle Button -->
+      <button id="sidebar-toggle" aria-label="Toggle navigation menu" class="p-2 rounded-full hover:bg-yt-hover active:bg-yt-border text-yt-text transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-1.5 focus:outline-none">
+        <div class="w-8 h-6 bg-yt-red rounded-lg flex items-center justify-center shadow-sm">
+          <svg class="w-4 h-4 fill-white translate-x-0.5" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <div class="flex items-center">
+          <span class="text-lg font-bold tracking-tighter">ViewTube</span>
+          <span class="text-[10px] text-yt-muted font-medium ml-1 self-start">CLONE</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Search Bar -->
+    <div class="flex-1 max-w-2xl mx-4 hidden sm:flex items-center justify-center">
+      <div class="flex items-center w-full max-w-lg">
+        <!-- Search Input Container -->
+        <div class="flex items-center w-full bg-[#121212] border border-yt-border rounded-l-full px-4 py-2 focus-within:border-blue-500 transition-colors">
+          <input 
+            type="text" 
+            placeholder="Search" 
+            class="w-full bg-transparent text-sm focus:outline-none text-yt-text placeholder-yt-muted"
+          />
+        </div>
+        <!-- Search Action Button -->
+        <button class="bg-yt-hover border border-l-0 border-yt-border rounded-r-full px-5 py-2.5 hover:bg-yt-border transition-colors">
+          <svg class="w-4 h-4 text-yt-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Voice Search Button -->
+      <button class="ml-3 p-2.5 rounded-full bg-yt-hover hover:bg-yt-border text-yt-text transition-colors" title="Search with your voice">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Right Section: Actions & User Avatar -->
+    <div class="flex items-center gap-1 sm:gap-2">
+      <!-- Mobile Search Icon (visible on small screens) -->
+      <button class="sm:hidden p-2 rounded-full hover:bg-yt-hover text-yt-text">
+        <svg class="w-5 h-5 text-yt-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </button>
+
+      <!-- Create / Upload Button -->
+      <button class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-yt-hover hover:bg-yt-border text-sm font-medium transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        <span>Create</span>
+      </button>
+
+      <!-- Notifications -->
+      <button class="p-2 rounded-full hover:bg-yt-hover text-yt-text relative" title="Notifications">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+        </svg>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-yt-red rounded-full"></span>
+      </button>
+
+      <!-- Profile Avatar Placeholder -->
+      <button class="ml-1 w-8 h-8 rounded-full overflow-hidden ring-2 ring-transparent hover:ring-zinc-500 transition focus:outline-none">
+        <div class="w-full h-full bg-gradient-to-tr from-purple-600 to-indigo-400 flex items-center justify-center text-xs font-bold text-white">
+          JS
+        </div>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- 2. MAIN LAYOUT: SIDEBAR + CONTENT AREA                    -->
+  <!-- ========================================================= -->
+  <div class="flex flex-1 overflow-hidden relative">
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden transition-opacity"></div>
+
+    <!-- Collapsible Sidebar -->
+    <!-- On desktop: expands/collapses between 240px and 72px -->
+    <!-- On mobile: slides in as a drawer -->
+    <aside id="sidebar" class="bg-yt-black custom-scrollbar overflow-y-auto z-40 transition-all duration-200 border-r border-yt-border/30 fixed lg:static top-14 bottom-0 left-0 -translate-x-full lg:translate-x-0 w-60 shrink-0">
+      <div class="p-3 space-y-1">
+        
+        <!-- Main Navigation Items -->
+        <a href="#" class="sidebar-item flex items-center gap-5 px-3 py-2.5 rounded-xl bg-yt-hover font-medium text-sm">
+          <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg>
+          <span class="sidebar-label truncate">Home</span>
+        </a>
+
+        <a href="#" class="sidebar-item flex items-center gap-5 px-3 py-2.5 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <span class="sidebar-label truncate">Shorts</span>
+        </a>
+
+        <a href="#" class="sidebar-item flex items-center gap-5 px-3 py-2.5 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+          <span class="sidebar-label truncate">Subscriptions</span>
+        </a>
+
+        <hr class="border-yt-border/50 my-3" />
+
+        <!-- You / Library Section -->
+        <div class="sidebar-section-title px-3 py-1 text-xs font-semibold uppercase text-yt-muted tracking-wider">
+          You
+        </div>
+
+        <a href="#" class="sidebar-item flex items-center gap-5 px-3 py-2.5 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="sidebar-label truncate">History</span>
+        </a>
+
+        <a href="#" class="sidebar-item flex items-center gap-5 px-3 py-2.5 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="sidebar-label truncate">Your videos</span>
+        </a>
+
+        <a href="#" class="sidebar-item flex items-center gap-5 px-3 py-2.5 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="sidebar-label truncate">Watch Later</span>
+        </a>
+
+        <a href="#" class="sidebar-item flex items-center gap-5 px-3 py-2.5 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+          </svg>
+          <span class="sidebar-label truncate">Liked videos</span>
+        </a>
+
+        <hr class="border-yt-border/50 my-3" />
+
+        <!-- Subscriptions Quick List -->
+        <div class="sidebar-section-title px-3 py-1 text-xs font-semibold uppercase text-yt-muted tracking-wider">
+          Subscriptions
+        </div>
+
+        <a href="#" class="sidebar-item flex items-center gap-4 px-3 py-2 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <div class="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center text-[10px] font-bold text-white shrink-0">
+            CS
+          </div>
+          <span class="sidebar-label truncate">Code Simplified</span>
+        </a>
+
+        <a href="#" class="sidebar-item flex items-center gap-4 px-3 py-2 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <div class="w-6 h-6 rounded-full bg-amber-600 flex items-center justify-center text-[10px] font-bold text-white shrink-0">
+            TC
+          </div>
+          <span class="sidebar-label truncate">Tailwind Crafter</span>
+        </a>
+
+        <a href="#" class="sidebar-item flex items-center gap-4 px-3 py-2 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white shrink-0">
+            JS
+          </div>
+          <span class="sidebar-label truncate">JS Ninja</span>
+        </a>
+
+        <a href="#" class="sidebar-item flex items-center gap-4 px-3 py-2 rounded-xl hover:bg-yt-hover transition-colors text-sm">
+          <div class="w-6 h-6 rounded-full bg-pink-600 flex items-center justify-center text-[10px] font-bold text-white shrink-0">
+            UX
+          </div>
+          <span class="sidebar-label truncate">Pixel Perfect UI</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Scrollable Area -->
+    <main class="flex-1 flex flex-col overflow-y-auto custom-scrollbar">
+
+      <!-- Category Filter Chips Bar -->
+      <nav class="sticky top-0 bg-yt-black/95 backdrop-blur-sm z-20 px-4 sm:px-6 py-3 border-b border-yt-border/20">
+        <div class="flex items-center gap-3 overflow-x-auto no-scrollbar">
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-text text-yt-black hover:bg-white shrink-0 transition-colors">
+            All
+          </button>
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors">
+            Web Development
+          </button>
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors">
+            Tailwind CSS
+          </button>
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors">
+            JavaScript
+          </button>
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors">
+            User Interface Design
+          </button>
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors">
+            Podcasts
+          </button>
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors">
+            Computers
+          </button>
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors">
+            Live
+          </button>
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors">
+            Coding Music
+          </button>
+          <button class="chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors">
+            Recently uploaded
+          </button>
+        </div>
+      </nav>
+
+      <!-- ========================================================= -->
+      <!-- 3. VIDEO GRID                                             -->
+      <!-- ========================================================= -->
+      <section class="p-4 sm:p-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8">
+
+          <!-- Video Card 1 -->
+          <article class="flex flex-col gap-3 group cursor-pointer">
+            <!-- Thumbnail Placeholder -->
+            <div class="relative aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-indigo-950 via-zinc-900 to-zinc-900 border border-yt-border/40 group-hover:ring-1 group-hover:ring-zinc-400 transition-all">
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                <span class="text-3xl mb-1">💻</span>
+                <span class="text-xs font-semibold text-zinc-300">HTML & CSS Masterclass</span>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-black/80 text-[11px] font-semibold px-1.5 py-0.5 rounded text-white tracking-wide">
+                18:24
+              </span>
+            </div>
+            <!-- Metadata -->
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                HC
+              </div>
+              <div class="flex flex-col">
+                <h3 class="text-sm font-semibold line-clamp-2 text-yt-text group-hover:text-white leading-snug">
+                  Build Modern Web Pages from Scratch (2026 Edition)
+                </h3>
+                <span class="text-xs text-yt-muted mt-1 hover:text-yt-text transition-colors">
+                  HTML Crafters
+                </span>
+                <div class="text-xs text-yt-muted flex items-center gap-1">
+                  <span>142K views</span>
+                  <span>•</span>
+                  <span>2 days ago</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Video Card 2 -->
+          <article class="flex flex-col gap-3 group cursor-pointer">
+            <div class="relative aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-sky-950 via-zinc-900 to-zinc-900 border border-yt-border/40 group-hover:ring-1 group-hover:ring-zinc-400 transition-all">
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                <span class="text-3xl mb-1">🎨</span>
+                <span class="text-xs font-semibold text-zinc-300">Tailwind CSS Tricks</span>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-black/80 text-[11px] font-semibold px-1.5 py-0.5 rounded text-white tracking-wide">
+                12:45
+              </span>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-sky-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                TW
+              </div>
+              <div class="flex flex-col">
+                <h3 class="text-sm font-semibold line-clamp-2 text-yt-text group-hover:text-white leading-snug">
+                  10 Tailwind CSS Utility Tricks Every Frontend Developer Must Know
+                </h3>
+                <span class="text-xs text-yt-muted mt-1 hover:text-yt-text transition-colors">
+                  Tailwind Crafter
+                </span>
+                <div class="text-xs text-yt-muted flex items-center gap-1">
+                  <span>88K views</span>
+                  <span>•</span>
+                  <span>5 days ago</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Video Card 3 -->
+          <article class="flex flex-col gap-3 group cursor-pointer">
+            <div class="relative aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-amber-950 via-zinc-900 to-zinc-900 border border-yt-border/40 group-hover:ring-1 group-hover:ring-zinc-400 transition-all">
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                <span class="text-3xl mb-1">⚡</span>
+                <span class="text-xs font-semibold text-zinc-300">Vanilla JS Dom Tips</span>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-black/80 text-[11px] font-semibold px-1.5 py-0.5 rounded text-white tracking-wide">
+                24:10
+              </span>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-amber-500 flex items-center justify-center text-xs font-bold text-black shrink-0">
+                JS
+              </div>
+              <div class="flex flex-col">
+                <h3 class="text-sm font-semibold line-clamp-2 text-yt-text group-hover:text-white leading-snug">
+                  Master the DOM Without Frameworks: Event Handling & State
+                </h3>
+                <span class="text-xs text-yt-muted mt-1 hover:text-yt-text transition-colors">
+                  JS Ninja
+                </span>
+                <div class="text-xs text-yt-muted flex items-center gap-1">
+                  <span>320K views</span>
+                  <span>•</span>
+                  <span>1 week ago</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Video Card 4 -->
+          <article class="flex flex-col gap-3 group cursor-pointer">
+            <div class="relative aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-rose-950 via-zinc-900 to-zinc-900 border border-yt-border/40 group-hover:ring-1 group-hover:ring-zinc-400 transition-all">
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                <span class="text-3xl mb-1">📐</span>
+                <span class="text-xs font-semibold text-zinc-300">Grid vs Flexbox</span>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-black/80 text-[11px] font-semibold px-1.5 py-0.5 rounded text-white tracking-wide">
+                09:15
+              </span>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-rose-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                UX
+              </div>
+              <div class="flex flex-col">
+                <h3 class="text-sm font-semibold line-clamp-2 text-yt-text group-hover:text-white leading-snug">
+                  CSS Grid or Flexbox? When and Why to Choose Each One
+                </h3>
+                <span class="text-xs text-yt-muted mt-1 hover:text-yt-text transition-colors">
+                  Pixel Perfect UI
+                </span>
+                <div class="text-xs text-yt-muted flex items-center gap-1">
+                  <span>45K views</span>
+                  <span>•</span>
+                  <span>2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Video Card 5 -->
+          <article class="flex flex-col gap-3 group cursor-pointer">
+            <div class="relative aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-emerald-950 via-zinc-900 to-zinc-900 border border-yt-border/40 group-hover:ring-1 group-hover:ring-zinc-400 transition-all">
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                <span class="text-3xl mb-1">🚀</span>
+                <span class="text-xs font-semibold text-zinc-300">Web Dev Roadmap</span>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-black/80 text-[11px] font-semibold px-1.5 py-0.5 rounded text-white tracking-wide">
+                31:02
+              </span>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-emerald-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                CS
+              </div>
+              <div class="flex flex-col">
+                <h3 class="text-sm font-semibold line-clamp-2 text-yt-text group-hover:text-white leading-snug">
+                  Full Stack Developer Roadmap - A Step by Step Beginner Guide
+                </h3>
+                <span class="text-xs text-yt-muted mt-1 hover:text-yt-text transition-colors">
+                  Code Simplified
+                </span>
+                <div class="text-xs text-yt-muted flex items-center gap-1">
+                  <span>1.1M views</span>
+                  <span>•</span>
+                  <span>1 month ago</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Video Card 6 -->
+          <article class="flex flex-col gap-3 group cursor-pointer">
+            <div class="relative aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-purple-950 via-zinc-900 to-zinc-900 border border-yt-border/40 group-hover:ring-1 group-hover:ring-zinc-400 transition-all">
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                <span class="text-3xl mb-1">🎧</span>
+                <span class="text-xs font-semibold text-zinc-300">Lofi Coding Beats</span>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-yt-red text-[11px] font-semibold px-1.5 py-0.5 rounded text-white tracking-wide uppercase">
+                LIVE
+              </span>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                LF
+              </div>
+              <div class="flex flex-col">
+                <h3 class="text-sm font-semibold line-clamp-2 text-yt-text group-hover:text-white leading-snug">
+                  Lofi Chill Beats to Code, Study, and Relax to [24/7 Stream]
+                </h3>
+                <span class="text-xs text-yt-muted mt-1 hover:text-yt-text transition-colors">
+                  Lofi Coding Room
+                </span>
+                <div class="text-xs text-yt-muted flex items-center gap-1">
+                  <span>4.2K watching</span>
+                  <span>•</span>
+                  <span class="text-yt-red font-medium">LIVE NOW</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Video Card 7 -->
+          <article class="flex flex-col gap-3 group cursor-pointer">
+            <div class="relative aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-cyan-950 via-zinc-900 to-zinc-900 border border-yt-border/40 group-hover:ring-1 group-hover:ring-zinc-400 transition-all">
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                <span class="text-3xl mb-1">📱</span>
+                <span class="text-xs font-semibold text-zinc-300">Mobile Responsive UI</span>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-black/80 text-[11px] font-semibold px-1.5 py-0.5 rounded text-white tracking-wide">
+                14:50
+              </span>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-cyan-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                MR
+              </div>
+              <div class="flex flex-col">
+                <h3 class="text-sm font-semibold line-clamp-2 text-yt-text group-hover:text-white leading-snug">
+                  Responsive Web Design Explained: Mobile-First Strategy
+                </h3>
+                <span class="text-xs text-yt-muted mt-1 hover:text-yt-text transition-colors">
+                  Mobile Responsive Lab
+                </span>
+                <div class="text-xs text-yt-muted flex items-center gap-1">
+                  <span>67K views</span>
+                  <span>•</span>
+                  <span>3 weeks ago</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Video Card 8 -->
+          <article class="flex flex-col gap-3 group cursor-pointer">
+            <div class="relative aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-fuchsia-950 via-zinc-900 to-zinc-900 border border-yt-border/40 group-hover:ring-1 group-hover:ring-zinc-400 transition-all">
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                <span class="text-3xl mb-1">✨</span>
+                <span class="text-xs font-semibold text-zinc-300">Modern CSS Animations</span>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-black/80 text-[11px] font-semibold px-1.5 py-0.5 rounded text-white tracking-wide">
+                16:12
+              </span>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-fuchsia-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                AN
+              </div>
+              <div class="flex flex-col">
+                <h3 class="text-sm font-semibold line-clamp-2 text-yt-text group-hover:text-white leading-snug">
+                  Smooth Micro-Animations with Pure CSS & Keyframes
+                </h3>
+                <span class="text-xs text-yt-muted mt-1 hover:text-yt-text transition-colors">
+                  Animators Collective
+                </span>
+                <div class="text-xs text-yt-muted flex items-center gap-1">
+                  <span>92K views</span>
+                  <span>•</span>
+                  <span>1 month ago</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- 4. SIMPLE VANILLA JAVASCRIPT INTERACTIONS                 -->
+  <!-- ========================================================= -->
+  <script>
+    // Grab references to key interactive elements
+    const sidebarToggleBtn = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const chipButtons = document.querySelectorAll('.chip-btn');
+
+    // Sidebar Toggle Handler
+    // On small screens (< 1024px): slides sidebar in/out with backdrop overlay.
+    // On large screens (>= 1024px): collapses/expands sidebar width between 240px and 72px (mini sidebar).
+    sidebarToggleBtn.addEventListener('click', () => {
+      const isMobile = window.innerWidth < 1024;
+
+      if (isMobile) {
+        // Toggle mobile drawer
+        const isClosed = sidebar.classList.contains('-translate-x-full');
+        if (isClosed) {
+          sidebar.classList.remove('-translate-x-full');
+          sidebarOverlay.classList.remove('hidden');
+        } else {
+          closeMobileSidebar();
+        }
+      } else {
+        // Toggle desktop collapse (normal 240px <-> compact 72px)
+        const isCollapsed = sidebar.classList.contains('lg:w-[72px]');
+        const labels = document.querySelectorAll('.sidebar-label');
+        const sectionTitles = document.querySelectorAll('.sidebar-section-title');
+        const items = document.querySelectorAll('.sidebar-item');
+
+        if (isCollapsed) {
+          sidebar.classList.remove('lg:w-[72px]');
+          sidebar.classList.add('w-60');
+          labels.forEach(l => l.classList.remove('hidden'));
+          sectionTitles.forEach(st => st.classList.remove('hidden'));
+          items.forEach(item => {
+            item.classList.add('px-3');
+            item.classList.remove('justify-center', 'px-0');
+          });
+        } else {
+          sidebar.classList.remove('w-60');
+          sidebar.classList.add('lg:w-[72px]');
+          labels.forEach(l => l.classList.add('hidden'));
+          sectionTitles.forEach(st => st.classList.add('hidden'));
+          items.forEach(item => {
+            item.classList.remove('px-3');
+            item.classList.add('justify-center', 'px-0');
+          });
+        }
+      }
+    });
+
+    // Close mobile sidebar when clicking the dark backdrop overlay
+    function closeMobileSidebar() {
+      sidebar.classList.add('-translate-x-full');
+      sidebarOverlay.classList.add('hidden');
+    }
+
+    sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+    // Filter Chips: active state toggle
+    chipButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Reset all chips to default dark styling
+        chipButtons.forEach(btn => {
+          btn.className = 'chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-hover hover:bg-yt-border text-yt-text shrink-0 transition-colors';
+        });
+
+        // Set clicked chip to active styling (white background, dark text)
+        button.className = 'chip-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-yt-text text-yt-black hover:bg-white shrink-0 transition-colors';
+      });
+    });
+  </script>
+
+</body>
+</html>
