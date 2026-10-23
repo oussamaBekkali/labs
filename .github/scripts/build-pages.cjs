@@ -168,7 +168,7 @@ function rewritePresentationLinks(content, presentation) {
         return `${image}[${label}](${targetLink}${suffix})`;
       }
 
-      if (/\.(?:md|html?)$/i.test(target)) {
+      if (/\.md$/i.test(target) || path.basename(target).toLowerCase() === "index.html") {
         console.log(`  Excluding local document link from ${relativePath(sourcePath)}: ${href}`);
         return label;
       }

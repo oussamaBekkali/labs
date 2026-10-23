@@ -433,19 +433,7 @@ La méthode JavaScript `fetch()` **ne rejette pas** sa promesse en cas de code 4
 ### Situation Rencontrée
 Lors du chargement de la vue de détail d'un article de blog, la page reste partiellement vide et l'affichage se bloque brutalement.
 
-### Code Source à l'Origine du Problème
-```javascript
-async function displayArticleDetails(articleId) {
-  const response = await fetch(`http://localhost:8000/api/articles/${articleId}`);
-  const article = await response.json();
-
-  // Erreur : l'article récupéré n'a pas encore d'auteur ou la propriété est absente
-  document.getElementById("article-title").textContent = article.title;
-  document.getElementById("author-name").textContent = article.author.name;
-}
-```
-
-Si le champ `author` vaut `undefined` ou `null`, le moteur JavaScript interrompt immédiatement l'exécution.
+Le code initial est disponible dans [`erreur-1/error.js`](./code-examples/erreur-1/error.js). Si le champ `author` vaut `undefined` ou `null`, le moteur JavaScript interrompt immédiatement l'exécution.
 
 ---
 
@@ -456,11 +444,9 @@ Si le champ `author` vaut `undefined` ou `null`, le moteur JavaScript interrompt
 <span class="badge">Lecture de l'erreur & Outils</span>
 
 ### Message Affiché dans la Console
-```text
-Uncaught TypeError: Cannot read properties of undefined (reading 'name')
-    at displayArticleDetails (article.js:42:47)
-    at async loadPage (article.js:12:3)
-```
+> Uncaught TypeError: Cannot read properties of undefined (reading 'name')<br>
+> at displayArticleDetails (article.js:42:47)<br>
+> at async loadPage (article.js:12:3)
 
 <div class="grid-2">
 <div class="card">
@@ -486,20 +472,7 @@ Uncaught TypeError: Cannot read properties of undefined (reading 'name')
 
 <span class="badge badge-success">Résolution</span>
 
-### Étape 1 : Sécuriser avec le Chaînage Optionnel et Valeur par Défaut
-```javascript
-// Solution moderne avec chaînage optionnel (?.) et coalescence des nuls (??)
-document.getElementById("article-title").textContent = article?.title ?? "Sans titre";
-document.getElementById("author-name").textContent = article?.author?.name ?? "Auteur anonyme";
-```
-
-### Étape 2 : Ajouter une Garde d'Intégrité
-```javascript
-if (!article || typeof article !== "object") {
-  console.warn("Données d'article invalides reçues de l'API");
-  return;
-}
-```
+La solution complète, avec garde d'intégrité, chaînage optionnel et valeurs par défaut, est dans [`erreur-1/solution.js`](./code-examples/erreur-1/solution.js).
 
 ### Vérification
 Recharger la page avec un article sans auteur assigné : le texte affiche *"Auteur anonyme"* sans générer aucune exception dans la console.
@@ -515,21 +488,7 @@ Recharger la page avec un article sans auteur assigné : le texte affiche *"Aute
 ### Situation Rencontrée
 Dans l'interface du blog, l'utilisateur clique sur le bouton *"Filtrer par catégorie"*. Rien ne se passe à l'écran, et une erreur s'inscrit instantanément dans la console.
 
-### Code Source à l'Origine du Problème
-```html
-<!-- index.html -->
-<button onclick="fetchPosts('technologie')">Voir Technologie</button>
-
-<script type="module" src="./js/app.js"></script>
-```
-
-```javascript
-// js/app.js (module ES6)
-function fetchPosts(category) {
-  console.log("Chargement de la catégorie :", category);
-  // Requête API...
-}
-```
+Le code initial est séparé entre [`erreur.html`](./code-examples/erreur-2/erreur.html) et [`app.js`](./code-examples/erreur-2/app.js).
 
 Puisque `app.js` est chargé en tant que **module ES6** (`type="module"`), ses fonctions sont confinées à la portée du module et ne sont pas rattachées à l'objet global `window`.
 
@@ -540,10 +499,8 @@ Puisque `app.js` est chargé en tant que **module ES6** (`type="module"`), ses f
 <span class="badge">Lecture de l'erreur & Outils</span>
 
 ### Message Affiché dans la Console
-```text
-Uncaught ReferenceError: fetchPosts is not defined
-    at HTMLButtonElement.onclick (index.html:24:1)
-```
+> Uncaught ReferenceError: fetchPosts is not defined<br>
+> at HTMLButtonElement.onclick (index.html:24:1)
 
 <div class="grid-2">
 <div class="card">
@@ -570,22 +527,7 @@ Uncaught ReferenceError: fetchPosts is not defined
 
 <span class="badge badge-success">Résolution</span>
 
-### Étape 1 : Supprimer les Écouteurs Inline et Utiliser `addEventListener`
-```javascript
-// js/app.js
-document.querySelectorAll(".btn-category").forEach(button => {
-  button.addEventListener("click", (event) => {
-    const category = event.target.dataset.category;
-    fetchPosts(category);
-  });
-});
-```
-
-### Étape 2 (Alternative) : Attacher Explicitement si Requis par l'Architecture
-```javascript
-// Si l'appel direct depuis le HTML est indispensable :
-window.fetchPosts = fetchPosts;
-```
+Les solutions (écouteur `addEventListener` et alternative d'attachement à `window`) sont dans [`erreur-2/solution.js`](./code-examples/erreur-2/solution.js).
 
 ### Vérification
 Cliquer sur chaque bouton de filtre : la liste des articles se met à jour et la console confirme l'appel avec le bon paramètre sans aucune erreur.
@@ -599,15 +541,7 @@ Cliquer sur chaque bouton de filtre : la liste des articles se met à jour et la
 ### Situation Rencontrée
 L'application tente de charger la liste des derniers articles via `fetch("http://localhost:8000/api/articles")`. La méthode `response.json()` échoue immédiatement et le blog n'affiche aucun contenu.
 
-### Code Source Défaillant
-```javascript
-async function loadArticles() {
-  const response = await fetch("http://localhost:8000/api/articles");
-  // Hypothèse erronée : on suppose que la réponse contient toujours du JSON
-  const articles = await response.json();
-  renderArticles(articles);
-}
-```
+Le code initial est disponible dans [`erreur-3/error.js`](./code-examples/erreur-3/error.js).
 
 Le script frontend s'exécute sans vérifier l'état de la réponse, alors que le serveur PHP a rencontré une défaillance interne.
 
@@ -620,10 +554,8 @@ Le script frontend s'exécute sans vérifier l'état de la réponse, alors que l
 <span class="badge">Lecture de l'erreur & Outils</span>
 
 ### Message Affiché dans la Console
-```text
-Uncaught (in promise) SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
-    at loadArticles (articles.js:4:31)
-```
+> Uncaught (in promise) SyntaxError: Unexpected token '<', `<!DOCTYPE ...` is not valid JSON<br>
+> at loadArticles (articles.js:4:31)
 
 <div class="grid-2">
 <div class="card">
@@ -649,26 +581,7 @@ Uncaught (in promise) SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not 
 
 <span class="badge badge-success">Résolution</span>
 
-### Étape 1 : Sécuriser la Réception Côté Frontend
-```javascript
-async function loadArticles() {
-  try {
-    const response = await fetch("http://localhost:8000/api/articles", {
-      headers: { "Accept": "application/json" }
-    });
-
-    if (!response.ok) {
-      throw new Error(`Erreur serveur HTTP : ${response.status} ${response.statusText}`);
-    }
-
-    const articles = await response.json();
-    renderArticles(articles);
-  } catch (error) {
-    console.error("Échec du chargement des articles :", error.message);
-    showErrorMessageToUser("Impossible de charger les articles actuellement.");
-  }
-}
-```
+La solution frontend (vérification HTTP, parsing protégé et message utilisateur) est dans [`erreur-3/solution.js`](./code-examples/erreur-3/solution.js).
 
 ### Étape 2 : Corriger le Problème Backend PHP
 Corriger les identifiants de base de données dans le fichier `.env` ou la configuration PHP.
@@ -684,17 +597,7 @@ Corriger les identifiants de base de données dans le fichier `.env` ou la confi
 ### Situation Rencontrée
 Lors de l'envoi d'un nouvel article via un formulaire, le navigateur bloque la requête immédiatement sans renvoyer aucun code de statut HTTP chiffré.
 
-### Code Source Défaillant
-```javascript
-async function publishArticle(data) {
-  const response = await fetch("http://localhost:8000/api/articles", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
-  return await response.json();
-}
-```
+Le code initial est disponible dans [`erreur-4/error.js`](./code-examples/erreur-4/error.js).
 
 La requête ne parvient pas au contrôleur PHP ou le navigateur refuse de lire la réponse.
 
@@ -705,12 +608,10 @@ La requête ne parvient pas au contrôleur PHP ou le navigateur refuse de lire l
 <span class="badge">Lecture de l'erreur & Outils</span>
 
 ### Message Affiché dans la Console
-```text
-Uncaught (in promise) TypeError: Failed to fetch
-    at publishArticle (editor.js:14:26)
-Access to fetch at 'http://localhost:8000/api/articles' from origin 'http://localhost:3000'
-has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present.
-```
+> Uncaught (in promise) TypeError: Failed to fetch<br>
+> at publishArticle (editor.js:14:26)<br>
+> Access to fetch at `http://localhost:8000/api/articles` from origin `http://localhost:3000`<br>
+> has been blocked by CORS policy: No `Access-Control-Allow-Origin` header is present.
 
 <div class="grid-2">
 <div class="card">
@@ -740,25 +641,11 @@ has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is pres
 
 ### Étape 1 : Démarrer le Serveur Backend PHP
 Dans le terminal du projet backend :
-```bash
-php -S localhost:8000 -t public
-# ou dans un projet Laravel :
-php artisan serve --port=8000
-```
+Commandes de démarrage : [`erreur-4/start-server.sh`](./code-examples/erreur-4/start-server.sh).
 
 ### Étape 2 : Configurer les En-têtes CORS Côté PHP
 Ajouter en tête du point d'entrée API (`index.php` ou middleware PHP) :
-```php
-<?php
-header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, Accept");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
-```
+Exemple de configuration PHP : [`erreur-4/cors.php`](./code-examples/erreur-4/cors.php).
 
 ---
 
@@ -769,23 +656,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 ### Situation Rencontrée
 La requête API s'est achevée avec un code `200 OK`, mais la fonction d'affichage des articles déclenche immédiatement une erreur fatale dans la console.
 
-### Code Source Défaillant
-```javascript
-async function renderBlogFeed() {
-  const response = await fetch("http://localhost:8000/api/posts");
-  const posts = await response.json();
-
-  // Erreur : on suppose que 'posts' est directement un tableau (Array)
-  const html = posts.map(post => `
-    <article class="post-card">
-      <h3>${post.title}</h3>
-      <p>${post.excerpt}</p>
-    </article>
-  `).join("");
-
-  document.getElementById("feed").innerHTML = html;
-}
-```
+Le code initial est disponible dans [`erreur-5/error.js`](./code-examples/erreur-5/error.js).
 
 ---
 
@@ -796,10 +667,8 @@ async function renderBlogFeed() {
 <span class="badge">Lecture de l'erreur & Outils</span>
 
 ### Message Affiché dans la Console
-```text
-Uncaught (in promise) TypeError: posts.map is not a function
-    at renderBlogFeed (feed.js:8:22)
-```
+> Uncaught (in promise) TypeError: posts.map is not a function<br>
+> at renderBlogFeed (feed.js:8:22)
 
 <div class="grid-2">
 <div class="card">
@@ -812,15 +681,8 @@ Uncaught (in promise) TypeError: posts.map is not a function
 <div class="card">
 
 ### Diagnostic dans DevTools
-- Saisie dans la console : `console.log(posts)` révèle la structure réelle :
-```json
-{
-  "status": "success",
-  "data": [ { "id": 1, "title": "Premier article" } ],
-  "total": 1
-}
-```
-Les articles sont encapsulés dans la propriété `posts.data`.
+- Saisie dans la console : `console.log(posts)` révèle une réponse contenant `status`, `data` et `total` (exemple dans [`erreur-5/response.json`](./code-examples/erreur-5/response.json)).
+- Les articles sont encapsulés dans la propriété `posts.data`.
 </div>
 </div>
 
@@ -830,30 +692,7 @@ Les articles sont encapsulés dans la propriété `posts.data`.
 
 <span class="badge badge-success">Résolution</span>
 
-### Étape 1 : Valider le Type et Extraire les Données
-```javascript
-async function renderBlogFeed() {
-  const response = await fetch("http://localhost:8000/api/posts");
-  const result = await response.json();
-
-  // Extraction sécurisée selon la structure reçue
-  const postsList = Array.isArray(result) ? result : (result.data || []);
-
-  if (postsList.length === 0) {
-    document.getElementById("feed").innerHTML = "<p>Aucun article publié pour le moment.</p>";
-    return;
-  }
-
-  const html = postsList.map(post => `
-    <article class="post-card">
-      <h3>${post.title ?? "Titre indisponible"}</h3>
-      <p>${post.excerpt ?? ""}</p>
-    </article>
-  `).join("");
-
-  document.getElementById("feed").innerHTML = html;
-}
-```
+La solution complète (validation du type, extraction et affichage du résultat) est dans [`erreur-5/solution.js`](./code-examples/erreur-5/solution.js).
 
 ---
 
