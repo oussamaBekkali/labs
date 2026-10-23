@@ -34,3 +34,60 @@ lab-XX-nom-du-sujet/
 - [Guide Markdown](./markdown.md)
 - [Guide des presentations Marp](./marp.md)
 - [Liste previsionnelle des sujets a traiter](./determiner_la_liste_des%20_labs_a_realiser.md)
+
+```
+labs
+├─ .agent
+│  ├─ rules
+│  │  ├─ author-attribution.md
+│  │  ├─ customizations-location.md
+│  │  └─ no-emojis.md
+│  └─ skills
+│     ├─ github-deployment
+│     │  └─ SKILL.md
+│     ├─ lab-adaptation
+│     │  └─ SKILL.md
+│     └─ lab-creator
+│        └─ SKILL.md
+├─ determiner_la_liste_des _labs_a_realiser.md
+├─ lab-01-comprendre-laravel
+│  ├─ definition.md
+│  ├─ introduction.md
+│  ├─ practical.md
+│  ├─ presentation.md
+│  └─ README.md
+├─ lab-02-architecture-mvc
+│  ├─ definition.md
+│  ├─ introduction.md
+│  ├─ practical.md
+│  ├─ presentation.md
+│  └─ README.md
+├─ lab-agent
+│  └─ presentation.md
+├─ lab-antigravity
+│  └─ .agent
+│     └─ skills
+│        └─ lab_creator
+│           └─ skill.md
+├─ lab-erreur-js
+│  └─ lab-erreur-js.md
+├─ lab-git
+│  └─ git.md
+├─ lab-laravel-afficher-la-liste-des-catégories
+│  └─ laravel_categories_lab.md
+├─ lab-laravel_helloWorld
+│  └─ laravel_hello_world_lab.md
+├─ lab-markdown
+│  └─ markdown.md
+├─ lab-marp
+│  └─ lab-marp.md
+├─ lab-prompt-task
+│  ├─ index.html
+│  └─ prompt.md
+├─ lab-starter
+│  └─ lab-starter.md
+├─ lab-what_is_a_lab
+│  └─ Qu’est-ce_qu’un_lab.md
+└─ README.md
+
+```
