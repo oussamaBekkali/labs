@@ -1,69 +1,60 @@
 ---
 name: github-deployment
-description: "Configure or update GitHub Pages deployment for Marp labs. Discover every lab Markdown file with valid YAML front matter containing marp: true, render all eligible presentations, and generate a homepage from the root README."
+description: "Configure GitHub Pages to discover and publish every valid Marp presentation in lab directories. Render only Marp Markdown to HTML with Marp CLI and include only the presentations and their required assets."
 ---
 
 # GitHub Deployment Skill
 
 ## Purpose
 
-Build and publish a GitHub Pages site containing the root README homepage and every valid Marp presentation in the repository's lab directories. Do not deploy ordinary Markdown documents or standalone HTML lab websites.
+Build and publish only rendered Marp presentations and their required local assets to GitHub Pages. The deployed site must not include a homepage, an index page, source Markdown, ordinary lab documents, or standalone HTML websites.
 
 ## 1. Inspect Before Changing
 
-1. Inspect the repository structure, current branch, worktree, root `README.md`, and every file in `.github/workflows/`.
-2. Identify top-level lab directories (currently named `lab-*`) and inspect their Markdown front matter.
-3. Treat a Markdown file as eligible only when it has valid YAML front matter with the Boolean value `marp: true`.
-4. Exclude ordinary Markdown, malformed or non-Marp front matter, HTML-only labs, `.agent/`, `.git/`, and development-only files.
-5. Include every eligible presentation. If a lab contains multiple presentations, publish all of them and group them clearly on the homepage.
-6. Preserve existing unrelated workflows and source files.
+1. Inspect the repository structure, current branch, worktree, and every file in `.github/workflows/`.
+2. Identify lab directories and scan their Markdown files.
+3. A file is eligible only if it has valid YAML front matter with the Boolean value `marp: true`.
+4. Exclude ordinary Markdown, malformed or non-Marp front matter, `.agent/`, `.git/`, development-only files, and HTML-only labs.
+5. Include every eligible presentation, including multiple presentations in one lab.
+6. Preserve unrelated workflows and all original repository files.
 
-## 2. Build the Site
+## 2. Build the Deployment Output
 
-Use `.github/workflows/deploy-pages.yml` and `.github/scripts/build-pages.cjs` for the GitHub Actions build.
+Use `.github/workflows/deploy-pages.yml` and `.github/scripts/build-pages.cjs` for this repository's build.
 
-- Trigger deployment on pushes to the configured branch when the README, lab content, or build configuration changes, and support manual `workflow_dispatch`.
-- Scan each top-level `lab-*` directory on every build; do not hard-code presentation filenames.
-- Render every eligible presentation to HTML with the official Marp CLI.
-- Generate `dist/index.html` from the root `README.md` without modifying the README. Retain local links only when their target is included in the published site; link to all eligible presentations using repository-relative URLs.
-- Preserve local assets required by presentations and keep each presentation and its assets in a predictable, separate output path.
-- Publish only `dist/`: the generated homepage, rendered presentation HTML, and required presentation assets. Do not copy ordinary Markdown, source `index.html` websites, `.agent/`, `.git/`, or unrelated files.
-- Keep all generated and temporary files separate from source files. Fail the build if no valid presentations are found or an eligible presentation fails to render.
+- Scan lab directories on every build; do not hard-code presentation filenames.
+- Render each eligible presentation with the official Marp CLI.
+- Preserve the source directory structure in the output so a presentation at `lab-name/deck.md` is published at `lab-name/deck.html`.
+- Include only rendered presentation HTML and the local assets actually required by those presentations.
+- Do not publish the root README, lab README files, ordinary Markdown, source `index.html` sites, or any generated README-based homepage or lab index.
+- Generate all files in a separate build directory. Never rewrite, move, or delete original lab files.
+- Fail the build if no valid Marp presentations are found or any eligible presentation fails to render.
+- Upload only the generated output directory as the Pages artifact.
 
-## 3. GitHub Pages Workflow
+## 3. GitHub Actions
 
-The workflow must:
+Configure `.github/workflows/deploy-pages.yml` to:
 
-1. Check out the repository and set up the required runtime.
-2. Install pinned Marp CLI and Markdown/front-matter parsing tools.
-3. Detect, render, and validate eligible presentations.
-4. Upload only the generated output with `actions/upload-pages-artifact`.
-5. Deploy with `actions/deploy-pages`.
+1. Run automatically on pushes to the configured branch when lab content or deployment configuration changes.
+2. Support manual runs with `workflow_dispatch`.
+3. Check out the repository, install pinned Marp CLI and front-matter parsing tools, discover and render eligible presentations, and validate the output.
+4. Upload with `actions/upload-pages-artifact` and deploy with `actions/deploy-pages`.
 
-Use least-privilege permissions (`contents: read`, `pages: write`, and `id-token: write`), the `github-pages` environment, and deployment concurrency. Keep the existing configured branch unless the user requests a change.
+Use least-privilege permissions (`contents: read`, `pages: write`, and `id-token: write`), the `github-pages` environment, and deployment concurrency. Keep the existing configured branch unless the user requests otherwise.
 
-## 4. GitHub Pages Compatibility
-
-- Use relative links so the site works at `https://<owner>.github.io/<repository>/`.
-- Verify homepage links point only to generated presentations or the homepage; external links may remain.
-- Resolve presentation asset paths relative to the rendered page and copy only required assets.
-- Never publish original Markdown as a substitute for rendered slides.
-
-## 5. Validation and Reporting
+## 4. Validation and Reporting
 
 Before reporting success:
 
-- Confirm each included source has valid YAML front matter with `marp: true` and has a non-empty rendered HTML output.
-- Confirm ordinary Markdown files and HTML-only labs are excluded.
-- Confirm `dist/index.html` is generated from the root README and lists only eligible labs/presentations.
-- Confirm output contains no source Markdown, unrelated HTML websites, `.agent/`, `.git/`, or development-only files.
-- Report included labs and their presentations, excluded labs with reasons, changed files, workflow triggers, and local validation results.
-- Distinguish a successful local build from a completed remote deployment. Do not claim deployment until the GitHub Actions run or published URL has been verified.
+- Verify each published HTML file corresponds to a valid source presentation with `marp: true`.
+- Verify all required local assets are present and the artifact has no source Markdown, README, unrelated HTML, `.agent/`, `.git/`, homepage, or lab index.
+- Report every included presentation and excluded lab with the reason for exclusion.
+- Give the URL structure as `https://<owner>.github.io/<repository>/<lab-directory>/<presentation-name>.html`.
+- Distinguish successful local validation from remote deployment. Never claim publication without verifying the GitHub Actions run or live URL.
 
-## 6. Working Rules
+## 5. Working Rules
 
-- Preserve original lab files and repository structure.
-- Inspect existing workflows before updating them; do not overwrite unrelated configuration.
-- Do not push changes, modify remote settings, or claim to have deployed without the user's confirmation and actual verification.
-- Ask before destructive changes or significant side effects.
-- Explain each created or modified file and disclose remaining limitations.
+- Inspect existing workflows before changing them; do not overwrite unrelated configuration.
+- Preserve original files and repository structure.
+- Do not push changes or modify remote settings without the user's confirmation.
+- Explain changed files, validation results, and remaining limitations.

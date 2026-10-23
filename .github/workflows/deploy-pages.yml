@@ -5,7 +5,6 @@ on:
     branches:
       - main
     paths:
-      - 'README.md'
       - 'lab-*/**'
       - '.github/scripts/build-pages.cjs'
       - '.github/workflows/deploy-pages.yml'
@@ -38,9 +37,8 @@ jobs:
           --no-save --no-package-lock
           @marp-team/marp-cli@4.2.3
           gray-matter@4.0.3
-          marked@15.0.7
 
-      - name: Build and validate eligible presentations
+      - name: Render and validate eligible presentations
         env:
           PAGES_TOOLS_DIR: ${{ runner.temp }}/pages-tools
         run: node .github/scripts/build-pages.cjs

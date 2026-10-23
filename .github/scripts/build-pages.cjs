@@ -8,7 +8,6 @@ const outputRoot = path.join(root, "dist");
 const toolsDir = process.env.PAGES_TOOLS_DIR || path.join(root, "node_modules");
 const toolsRequire = createRequire(path.join(toolsDir, "build-pages.cjs"));
 const matter = toolsRequire("gray-matter");
-const { marked } = toolsRequire("marked");
 const marpPackagePath = path.join(
   toolsDir,
   "node_modules",
@@ -24,6 +23,7 @@ const temporarySourceRoot = path.join(outputRoot, ".build-src");
 const ignoredDirectories = new Set([".git", ".agent", "node_modules"]);
 const presentationsBySource = new Map();
 const labs = [];
+const presentationAssets = new Set();
 
 function walkMarkdown(directory) {
   const files = [];
@@ -50,15 +50,6 @@ function relativePath(absolutePath) {
 
 function urlPath(relative) {
   return relative.split("/").map(encodeURIComponent).join("/");
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
 }
 
 function isInside(directory, target) {
@@ -107,6 +98,7 @@ function copyPresentationAsset(labRoot, target) {
   fs.mkdirSync(path.dirname(temporaryAsset), { recursive: true });
   fs.copyFileSync(target, outputAsset);
   fs.copyFileSync(target, temporaryAsset);
+  presentationAssets.add(assetRelative.split(path.sep).join("/"));
   return true;
 }
 
@@ -122,6 +114,29 @@ function rewriteOutsideCode(content, rewrite) {
   });
 
   return rewrite(safeContent).replace(/\u0000(\d+)\u0000/g, (_placeholder, index) => codeSegments[Number(index)]);
+}
+
+function copyReferencedAssets(content, presentation, labRoot) {
+  const sourcePath = presentation.sourcePath;
+  rewriteOutsideCode(content, (markdown) => {
+    const references = [
+      ...markdown.matchAll(/\b(?:src|href|poster)\s*=\s*(["'])(.*?)\1/gi),
+      ...markdown.matchAll(/url\(\s*(["']?)(.*?)\1\s*\)/gi),
+    ];
+
+    for (const reference of references) {
+      const href = reference[2].trim();
+      if (!href || isExternalUrl(href) || /\.(?:md|html?)(?:[?#].*)?$/i.test(href)) {
+        continue;
+      }
+
+      const target = resolveLocalTarget(sourcePath, href);
+      if (target) {
+        copyPresentationAsset(labRoot, target);
+      }
+    }
+    return markdown;
+  });
 }
 
 function rewritePresentationLinks(content, presentation) {
@@ -172,46 +187,6 @@ function rewritePresentationLinks(content, presentation) {
   ));
 }
 
-function rewriteHomepageLinks(html, eligibleSources) {
-  const links = new Map();
-  for (const [source, presentation] of eligibleSources) {
-    links.set(source.replace(/\\/g, "/"), presentation.outputRelative);
-  }
-
-  return html.replace(/<a\b[^>]*href=(["'])(.*?)\1[^>]*>([\s\S]*?)<\/a>/gi, (anchor, _quote, href, body) => {
-    if (isExternalUrl(href)) {
-      return anchor;
-    }
-
-    const cleanHref = href.replace(/&amp;/g, "&");
-    const localPath = cleanHref.split(/[?#]/, 1)[0];
-    let decodedPath;
-    try {
-      decodedPath = decodeURIComponent(localPath);
-    } catch {
-      return body;
-    }
-
-    const target = path.resolve(root, decodedPath);
-    if (!isInside(root, target)) {
-      return body;
-    }
-
-    const sourceRelative = relativePath(target);
-    const publishedPage = links.get(sourceRelative);
-    if (publishedPage) {
-      const suffix = cleanHref.slice(localPath.length);
-      return `<a href="${escapeHtml(`./${urlPath(publishedPage)}${suffix}`)}">${body}</a>`;
-    }
-
-    if (sourceRelative.toLowerCase() === "readme.md") {
-      return `<a href="./index.html${escapeHtml(cleanHref.slice(localPath.length))}">${body}</a>`;
-    }
-
-    return body;
-  });
-}
-
 function scanLabs() {
   for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
     if (!entry.isDirectory() || !entry.name.startsWith("lab-")) {
@@ -248,6 +223,7 @@ function scanLabs() {
 
 function renderPresentation(presentation) {
   const original = fs.readFileSync(presentation.sourcePath, "utf8");
+  copyReferencedAssets(original, presentation, path.join(root, presentation.labName));
   const rewritten = rewritePresentationLinks(original, presentation);
   const temporaryInput = path.join(temporarySourceRoot, presentation.sourceRelative);
   const outputFile = path.join(outputRoot, presentation.outputRelative);
@@ -269,74 +245,48 @@ function renderPresentation(presentation) {
   console.log(`  Rendered ${presentation.sourceRelative} -> ${presentation.outputRelative}`);
 }
 
-function buildHomepage() {
-  const readmePath = path.join(root, "README.md");
-  if (!fs.existsSync(readmePath)) {
-    throw new Error("Root README.md is required to generate the homepage.");
-  }
-
-  const readmeHtml = marked.parse(fs.readFileSync(readmePath, "utf8"));
-  const rewrittenReadme = rewriteHomepageLinks(readmeHtml, presentationsBySource);
-  const eligibleLabs = labs.filter((lab) => lab.presentations.length > 0);
-  const presentationList = eligibleLabs.map((lab) => {
-    const items = lab.presentations.map((presentation) => {
-      const title = path.basename(presentation.sourcePath, path.extname(presentation.sourcePath));
-      return `<li><a href="./${urlPath(presentation.outputRelative)}">${escapeHtml(title)}</a></li>`;
-    }).join("\n");
-    return `<li><strong>${escapeHtml(lab.name)}</strong><ul>${items}</ul></li>`;
-  }).join("\n");
-
-  const homepage = `<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Labs</title>
-  <style>
-    body { max-width: 72rem; margin: 2rem auto; padding: 0 1rem; font: 1rem/1.6 system-ui, sans-serif; color: #1f2937; }
-    img { max-width: 100%; height: auto; }
-    pre { overflow-x: auto; padding: 1rem; background: #f3f4f6; }
-    table { border-collapse: collapse; display: block; overflow-x: auto; }
-    th, td { border: 1px solid #d1d5db; padding: .5rem; text-align: left; }
-  </style>
-</head>
-<body>
-${rewrittenReadme}
-<section aria-labelledby="presentations-heading">
-  <h2 id="presentations-heading">Available Marp presentations</h2>
-  <ul>${presentationList}</ul>
-</section>
-</body>
-</html>
-`;
-
-  fs.writeFileSync(path.join(outputRoot, "index.html"), homepage, "utf8");
-}
-
 function validateBuild() {
-  const homepagePath = path.join(outputRoot, "index.html");
-  if (!fs.existsSync(homepagePath)) {
-    throw new Error("Generated homepage is missing.");
+  const expectedFiles = new Set([
+    ...[...presentationsBySource.values()].map((presentation) => presentation.outputRelative),
+    ...presentationAssets,
+  ]);
+  const actualFiles = new Set();
+
+  function collectFiles(directory) {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const absolutePath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        collectFiles(absolutePath);
+      } else if (entry.isFile()) {
+        actualFiles.add(path.relative(outputRoot, absolutePath).split(path.sep).join("/"));
+      }
+    }
   }
 
-  const homepage = fs.readFileSync(homepagePath, "utf8");
+  collectFiles(outputRoot);
+  if (actualFiles.size !== expectedFiles.size || [...actualFiles].some((file) => !expectedFiles.has(file))) {
+    const unexpected = [...actualFiles].filter((file) => !expectedFiles.has(file));
+    const missing = [...expectedFiles].filter((file) => !actualFiles.has(file));
+    throw new Error(`Deployment output contains unexpected or missing files. Unexpected: ${unexpected.join(", ") || "none"}. Missing: ${missing.join(", ") || "none"}.`);
+  }
+
   for (const [source, presentation] of presentationsBySource) {
     const outputPath = path.join(outputRoot, presentation.outputRelative);
-    if (!fs.existsSync(outputPath)) {
+    if (!fs.existsSync(outputPath) || fs.statSync(outputPath).size === 0) {
       throw new Error(`Eligible presentation was not published: ${source}`);
-    }
-    if (!homepage.includes(`./${urlPath(presentation.outputRelative)}`)) {
-      throw new Error(`Homepage is missing eligible presentation: ${source}`);
     }
   }
 
   for (const lab of labs) {
     if (lab.presentations.length > 0) {
-      console.log(`Included ${lab.name}: ${lab.presentations.map((item) => path.basename(item.sourcePath)).join(", ")}`);
+      for (const presentation of lab.presentations) {
+        console.log(`Included ${presentation.sourceRelative} -> ${presentation.outputRelative}`);
+      }
     } else {
       console.log(`Excluded ${lab.name}: no valid Markdown file with YAML front matter marp: true.`);
     }
   }
+  console.log(`Validated ${actualFiles.size} deployment files: ${presentationsBySource.size} presentations and ${presentationAssets.size} required assets.`);
 }
 
 function main() {
@@ -353,13 +303,12 @@ function main() {
     renderPresentation(presentation);
   }
   fs.rmSync(temporarySourceRoot, { recursive: true, force: true });
-  buildHomepage();
   validateBuild();
 }
 
 try {
   main();
 } catch (error) {
-  console.error(error.message);
+  console.error(error.stack || error.message);
   process.exitCode = 1;
 }
