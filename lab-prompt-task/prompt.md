@@ -8,42 +8,18 @@ style: |
     background: #111827;
     color: #f3f4f6;
     font-family: Inter, system-ui, sans-serif;
+    font-size: 28px;
     padding: 48px 64px;
-  }
-  h1, h2, h3 {
-    color: #f9fafb;
-    font-family: Anton, Impact, sans-serif;
-  }
-  h1 {
-    font-size: 2.2em;
-  }
-  h2 {
-    border-bottom: 2px solid #38bdf8;
-    padding-bottom: 0.2em;
-  }
-  strong {
-    color: #7dd3fc;
-  }
-  code {
-    color: #bae6fd;
-  }
-  pre {
-    background: #1f2937;
-    border: 1px solid #374151;
-    border-radius: 8px;
   }
   section.light {
     background: #f8fafc;
     color: #1f2937;
   }
-  section.light h1,
-  section.light h2,
-  section.light h3 {
-    color: #0f172a;
-  }
-  section.light strong {
-    color: #0369a1;
-  }
+  h1, h2 { color: #7dd3fc; }
+  section.light h1, section.light h2 { color: #0369a1; }
+  strong { color: #7dd3fc; }
+  section.light strong { color: #0369a1; }
+  pre { font-size: 0.72em; }
 ---
 
 # Improving a Video Platform Prompt
@@ -62,12 +38,12 @@ style: |
 
 ## Introduction
 
-**Goal:** turn a vague request for a video-platform page into a clear, testable prompt for a beginner-friendly interface.
+This lab turns a vague page request into a clear, testable prompt.
 
-- **Scope:** one static `index.html` using HTML, Tailwind CSS, and vanilla JavaScript.
-- **Audience:** a student learning web development.
-- **Practice:** specify layout, responsiveness, sample content, interactions, constraints, and deliverables.
-- **Out of scope:** video playback, authentication, APIs, and backend behavior.
+- Build a static video-platform page for a beginner.
+- Use HTML, Tailwind CSS, and vanilla JavaScript.
+- Specify content, layout, behavior, and deliverables.
+- Keep playback, APIs, and backend work out of scope.
 
 ---
 
@@ -75,33 +51,28 @@ style: |
 
 ## Problems Encountered
 
-The original request leaves important implementation choices open:
+The starting prompt asks for a page “like YouTube,” but leaves key decisions open:
 
-- “A frame” does not define the page sections or what each video card contains.
-- “Like YouTube” is a reference, not a precise layout or feature specification.
-- It does not say whether the page should adapt to mobile screens.
-- “Use HTML, Tailwind, JS” does not clarify the Tailwind setup or the role of JavaScript.
-- It does not limit scope, specify the output format, or prevent extra files and backend features.
+- Page regions and video-card content are unspecified.
+- Responsive behavior and JavaScript purpose are unclear.
+- Setup, output format, and scope are not defined.
 
 ---
 
 ## Solutions Implemented
 
-| Ambiguity | Prompt improvement |
-|:---|:---|
-| Unclear page structure | Name the navbar, sidebar, search, and video grid. |
-| Unclear card content | Require a thumbnail placeholder, title, channel, and view count. |
-| Unclear technical setup | Specify Tailwind CDN and vanilla JavaScript. |
-| Scope could grow | Exclude playback, authentication, and backend features. |
-| Deliverable is unclear | Require one ready-to-run `index.html` and instructions to open it. |
+The improved prompt makes the request verifiable:
 
-Use a rubric to check the generated page against these requirements instead of relying on a vague “looks good” judgment.
+- Names the navbar, sidebar, search, and video grid.
+- Defines card fields and a responsive layout.
+- Specifies Tailwind CDN and vanilla JavaScript.
+- Requires one file and excludes backend features.
 
 ---
 
 <!-- _class: light -->
 
-## Starting Prompt
+## Starting prompt
 
 > Context: I am a student learning web development.
 >
@@ -111,97 +82,110 @@ Use a rubric to check the generated page against these requirements instead of r
 >
 > Expected result: an example of a video platform page like YouTube, just the framework, in one `index.html` page.
 
-This captures the idea, but it does not define what “framework” means or how to verify the result.
+The idea is clear, but “frame” and “framework” are not precise deliverables.
 
 ---
 
-## Improved Prompt
+## Improved prompt: layout
 
 ```text
 Context: I am a student learning web development and practicing page layouts.
 
-Objective: Create a static, YouTube-inspired video platform page as the visual
-skeleton for a future project.
+Objective: Create a static, YouTube-inspired page as a visual skeleton.
 
 Requirements:
 - Use semantic HTML, Tailwind CSS through its CDN, and vanilla JavaScript.
 - Put all code in one ready-to-run file named index.html.
 - Create a responsive navigation bar, sidebar, search bar, and video grid.
-- Give each video card a thumbnail placeholder, title, channel name, and view count.
-- Use fictional placeholder content; do not embed or play real videos.
-- Keep the code simple, readable, and beginner-friendly.
-- Use JavaScript only for a small interface interaction, such as toggling the sidebar.
-- Do not add authentication, a backend, APIs, or any extra files.
-
-Output the complete index.html in one HTML code block, then briefly explain how
-to save it and open it in a browser.
 ```
 
 ---
 
 <!-- _class: light -->
 
-## Practical Example: Page Skeleton
+## Improved prompt: content and scope
 
-The requested regions can be expressed as clear semantic HTML before filling in the visual details:
+```text
+- Give each video card a thumbnail placeholder, title, channel, and view count.
+- Use fictional placeholder content; do not embed or play real videos.
+- Keep the code simple, readable, and beginner-friendly.
+- Use JavaScript only for a small interaction, such as toggling the sidebar.
+- Do not add authentication, a backend, APIs, or extra files.
+```
+
+---
+
+## Improved prompt: output
+
+```text
+Output the complete index.html in one HTML code block.
+Then briefly explain how to save it and open it in a browser.
+```
+
+Clear output instructions reduce ambiguity about what the response should contain.
+
+---
+
+<!-- _class: light -->
+
+## Express the page structure
+
+Semantic regions make the requested layout concrete.
 
 ```html
-<header>
-  <!-- Brand, menu button, and search -->
-</header>
+<header><!-- Brand, menu, and search --></header>
 <aside aria-label="Main navigation">
   <!-- Navigation links -->
 </aside>
 <main>
   <section aria-label="Videos">
-    <article>
-      <!-- Thumbnail, title, channel, and view count -->
-    </article>
+    <article><!-- Thumbnail and video details --></article>
   </section>
 </main>
 ```
 
-Tailwind utility classes can then define the responsive grid, spacing, and colors without adding a separate stylesheet.
+Tailwind classes can supply responsive layout and styling.
 
 ---
 
-## Practical Example: Small Interaction
+## Keep the interaction focused
 
-Keep JavaScript focused on the menu rather than implementing unrelated platform features:
+The example interaction toggles the navigation without adding platform features.
 
 ```html
 <button id="sidebar-toggle" aria-expanded="true">
   Toggle navigation
 </button>
 <aside id="sidebar">Navigation links</aside>
-
-<script>
-  const toggle = document.querySelector("#sidebar-toggle");
-  const sidebar = document.querySelector("#sidebar");
-
-  toggle.addEventListener("click", () => {
-    const isExpanded = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", String(!isExpanded));
-    sidebar.hidden = isExpanded;
-  });
-</script>
 ```
-
-The `aria-expanded` value communicates the menu state to assistive technology as well as to the page logic.
 
 ---
 
 <!-- _class: light -->
 
-## Validate the Result
+## Toggle the sidebar
 
-Check the generated `index.html` against the prompt:
+```javascript
+const toggle = document.querySelector("#sidebar-toggle");
+const sidebar = document.querySelector("#sidebar");
 
-1. **Single-file delivery:** all HTML, Tailwind CDN setup, and JavaScript are in `index.html`.
-2. **Required regions:** navbar, sidebar, search, and a video grid are present.
-3. **Complete cards:** every card has a placeholder thumbnail, title, channel, and view count.
-4. **Responsive layout:** the grid and navigation adapt to narrow and wide screens.
-5. **Limited behavior:** the sidebar interaction works; no backend, authentication, or video playback is included.
-6. **Run check:** save the file and open it in a browser; verify the layout and menu interaction.
+toggle.addEventListener("click", () => {
+  const expanded = toggle.getAttribute("aria-expanded") === "true";
+  toggle.setAttribute("aria-expanded", String(!expanded));
+  sidebar.hidden = expanded;
+});
+```
 
-The companion example is [`index.html`](./index.html). It demonstrates the requested structure and includes responsive video cards and sidebar controls.
+The `aria-expanded` value exposes the menu state to assistive technology.
+
+---
+
+## Validate the generated page
+
+- One ready-to-run `index.html` contains all code.
+- Required regions and video-card fields are present.
+- Layout adapts to narrow and wide screens.
+- Sidebar interaction works; excluded features remain absent.
+- Open the file in a browser and verify the result.
+
+The companion [`index.html`](./index.html) demonstrates the requested layout and controls.

@@ -1,143 +1,139 @@
 ---
 marp: true
 theme: default
-size: 16:9
 paginate: true
+size: 16:9
 style: |
   section {
     font-family: Arial, sans-serif;
-    background: #f8fafc;
-    color: #202938;
+    background: #101827;
+    color: #e8eef7;
     padding: 48px 64px;
-    font-size: 25px;
+    font-size: 28px;
   }
-  h1, h2 {
-    color: #1769aa;
+  section.light {
+    background: #f5f8fc;
+    color: #202b3c;
   }
-  h1 {
-    font-size: 1.8em;
-    margin-bottom: 0.65em;
-  }
-  h2 {
-    font-size: 1.25em;
-  }
-  strong {
-    color: #1769aa;
-  }
-  code {
-    background: #e8f1f8;
-    color: #143b5d;
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-  a {
-    color: #1769aa;
-  }
-  table {
-    font-size: 0.82em;
-  }
-  th {
-    background: #e8f1f8;
-  }
-  blockquote {
-    border-left: 5px solid #1769aa;
-    color: #35445a;
-    padding-left: 1em;
-  }
+  h1, h2 { color: #56c2d6; }
+  section.light h1, section.light h2 { color: #1769aa; }
+  strong { color: #73d6bd; }
+  section.light strong { color: #1769aa; }
+  pre { font-size: 0.75em; }
 ---
-
-<!-- _class: lead -->
 
 # Lab-Starter
 
-## Set Up Your Development Environment
+---
 
-**Git · Windows · Visual Studio Code**
+<!-- _class: light -->
+
+## Lab Plan
+
+1. Introduction
+2. Problems Encountered
+3. Solutions Implemented
 
 ---
 
-# Plan
+## Introduction
 
-1. The problems
-2. The solutions
-3. Step-by-step setup instructions
+This lab prepares a Windows development workspace for web projects.
 
----
-
-# Common Setup Problems
-
-| Challenge                                  | Tool or setting                                                                                          |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| Project changes are not tracked            | Git                                                                                                      |
-| Files such as `.gitignore` are not visible | Hidden items in File Explorer                                                                            |
-| A file’s full name is unclear              | File name extensions in File Explorer                                                                    |
-| Tasks are hard to find in the code         | [Better Todo Tree](https://marketplace.visualstudio.com/items?itemName=FanaticPythoner.better-todo-tree) |
-| HTML changes require manual refresh        | [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)                 |
+- Track project changes with Git.
+- Find hidden files and full file extensions.
+- Use VS Code extensions for TODOs and HTML previews.
 
 ---
 
-# Initialize a Git Repository
+<!-- _class: light -->
 
-1. Open your project folder in VS Code.
-2. Open **Source Control** with `Ctrl + Shift + G`.
-3. Select **Initialize Repository**.
+## Problems Encountered
 
-Or run this command in the project folder:
+The lab identifies common setup challenges:
+
+- Git is not tracking project changes yet.
+- Hidden files or file extensions are not visible.
+- TODO comments and HTML changes are harder to find or preview.
+
+---
+
+## Solutions Implemented
+
+- Initialize Git in the project folder.
+- Enable hidden items and file extensions in File Explorer.
+- Use Better Todo Tree to browse TODO comments.
+- Use Live Server to preview static HTML.
+
+---
+
+<!-- _class: light -->
+
+## Initialize Git
+
+Open the project folder in VS Code, then choose **Source Control → Initialize Repository**.
+
+Or run this in the project directory:
 
 ```bash
 git init
 ```
 
-Git can now track changes in the project. You still need to create commits to save snapshots.
+Git tracks changes; commits save project snapshots.
 
 ---
 
-# Show Hidden Files
+## Show hidden files
 
-Use this to find files such as `.gitignore` or `.env`:
+In File Explorer:
 
-1. Open File Explorer with `Win + E`.
-2. Select **View** → **Show**.
-3. Turn on **Hidden items**.
+1. Press `Win + E`.
+2. Select **View → Show**.
+3. Enable **Hidden items**.
 
-Hidden files will now appear in the project folder.
-
----
-
-# Show File Name Extensions
-
-File extensions help distinguish `README.md` from `README.md.txt`.
-
-1. Open File Explorer with `Win + E`.
-2. Select **View** → **Show**.
-3. Turn on **File name extensions**.
-4. Check the full file name, for example, `README.md`.
+This reveals files such as `.gitignore`.
 
 ---
 
-# Find TODOs with Better Todo Tree
+<!-- _class: light -->
 
-Better Todo Tree searches code comments such as `TODO` and `FIXME` and displays them in a tree.
+## Show file extensions
 
-1. Open **Extensions** with `Ctrl + Shift + X`.
-2. Search for [**Better Todo Tree**](https://marketplace.visualstudio.com/items?itemName=FanaticPythoner.better-todo-tree) by FanaticPythoner and install it.
-3. Add task comments where work remains:
+In File Explorer, select **View → Show → File name extensions**.
+
+Check the complete name, for example:
+
+```text
+README.md
+```
+
+This helps distinguish it from `README.md.txt`.
+
+---
+
+## Find TODO comments
+
+Open Extensions with `Ctrl + Shift + X`, then install **Better Todo Tree** by FanaticPythoner.
+
+Add task markers to source comments:
 
 ```js
 // TODO: add input validation
 // FIXME: correct this error
 ```
 
-4. Open the Better Todo Tree view and select an item to jump to its line.
+Select an item in the extension view to jump to its line.
 
 ---
 
-# Preview HTML with Live Server
+<!-- _class: light -->
 
-1. Open **Extensions** with `Ctrl + Shift + X`.
-2. Search for [**Live Server**](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) by Ritwick Dey and install it.
-3. Open the project folder containing `index.html`.
-4. Select **Go Live** in the VS Code status bar.
-5. Save an edit and check the browser preview.
+## Preview static HTML
 
-> Live Server serves static files; it does not run PHP code.
+In Extensions (`Ctrl + Shift + X`), install **Live Server** by Ritwick Dey, then:
+
+1. Open the folder containing `index.html`.
+2. Select **Go Live** in the VS Code status bar.
+3. Save an edit and inspect the browser preview.
+
+Live Server serves static files; it does not execute PHP.

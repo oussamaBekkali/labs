@@ -1,213 +1,214 @@
 ---
 marp: true
-theme: gaia
-_class: lead
+theme: default
 paginate: true
-backgroundColor: #f8fafc
-color: #1e293b
-header: "Lab 01 : Comprendre Laravel"
-footer: "by oussama bekkali"
+size: 16:9
+style: |
+  section {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 28px;
+    padding: 48px 64px;
+    background: #101827;
+    color: #e8eef7;
+  }
+  section.light {
+    background: #f5f8fc;
+    color: #202b3c;
+  }
+  h1, h2 { color: #56c2d6; }
+  section.light h1, section.light h2 { color: #1769aa; }
+  strong { color: #73d6bd; }
+  section.light strong { color: #1769aa; }
+  pre { font-size: 0.75em; }
 ---
-
-<style>
-section {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 24px;
-  padding: 40px;
-}
-h1 {
-  color: #dc2626;
-}
-h2 {
-  color: #0f172a;
-  border-bottom: 3px solid #dc2626;
-  padding-bottom: 8px;
-}
-code {
-  background-color: #f1f5f9;
-  color: #b91c1c;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-.highlight {
-  color: #dc2626;
-  font-weight: bold;
-}
-.box {
-  background: white;
-  border-left: 5px solid #dc2626;
-  padding: 15px;
-  border-radius: 6px;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-}
-</style>
 
 # Lab 01 : Comprendre Laravel
-### Rôle, Architecture, Avantages et Utilisation
-
-by oussama bekkali
 
 ---
 
-## Problématique : Pourquoi un Framework ?
+<!-- _class: light -->
 
-### Avant les frameworks (PHP Spaghetti) :
-- Mélange de requêtes SQL, logique métier et HTML dans un seul fichier.
-- Risques de sécurité élevés (Injections SQL, XSS, failles CSRF).
-- Code difficile à maintenir et à faire évoluer en équipe.
+## Lab Plan
 
-### La solution :
-- Adopter un **cadre de travail structuré** (Framework).
-- Respecter des standards de conception éprouvés.
-- Réutiliser des composants testés et optimisés.
+1. Introduction
+2. Problems Encountered
+3. Solutions Implemented
 
 ---
 
-## Qu'est-ce que Laravel ?
+## Introduction
 
-- **Créateur** : Taylor Otwell (2011).
-- **Philosophie** : *"The PHP Framework for Web Artisans"*.
-- **Nature** : Framework web open-source full-stack en PHP.
-- **Approche** : **"Batteries included"** & **"Convention over Configuration"**.
+Ce lab présente Laravel, un framework web open source écrit en PHP.
 
-<div class="box">
-<b>Objectif principal :</b> Rendre le développement agréable, élégant et ultra-productif sans sacrifier la puissance applicative.
-</div>
+- Comprendre son rôle dans la création d’applications web.
+- Découvrir MVC, Artisan, Eloquent et Blade.
+- Situer les routes et les migrations dans le projet.
 
 ---
 
-## L'Architecture MVC
+<!-- _class: light -->
 
-Laravel sépare rigoureusement les responsabilités de l'application :
+## Problems Encountered
 
-- **M (Modèle - Model)** :
-  - Représente les données et la logique métier.
-  - Géré avec l'ORM **Eloquent**.
-- **V (Vue - View)** :
-  - Interface utilisateur finale présentée dans le navigateur.
-  - Moteur de gabarits **Blade**.
-- **C (Contrôleur - Controller)** :
-  - Chef d'orchestre : intercepte la requête, consulte le modèle et génère la vue.
+Aucun problème technique bloquant n’est rapporté pour ce lab.
+
+Le code PHP non structuré est présenté comme motivation : mélanger HTML, SQL et logique complique la maintenance.
 
 ---
 
-## Le Cycle d'une Requête HTTP
+## Solutions Implemented
 
+Le lab présente Laravel comme cadre de travail structuré :
+
+- MVC répartit les responsabilités de l’application.
+- Artisan automatise les tâches courantes du projet.
+- Eloquent et Blade fournissent des outils pour les données et les vues.
+
+---
+
+<!-- _class: light -->
+
+## Pourquoi utiliser un framework ?
+
+Sans structure, un script peut mélanger affichage, traitement et accès aux données.
+
+- Les responsabilités deviennent difficiles à séparer.
+- Les changements sont plus difficiles à maintenir.
+- Un framework fournit des conventions et composants réutilisables.
+
+---
+
+## Laravel en bref
+
+- Framework web full-stack open source en PHP.
+- Suit des conventions pour réduire la configuration répétitive.
+- Fournit des outils pour le routage, les données et les vues.
+- Vise un développement d’applications organisé et expressif.
+
+---
+
+<!-- _class: light -->
+
+## MVC : trois responsabilités
+
+- **Modèle :** données et règles métier.
+- **Vue :** présentation des informations.
+- **Contrôleur :** coordonne la requête, les données et la réponse.
+
+Laravel utilise notamment Eloquent et Blade pour ces composants.
+
+---
+
+## Cycle d’une requête Laravel
+
+```text
+Navigateur → Route → Middleware → Contrôleur
+                                  ↓
+                           Modèle / Eloquent
+                                  ↓
+                            Base de données
+                                  ↓
+Contrôleur → Vue Blade → Réponse HTTP
 ```
-Navigateur (Client)
-       │
-       ▼
-1. Routeur (routes/web.php)
-       │
-       ▼
-2. Middleware (Vérification CSRF, Authentification)
-       │
-       ▼
-3. Contrôleur (Exécute la méthode cible)
-       ├──► 4. Modèle Eloquent ──► Base de Données (SQL)
-       ▼
-5. Vue Blade (Injecte les données dans le HTML)
-       │
-       ▼
-Réponse HTTP envoyée au Navigateur
+
+La route dirige la requête ; le contrôleur prépare la réponse.
+
+---
+
+<!-- _class: light -->
+
+## Artisan : commandes du projet
+
+Artisan est l’interface en ligne de commande de Laravel.
+
+```bash
+php artisan make:model Article
+php artisan migrate
 ```
 
----
-
-## Les 4 Piliers Fondamentaux de Laravel
-
-1. **Artisan CLI** :
-   - Interface en ligne de commande pour tout automatiser.
-   - `php artisan make:model`, `php artisan migrate`, etc.
-2. **Eloquent ORM** :
-   - Manipulation intuitive de la base de données via la POO.
-3. **Moteur Blade** :
-   - Templates modulaires avec directives lisibles (`@if`, `@foreach`).
-4. **Migrations & Seeders** :
-   - Versionnement et initialisation structurée de la base de données.
+Les commandes disponibles dépendent de la version et du projet Laravel.
 
 ---
 
-## Eloquent ORM : L'Élégance du Code
+## Eloquent : interroger les données
 
-Fini les requêtes SQL complexes et les `mysqli_query` à répétition !
+Un modèle Eloquent permet d’interroger une table avec une API PHP.
 
-### En PHP procédural :
 ```php
-$sql = "SELECT * FROM users WHERE active = 1 ORDER BY created_at DESC";
-$result = mysqli_query($conn, $sql);
+$users = User::where('active', true)
+    ->latest()
+    ->get();
 ```
 
-### Avec Laravel Eloquent :
-```php
-$users = User::where('active', true)->latest()->get();
+Eloquent utilise des requêtes liées pour les valeurs, mais les entrées doivent toujours être validées.
+
+---
+
+<!-- _class: light -->
+
+## Blade : afficher une liste
+
+Blade fournit des directives pour afficher des données transmises à la vue.
+
+```blade
+@foreach ($articles as $article)
+    <article>
+        <h2>{{ $article->title }}</h2>
+        <p>{{ $article->description }}</p>
+    </article>
+@endforeach
 ```
 
-> Sécurisation automatique contre les **injections SQL** via des requêtes préparées systématiques.
+L’échappement de `{{ }}` aide à afficher le texte sans interpréter son HTML.
 
 ---
 
-## Le Moteur de Templates Blade
+## Migrations et seeders
 
-Blade combine rapidité d'exécution et syntaxe expressive :
-
-```html
-@extends('layouts.app')
-
-@section('content')
-    <h1>Catalogue de Formations</h1>
-
-    @forelse($formations as $formation)
-        <div class="card">
-            <h3>{{ $formation->titre }}</h3>
-            <p>{{ $formation->description }}</p>
-        </div>
-    @empty
-        <p>Aucune formation disponible.</p>
-    @endforelse
-@endsection
-```
+- Les migrations décrivent les changements de schéma de la base.
+- Elles permettent de partager ces changements via le code.
+- Les seeders insèrent des données d’exemple ou de test.
 
 ---
 
-## Les Avantages Majeurs de Laravel
+<!-- _class: light -->
 
-- **Sécurité intégrée par défaut** :
-  - Protection automatique contre les attaques **CSRF**, **XSS** et **SQLi**.
-- **Écosystème géant et actif** :
-  - Des millions d'utilisateurs, une documentation d'une clarté exemplaire.
-- **Rapidité de développement (Time-to-Market)** :
-  - Tout est fourni dès l'installation (auth, mail, files d'attente, cache).
-- **Maintenabilité et Travail Collaboratif** :
-  - Même structure pour tous les développeurs Laravel du monde.
+## L’écosystème Laravel
+
+- **Composer :** gestion des dépendances PHP.
+- **Routing et middleware :** traitement des requêtes HTTP.
+- **Eloquent et migrations :** accès et évolution des données.
+- **Blade :** rendu de vues côté serveur.
 
 ---
 
-## Un Écosystème Complet et Moderne
+<!-- _class: light -->
 
-Laravel s'adapte à tous les besoins d'architecture logicielle :
+## Outils de l’écosystème
 
-- **Laravel Breeze / Jetstream** : Systèmes complets d'authentification.
-- **Laravel Sanctum** : Sécurisation d'API REST pour applications mobiles / React / Vue.
-- **Laravel Livewire** : Interfaces réactives modernes en pur PHP.
-- **Laravel Inertia.js** : Le pont parfait entre Laravel et React / Vue.js.
+- **Breeze et Jetstream :** options de démarrage pour l’authentification.
+- **Sanctum :** authentification pour applications et API.
+- **Livewire :** interfaces interactives avec Laravel.
+- **Inertia :** relie Laravel à des frameworks frontend.
 
----
-
-## En Résumé
-
-1. Laravel est le **leader incontesté des frameworks PHP modernes**.
-2. Il applique le design pattern **MVC** pour une séparation propre du code.
-3. Il offre une **boîte à outils complète** (Artisan, Eloquent, Blade).
-4. Il garantit une **sécurité native** et une **productivité maximale**.
+Les fonctionnalités varient selon les versions et les besoins du projet.
 
 ---
 
-<!-- _class: lead -->
+## À retenir
 
-# Merci pour votre attention !
+- Laravel structure le développement d’applications web en PHP.
+- MVC sépare données, présentation et coordination.
+- Artisan, Eloquent, Blade et les migrations répondent à des besoins distincts.
 
-### Des questions ?
+---
 
-Retrouvez tous les exercices et guides dans le dossier :  
-`lab-01-comprendre-laravel/`
+<!-- _class: light -->
+
+## Pour continuer
+
+Le lab détaille les concepts et les exercices dans :
+
+- [`introduction.md`](./introduction.md)
+- [`definition.md`](./definition.md)
+- [`practical.md`](./practical.md)

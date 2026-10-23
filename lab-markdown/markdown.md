@@ -9,70 +9,17 @@ style: |
     background: #101827;
     color: #e8eef7;
     padding: 48px 64px;
-    font-size: 25px;
+    font-size: 28px;
   }
   section.light {
     background: #f5f8fc;
     color: #202b3c;
   }
-  h1, h2, h3 {
-    font-family: "Segoe UI", Arial, sans-serif;
-    color: #56c2d6;
-  }
-  section.light h1,
-  section.light h2,
-  section.light h3 {
-    color: #1769aa;
-  }
-  h1 {
-    font-size: 1.8em;
-  }
-  h2 {
-    font-size: 1.3em;
-  }
-  strong {
-    color: #73d6bd;
-  }
-  section.light strong {
-    color: #1769aa;
-  }
-  code {
-    background: #26354a;
-    color: #a9e5f0;
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-  section.light code {
-    background: #e5edf6;
-    color: #143b5d;
-  }
-  pre {
-    border: 1px solid #34455c;
-    border-radius: 8px;
-    font-size: 0.72em;
-  }
-  section.light pre {
-    border-color: #d2deeb;
-  }
-  a {
-    color: #73d6bd;
-  }
-  section.light a {
-    color: #1769aa;
-  }
-  table {
-    font-size: 0.78em;
-  }
-  th {
-    background: #26354a;
-  }
-  section.light th {
-    background: #e5edf6;
-  }
-  blockquote {
-    border-left: 5px solid #56c2d6;
-    padding-left: 1em;
-  }
+  h1, h2 { color: #56c2d6; }
+  section.light h1, section.light h2 { color: #1769aa; }
+  strong { color: #73d6bd; }
+  section.light strong { color: #1769aa; }
+  pre { font-size: 0.75em; }
 ---
 
 # Lab Markdown
@@ -91,14 +38,12 @@ style: |
 
 ## Introduction
 
-Markdown is a lightweight markup language for writing structured, readable text. It is commonly used for project documentation, notes, issues, and learning materials.
+Markdown is a lightweight syntax for writing structured text.
 
-In this lab, you will practice how to:
-
-- Organize content with headings and lists.
-- Add emphasis, links, quotes, and code.
+- Organize documents with headings and lists.
+- Add links, emphasis, quotations, and code.
 - Create tables, task lists, and images.
-- Use HTML when a Markdown feature is not enough.
+- Preview documents in their target platform.
 
 ---
 
@@ -106,144 +51,141 @@ In this lab, you will practice how to:
 
 ## Problems Encountered
 
-| Common pitfall | What can go wrong |
-| :--- | :--- |
-| Skipping heading levels | The document outline becomes confusing. |
-| Forgetting blank lines | Some renderers may combine nearby blocks unexpectedly. |
-| Using the wrong link or image path | The destination or image cannot be found. |
-| Mismatching code fences | Markdown inside the example is rendered instead of displayed. |
-| Assuming every renderer supports the same features | Task lists or embedded HTML may look different. |
+No specific blocking incident is reported.
+
+The lab covers common pitfalls: confusing heading levels, missing spacing, broken paths, mismatched code fences, and renderer differences.
 
 ---
 
 ## Solutions Implemented
 
-| Pitfall | Reliable practice |
-| :--- | :--- |
-| Unclear heading hierarchy | Start with `#` and add heading levels in order. |
-| Blocks run together | Leave a blank line between paragraphs, lists, and other blocks. |
-| Broken destinations | Use a descriptive label and verify the relative path or URL. |
-| Code example renders as content | Wrap examples in matching triple-backtick fences and name the language. |
-| Renderer differences | Preview the file in its target platform and check its Markdown support. |
+- Keep heading levels in a logical order.
+- Separate Markdown blocks with blank lines.
+- Verify links, image paths, and matching code fences.
+- Preview the document in its target renderer.
 
 ---
 
-## Headings and Paragraphs
+<!-- _class: light -->
 
-Use `#` characters to create headings. More `#` characters mean a lower-level heading. Leave a blank line between separate paragraphs.
+## Headings and paragraphs
+
+Use additional `#` characters for lower heading levels.
 
 ```markdown
 # Page title
 ## Section
 ### Subsection
 
-This is the first paragraph.
+First paragraph.
 
-This is a second paragraph.
+Second paragraph.
 ```
 
-Use headings in order to make the content easier to scan and navigate.
+Blank lines separate paragraphs and improve source readability.
+
+---
+
+## Lists
+
+Use hyphens for bullets and numbers for ordered steps.
+
+```markdown
+- Collect requirements
+- Write the content
+  - Review examples
+
+1. Create a file.
+2. Add sections.
+3. Preview the result.
+```
+
+Indent nested items consistently.
 
 ---
 
 <!-- _class: light -->
 
-## Lists
-
-Use `-`, `*`, or `+` for unordered lists. Numbered lists use a number followed by a period.
+## Emphasis, code, and links
 
 ```markdown
-- Collect the requirements
-- Write the content
-  - Review the examples
+**Bold** and _italic_
 
-1. Create a file named `README.md`.
-2. Add headings and content.
-3. Preview the rendered result.
-```
-
-Indent nested items consistently so their relationship stays clear.
-
----
-
-## Emphasis, Inline Code, and Links
-
-```markdown
-**Bold text**
-_Italic text_
-**_Bold and italic text_**
-
-Use `inline code` for a command, file name, or short value.
+Use `inline code` for short commands or filenames.
 
 [Markdown Guide](https://www.markdownguide.org/)
 ```
 
-Use link text that explains where the link goes instead of labels such as “click here.”
+Choose link text that describes its destination.
 
 ---
 
-<!-- _class: light -->
+## Quotes and code blocks
 
-## Quotes and Code Blocks
+Start a block quote with `>`. Fence multi-line examples with backticks and a language.
 
-Start a quote with `>`. Use triple backticks for a multi-line code block, and specify its language for clearer presentation.
-
-> Markdown keeps the source readable while adding useful structure.
+```markdown
+> A short quotation.
+```
 
 ```javascript
 const greeting = "Hello, Markdown!";
 console.log(greeting);
 ```
 
-Use inline code for short snippets and fenced blocks for examples that span multiple lines.
-
 ---
 
-## Tables and Task Lists
+<!-- _class: light -->
+
+## Tables and task lists
 
 ```markdown
 | Topic | Status |
 | :--- | :---: |
-| Headings | Done |
-| Links | In progress |
+| Links | Checked |
+| Preview | Pending |
 
 - [x] Create the document
 - [ ] Check the rendered preview
 ```
 
-The `x` marks a completed task. Task-list rendering depends on the Markdown platform.
+Task-list rendering depends on the Markdown platform.
 
 ---
 
-<!-- _class: light -->
+## Images and HTML
 
-## Images, HTML, and Separators
-
-Add an image with alternative text and a path to the image:
+Provide descriptive alternative text and a valid image path:
 
 ```markdown
 ![A descriptive caption](images/example.png)
 ```
 
-Some Markdown renderers allow HTML for features such as collapsible details:
-
-```html
-<details>
-  <summary>Show more</summary>
-  Additional information goes here.
-</details>
-```
-
-In Marp, a line containing three hyphens (`---`) separates slides. In ordinary Markdown documents, it can render as a horizontal rule.
+Some renderers support HTML for features such as collapsible details.
 
 ---
 
-## Practice Checklist
+<!-- _class: light -->
 
-- [ ] Create a Markdown file.
-- [ ] Add a title, sections, and paragraphs.
-- [ ] Include a list, a link, and a code example.
-- [ ] Add a table and a task list.
-- [ ] Preview the file and correct any broken paths or formatting.
+## Separators depend on context
 
-Markdown features can vary by platform, so always check the rendered document where it will be published.
+In Marp, a line containing three hyphens starts a new slide:
+
+```markdown
+## First slide
+
+---
+
+## Next slide
+```
+
+In ordinary Markdown, the same line may render as a horizontal rule.
+
+---
+
+## Practice checklist
+
+- Create a Markdown file with headings and paragraphs.
+- Add a list, link, code example, table, and task list.
+- Check image and link destinations.
+- Preview the document in its target platform.

@@ -1,186 +1,190 @@
 ---
 marp: true
-theme: gaia
-_class: lead
+theme: default
 paginate: true
-backgroundColor: #f8fafc
-color: #1e293b
-header: "Lab 02 : Comprendre l'Architecture MVC"
-footer: "by oussama bekkali"
+size: 16:9
+style: |
+  section {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 28px;
+    padding: 48px 64px;
+    background: #101827;
+    color: #e8eef7;
+  }
+  section.light {
+    background: #f5f8fc;
+    color: #202b3c;
+  }
+  h1, h2 { color: #56c2d6; }
+  section.light h1, section.light h2 { color: #1769aa; }
+  strong { color: #73d6bd; }
+  section.light strong { color: #1769aa; }
+  pre { font-size: 0.75em; }
 ---
 
-<style>
-section {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 24px;
-  padding: 40px;
-}
-h1 {
-  color: #0369a1;
-}
-h2 {
-  color: #0f172a;
-  border-bottom: 3px solid #0284c7;
-  padding-bottom: 8px;
-}
-code {
-  background-color: #f1f5f9;
-  color: #0369a1;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-.box {
-  background: white;
-  border-left: 5px solid #0284c7;
-  padding: 15px;
-  border-radius: 6px;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-}
-</style>
-
-# Lab 02 : Comprendre l'Architecture MVC
-### Découvrir le principe Model-View-Controller et le rôle de chaque composant
-
-by oussama bekkali
+# Lab 02 : Comprendre l’Architecture MVC
 
 ---
 
-## Problématique : Pourquoi Structurer une Application ?
+<!-- _class: light -->
 
-### Le constat du code non structuré :
-- Un fichier unique gère à la fois l'affichage, les requêtes SQL et la session.
-- Difficulté majeure pour travailler à plusieurs développeurs.
-- Risque constant de casser une fonctionnalité existante lors d'une modification.
+## Lab Plan
 
-### Le principe clé :
-- **Séparation des Préoccupations (*Separation of Concerns*)** : chaque brique logicielle a une responsabilité unique et isolée.
+1. Introduction
+2. Problems Encountered
+3. Solutions Implemented
 
 ---
 
-## Origine et Définition du Pattern MVC
+## Introduction
 
-- **Origine** : Conçu par Trygve Reenskaug à la fin des années 1970 (Xerox PARC).
-- **Principe** : Découper une application en trois composants majeurs :
-  - **M** : Le Modèle (*Model*)
-  - **V** : La Vue (*View*)
-  - **C** : Le Contrôleur (*Controller*)
+Ce lab explique l’architecture Model–View–Controller (MVC) et son usage dans Laravel.
 
-<div class="box">
-<b>Règle d'or :</b> La Vue ne parle jamais directement à la base de données, et le Modèle ne génère jamais d'interface graphique.
-</div>
+- Comprendre la séparation des responsabilités.
+- Identifier les rôles du modèle, de la vue et du contrôleur.
+- Suivre une requête HTTP dans une application Laravel.
 
 ---
 
-## Le Modèle (Model) : Le Cœur Métier
+<!-- _class: light -->
 
-- **Mission principale** :
-  - Représente les données applicatives et applique les règles de gestion métier.
-  - Interagit avec la base de données relationnelle via **Eloquent ORM**.
-- **Ce qu'il contient** :
-  - Définition des champs autorisés (`$fillable`).
-  - Relations entre entités (`hasMany`, `belongsTo`).
-  - Portées de requêtes (*Query Scopes*) pour filtrer facilement les données.
-- **Ce qu'il ne doit JAMAIS contenir** :
-  - Du code HTML, du CSS ou des redirections de pages web.
+## Problems Encountered
+
+Aucun incident technique de lab n’est rapporté.
+
+Le matériel décrit le code non structuré comme contexte : lorsqu’un fichier mélange SQL, logique métier et HTML, il devient difficile à modifier.
 
 ---
 
-## La Vue (View) : L'Interface Utilisateur
+## Solutions Implemented
 
-- **Mission principale** :
-  - Générer le balisage HTML final présenté à l'utilisateur dans son navigateur.
-  - Dans Laravel, les vues sont conçues avec le moteur de templates **Blade**.
-- **Ce qu'elle contient** :
-  - Structure HTML et styles CSS.
-  - Directives d'affichage simples : `@foreach`, `@if`, `{{ $variable }}`.
-- **Ce qu'elle ne doit JAMAIS contenir** :
-  - Des requêtes de base de données directes.
-  - De la logique financière, du hashage de mot de passe ou des calculs lourds.
+MVC répartit le travail entre des composants aux responsabilités distinctes :
+
+- Le modèle travaille avec les données et les règles métier.
+- La vue présente les données.
+- Le contrôleur coordonne la requête et la réponse.
 
 ---
 
-## Le Contrôleur (Controller) : Le Coordinateur
+<!-- _class: light -->
 
-- **Mission principale** :
-  - Servir de passerelle entre la requête HTTP, le Modèle et la Vue.
-- **Ses étapes de travail** :
-  1. Réceptionne la requête acheminée par le Routeur.
-  2. Valide les données soumises par l'utilisateur.
-  3. Interroge le Modèle approprié pour récupérer ou enregistrer des données.
-  4. Choisit la Vue adéquate et lui injecte les données.
-- **Règle essentielle** :
-  - Le contrôleur doit rester léger (*Thin Controller*) : il délègue l'effort métier au modèle.
+## Le modèle
+
+Le modèle représente les données du domaine et leur accès.
+
+- Dans Laravel, Eloquent relie les modèles aux tables.
+- Les modèles peuvent définir des relations entre entités.
+- Le modèle ne génère pas l’interface HTML.
 
 ---
 
-## Le Cycle d'une Requête HTTP en MVC
+## La vue
 
-```
-Client (Navigateur)
-       │
-       ▼ (1. Requête HTTP)
-Routeur (routes/web.php)
-       │
-       ▼ (2. Aiguillage)
-Contrôleur (app/Http/Controllers/)
-       │
-       ├──► (3. Demande de données) ──► Modèle (app/Models/)
-       │                                     │
-       │                                     ▼ (4. SQL)
-       │                              Base de Données
-       │                                     │
-       ◄── (5. Données retournées) ◄─────────┘
-       │
-       ▼ (6. Transmission des variables)
-Vue Blade (resources/views/)
-       │
-       ▼ (7. Rendu HTML)
-Client (Navigateur affiche la page)
+La vue présente les données à l’utilisateur.
+
+- Laravel utilise Blade pour les vues côté serveur.
+- Une vue contient du HTML et des directives de présentation.
+- Les données sont préparées avant le rendu.
+- Une vue n’interroge pas directement la base de données.
+
+---
+
+<!-- _class: light -->
+
+## Le contrôleur
+
+Le contrôleur reçoit une requête et coordonne son traitement.
+
+1. Reçoit les données après le routage.
+2. Valide les entrées selon le besoin.
+3. Demande les données au modèle.
+4. Retourne une vue ou une autre réponse.
+
+---
+
+## Cycle d’une requête MVC
+
+```text
+Navigateur → Route → Contrôleur
+                         ↓
+                      Modèle
+                         ↕
+                   Base de données
+                         ↓
+Contrôleur → Vue → Réponse HTTP → Navigateur
 ```
 
----
-
-## Organisation Concrète dans Laravel
-
-| Couche MVC | Emplacement dans le Projet | Exemple de Fichier |
-| :--- | :--- | :--- |
-| **Modèle** | `app/Models/` | `Task.php`, `User.php` |
-| **Contrôleur** | `app/Http/Controllers/` | `TaskController.php` |
-| **Vue** | `resources/views/` | `tasks/index.blade.php` |
-| **Routage** | `routes/web.php` | Déclare l'URL et cible le contrôleur |
+Le contrôleur coordonne ; chaque couche conserve son rôle.
 
 ---
 
-## Les Anti-Patterns à Éviter Absolument
+<!-- _class: light -->
 
-### 1. Le Contrôleur Obèse (*Fat Controller*)
-- Écrire 400 lignes dans une méthode de contrôleur.
-- **Solution** : Déplacer la logique dans le modèle ou dans des classes de services.
+## Où trouver les composants ?
 
-### 2. La Vue Intelligente (*Smart View*)
-- Faire des requêtes de type `User::all()` directement dans le template Blade.
-- **Solution** : Toujours préparer les données en amont dans le contrôleur.
-
-### 3. Le Modèle Anémique (*Anemic Model*)
-- Laisser le modèle vide et faire tous les calculs dans le contrôleur.
-- **Solution** : Enrichir le modèle avec des accesseurs et des scopes.
+| Composant | Emplacement Laravel |
+| :-- | :-- |
+| Modèle | `app/Models/` |
+| Contrôleur | `app/Http/Controllers/` |
+| Vue Blade | `resources/views/` |
+| Routes web | `routes/web.php` |
 
 ---
 
-## Synthèse : Les Bénéfices du Pattern MVC
+## Garder le contrôleur léger
 
-1. **Maintenabilité** : Code ordonné, lisible et standardisé à l'échelle mondiale.
-2. **Travail d'équipe** : Séparation nette entre travail back-end et intégration front-end.
-3. **Évolutivité** : Possibilité de faire évoluer la base de données sans toucher aux gabarits d'affichage.
-4. **Testabilité** : Chaque composant peut être vérifié unitairement de manière fiable.
+Un contrôleur trop chargé concentre des tâches sans rapport.
+
+- Extraire les règles métier complexes du contrôleur.
+- Éviter les longues méthodes de traitement.
+- Déléguer l’accès aux données aux modèles ou services appropriés.
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: light -->
 
-# Merci pour votre attention !
+## Garder la vue dédiée à la présentation
 
-### Des questions sur l'Architecture MVC ?
+Une vue doit afficher les données, pas gérer leur persistance.
 
-Tous les exercices pratiques et le code d'exemple sont disponibles dans le dossier :  
-`lab-02-architecture-mvc/`
+- Éviter les requêtes de base de données dans Blade.
+- Limiter les vues aux conditions et boucles d’affichage simples.
+- Préparer les données avant le rendu.
+
+---
+
+## Éviter un modèle anémique
+
+Un modèle vide peut laisser toute la logique métier dans les contrôleurs.
+
+- Placer les comportements liés aux données dans la couche appropriée.
+- Utiliser relations et scopes Eloquent lorsque cela convient.
+- Garder les responsabilités explicites.
+
+---
+
+<!-- _class: light -->
+
+## Bénéfices de MVC
+
+- Le code est plus simple à localiser et maintenir.
+- Les responsabilités facilitent le travail en parallèle.
+- Les composants peuvent être testés séparément.
+- Une modification d’une couche perturbe moins les autres.
+
+---
+
+## À retenir
+
+- Le modèle traite les données et règles du domaine.
+- La vue affiche les informations préparées.
+- Le contrôleur orchestre le traitement HTTP.
+- La séparation des responsabilités aide la maintenance.
+
+---
+
+<!-- _class: light -->
+
+## Pour continuer
+
+Les exercices d’application se trouvent dans [`practical.md`](./practical.md).

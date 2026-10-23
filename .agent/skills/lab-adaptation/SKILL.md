@@ -1,137 +1,227 @@
 ---
 name: lab-adaptation
-description: Adapt lab deliverables into structured, professional Marp presentations while preserving technical accuracy, the required slide structure, and practical implementation details.
+description: Create professional Marp presentations from lab deliverables. Prioritize readable slides, concise content, short code examples, and automatic content splitting to prevent overcrowding and text overflow.
 ---
 
-# Lab Adaptation Skill — Standard Marp Presentation Structure
+# Lab Adaptation Skill
 
 ## Purpose
 
-Adapt and realize any lab deliverable into a consistent, modern Marp presentation while strictly preserving the required structural flow and technical accuracy.
+Transform lab instructions, exercises, and implementation details into clear, professional Marp presentations.
 
-## Mandatory Slide Structure
+The priority is **readability, visual clarity, and technical accuracy**, not fitting as much information as possible onto each slide.
 
-Every lab presentation must be in Marp format (`marp: true`) and follow this sequential slide structure.
+Never create overcrowded slides. Use additional slides whenever necessary.
 
-### Slide 1: Title (Lab Name Only)
+## 1. Mandatory Slide Structure
 
-- **Content:** The title or name of the lab only.
-- **Rule:** Never include author or presenter names, student IDs, organization names, or extra subheadings unless explicitly requested.
+Every presentation must follow this order.
+
+### Slide 1: Title
+
+- Display only the lab name.
+- Do not include author names, student IDs, organization names, or extra subtitles unless explicitly requested.
 
 ### Slide 2: Lab Plan
 
-- **Content:** The agenda must follow this exact structure:
+Use this exact agenda:
 
-  ```markdown
-  <!-- _class: light -->
+<!-- _class: light -->
 
-  ## Lab Plan
+## Lab Plan
 
-  1. Introduction
-  2. Problems Encountered
-  3. Solutions Implemented
-  ```
+1. Introduction
+2. Problems Encountered
+3. Solutions Implemented
 
 ### Slide 3: Introduction
 
-- Briefly explain the purpose, scope, and objectives of the lab based on its topic.
-- List the key concepts, tools, technologies, or syntax practiced during the lab.
-- Keep the content concise and relevant to the lab requirements.
+- Explain the purpose of the lab.
+- State its main objective.
+- Introduce the essential technologies or concepts.
+- Keep the content short and relevant.
 
 ### Slide 4: Problems Encountered
 
-- Include concrete technical issues, obstacles, syntax pitfalls, or configuration challenges relevant to the lab.
-- Use actual problems encountered during the lab whenever that information is available.
-- Never invent problems or claim that an issue occurred without supporting information.
-- If no incidents occurred or no problems were reported, explicitly state that no blocking technical problems were encountered or reported.
+- Describe actual technical problems reported or supported by the available lab material.
+- Explain each problem briefly.
+- Never invent errors or claim that a problem occurred without evidence.
+- If no problems were reported, state that no blocking problems were reported.
 
 ### Slide 5: Solutions Implemented
 
-- Document the concrete solutions, fixes, and best practices applied to resolve problems or satisfy the lab requirements.
-- Connect each solution to its corresponding problem whenever applicable.
-- Ensure that the solutions are technically accurate and consistent with the implementation.
+- Present the actual solutions and fixes.
+- Connect solutions to their corresponding problems when applicable.
+- Keep explanations concise.
+- Do not invent implementation details.
 
-### Subsequent Slides: Practical Examples and Implementation
+### Subsequent Slides: Practical Implementation
 
-- Include practical code blocks, commands, syntax demonstrations, diagrams, or tables directly inside the Marp presentation.
-- Keep explanations concise and make examples easy to understand.
-- Use the actual technologies, commands, and code relevant to the lab.
-- Do not create separate exercise or companion Markdown files.
-- Integrate all practical deliverables and implementation examples into the designated lab presentation file.
-- Organize the slides in a logical sequence that follows the actual lab workflow.
-- Add slides as needed to explain the implementation without overcrowding individual slides.
+- Explain the implementation in a logical sequence.
+- Include commands, code, diagrams, tables, or screenshots when useful.
+- Give each slide one main idea or closely related group of ideas.
+- Split long implementations across multiple slides.
+- Preserve essential technical details without overcrowding the presentation.
 
-## Marp Presentation and Design Standards
+## 2. Strict Slide-Density Rules
 
-### 1. Always Use Marp
+These rules are mandatory and take priority over fitting content onto fewer slides.
 
-Every lab presentation must be a valid Marp Markdown file with YAML frontmatter.
+### Rule 1: One Main Idea Per Slide
 
-Use this structure as a starting point:
+Each slide must communicate one main idea.
 
-```yaml
+Do not combine unrelated concepts, multiple implementation steps, or several large code examples on the same slide.
+
+If a topic contains multiple steps, give each step its own slide when necessary.
+
+### Rule 2: Never Allow Text Overflow
+
+All text and code must fit comfortably within the slide boundaries.
+
+- Never allow text to extend beyond the slide.
+- Never allow code blocks to be cut off.
+- Never allow headings, tables, lists, or diagrams to overflow.
+- Leave sufficient space around all content.
+- Do not place content too close to the bottom or edges.
+- Account for the space occupied by headings, footers, and slide numbers.
+
+If content does not fit, split it into additional slides immediately.
+
+### Rule 3: Use Concise Text
+
+- Prefer short sentences and bullet points.
+- Explain only what is necessary to understand the current slide.
+- Remove repetition and unnecessary introductions.
+- Avoid long paragraphs.
+- Do not copy entire sections of documentation onto slides.
+- Preserve important facts, commands, implementation steps, and technical explanations.
+
+As a general guideline, aim for **3–5 concise bullet points per slide**, with approximately 6–12 words per bullet.
+
+These are guidelines, not limits that justify removing essential information. Use fewer bullets when the content is complex.
+
+### Rule 4: Control the Amount of Content
+
+Use these starting guidelines for a 16:9 presentation:
+
+- **Title slides:** One title only.
+- **Text slides:** Approximately 20–40 words.
+- **Explanation slides:** Approximately 30–50 words when the layout allows.
+- **Code slides:** One short, focused example.
+- **Table slides:** Only the rows and columns needed to explain the concept.
+
+These are approximate targets, not mandatory word counts.
+
+Never force content to fit these limits if a different layout is needed. Instead, split complex material into additional slides.
+
+### Rule 5: Never Shrink Text to Force Content to Fit
+
+Do not solve overcrowding by:
+
+- Reducing font sizes excessively.
+- Compressing line spacing.
+- Removing necessary margins.
+- Using extremely narrow content areas.
+- Filling every available part of the slide.
+- Hiding or clipping content.
+
+Use a readable font size appropriate for presentation viewing. As a starting point, use approximately 28–36 pt for body text and 36–48 pt for headings.
+
+If the content does not fit at a readable size, create another slide.
+
+### Rule 6: Split Long Code Examples
+
+Code must remain readable and understandable.
+
+- Include only the lines necessary to explain the current concept.
+- Never squeeze a complete large file onto one slide.
+- Divide long code into logical sections across multiple slides.
+- Keep related code together.
+- Include the filename when it helps identify the file being explained.
+- Explain the purpose of each code section briefly.
+- Preserve correct syntax and the essential implementation.
+
+For example, a Laravel lab may use separate slides for:
+
+1. Creating a route.
+2. Creating a controller.
+3. Passing data to a view.
+4. Displaying the data in Blade.
+
+Do not place all four implementations on one slide merely to reduce the slide count.
+
+### Rule 7: Split Large Lists and Tables
+
+- Divide long lists across multiple slides.
+- Split large tables into logical groups.
+- Repeat column headings when a table continues on another slide.
+- Avoid tiny text in tables.
+- Do not remove important rows merely to fit the slide.
+
+### Rule 8: Prefer More Slides Over Overcrowding
+
+There is no fixed maximum number of slides unless the user specifies one.
+
+A presentation with 15 readable slides is preferable to a presentation with 7 overcrowded slides.
+
+Do not sacrifice readability to minimize the slide count.
+
+## 3. Marp Configuration
+
+Every presentation must be a valid Marp Markdown file.
+
+Use this configuration as a starting point:
+
 ---
+
 marp: true
 theme: default
 paginate: true
 size: 16:9
-style: |
-  section {
-    font-family: Inter, system-ui, sans-serif;
-  }
 
-  h1, h2, h3 {
-    font-family: Anton, Impact, sans-serif;
-  }
-
-  section.light {
-    background: #ffffff;
-    color: #222222;
-  }
 ---
-```
 
-- Preserve the required `marp: true` setting.
-- Use the default Marp theme unless another theme is explicitly requested.
-- Enable slide numbers with `paginate: true`.
-- Use the 16:9 aspect ratio.
-- Keep custom CSS valid and compatible with Marp.
-- Avoid unnecessary styling that reduces readability.
+Use custom CSS only when it improves readability and remains compatible with Marp.
 
-### 2. Slide Separators
+### Slide Separators
 
-- Use `---` between every slide.
-- Ensure each slide has a clear purpose and heading where appropriate.
-- Do not confuse Marp slide separators with YAML frontmatter delimiters.
+- Use `---` between slides.
+- Keep the YAML frontmatter at the beginning of the file.
+- Do not confuse frontmatter delimiters with slide separators.
+- Ensure code fences are properly opened and closed.
 
-### 3. Alternating Visual Rhythm
+### Light and Dark Slides
 
-- Alternate between dark-background sections and light-background sections to maintain visual variety and readability.
-- Use `<!-- _class: light -->` for slides that should use the light style.
-- Apply the light class immediately after the slide separator and before the slide content.
-- Keep text and backgrounds high contrast.
-- Use consistent spacing, alignment, and visual hierarchy throughout the presentation.
+Alternate between dark and light slides when appropriate.
 
-### 4. Typography and Code
+Use:
 
-- Use clear headings with `Anton`, `Impact`, or a sans-serif fallback.
-- Use `Inter`, `system-ui`, or a suitable sans-serif font for body text.
-- Use readable font sizes and avoid overcrowding slides.
-- Always declare the programming language in fenced code blocks.
+<!-- _class: light -->
+
+immediately after a slide separator to apply the light class.
+
+Ensure that the selected theme or custom CSS actually defines the intended light appearance.
+
+Do not alternate backgrounds at the expense of readability or visual consistency.
+
+## 4. Typography and Visual Design
+
+- Use clear, readable headings.
+- Use a consistent sans-serif font for body text.
+- Maintain strong contrast between text and background.
+- Keep spacing and alignment consistent.
+- Use diagrams when they explain a process more clearly than text.
+- Use tables only when comparing related information.
+- Avoid decorative elements that compete with the content.
+- Keep layouts simple and professional.
+- Ensure slides remain readable on a projector or shared screen.
+
+### Code Formatting
+
+Always specify the language in fenced code blocks.
 
 Examples:
-
-```html
-<h1>Hello World</h1>
-```
-
-```javascript
-console.log("Hello World");
-```
-
-```bash
-php artisan serve
-```
 
 ```php
 <?php
@@ -139,82 +229,79 @@ php artisan serve
 echo "Hello World";
 ```
 
-- Use proper Markdown table alignment when tables are necessary.
-
-Example:
-
-```markdown
-| Feature | Description         | Status |
-| :------ | :------------------ | :----: |
-| Route   | Handles the request |  Done  |
-| View    | Displays the page   |  Done  |
+```bash
+php artisan serve
 ```
 
-- Keep code examples short enough to fit on slides.
-- If a code example is too long, divide it into logical parts across multiple slides without removing essential implementation details.
+```javascript
+console.log("Hello World");
+```
 
-### 5. Visual Quality
+Use syntax highlighting where supported.
 
-- Maintain a professional, consistent presentation design.
-- Use concise text instead of long paragraphs.
-- Prefer lists, diagrams, tables, and code examples when they improve understanding.
-- Use visual elements only when they support the lab's content.
-- Avoid unnecessary decorative elements, excessive colors, and inconsistent formatting.
-- Ensure that each slide remains readable when presented on a screen.
+## 5. Technical Accuracy
 
-## Operational Guidelines
+- Follow the provided lab instructions and actual implementation.
+- Preserve the specified technologies and workflow.
+- Use correct commands, filenames, and syntax.
+- Do not invent completed steps, errors, test results, or solutions.
+- Do not replace the requested technology without permission.
+- If information is missing, avoid presenting assumptions as facts.
+- Simplify explanations without changing the technical meaning.
 
-### 1. No Presenter Names
+## 6. Single Deliverable File
 
-Keep the cover slide focused strictly on the lab topic.
-
-Do not add student names, presenter names, student IDs, or organization names unless explicitly requested.
-
-### 2. Single Deliverable File
-
-- Keep all documentation, explanations, commands, and practical examples inside the designated lab presentation file.
+- Keep the complete presentation in the designated lab Markdown file.
 - Use a filename such as `lab-<topic>.md`.
-- Do not generate separate Markdown files for exercises or implementation examples.
-- Modify the existing lab file when one is already designated.
+- Integrate practical examples directly into the presentation.
+- Do not create separate exercise or companion Markdown files.
+- Modify the existing lab presentation when one is already designated.
 
-### 3. Preserve Technical Accuracy
+## 7. Git Operations
 
-- Follow the supplied lab instructions and actual implementation.
-- Do not invent completed steps, test results, errors, or solutions.
-- Preserve the correct commands, syntax, filenames, and technology choices.
-- If required information is missing, avoid presenting assumptions as facts.
-- Do not replace the requested technology with another technology without permission.
+- Do not ask unnecessary Git questions when the task is clear.
+- Do not perform redundant repository inspections.
+- Commit and push only when explicitly requested.
+- Never claim that a commit or push succeeded unless it actually did.
 
-### 4. Follow the Lab Workflow
+## 8. Mandatory Final Review
 
-- Organize content according to the actual sequence of work.
-- Explain what each important command, file, or code block does.
-- Keep explanations appropriate for the lab's learning objectives.
-- Include only content that supports the lab requirements or helps explain the implementation.
+Before finishing, review every slide individually.
 
-### 5. Git Operations
+### Structure
 
-- Do not ask unnecessary questions about Git when the task is already clear.
-- When explicitly asked to commit and push, inspect only what is necessary to perform the requested operation safely.
-- Avoid redundant inspection loops.
-- Never claim that changes were committed or pushed unless the operation actually succeeded.
-- Do not commit or push unless requested.
-
-## Final Validation Checklist
-
-Before finishing a lab presentation, verify the following:
-
-- [ ] The file uses valid Marp Markdown and contains `marp: true`.
 - [ ] Slide 1 contains only the lab name.
 - [ ] Slide 2 contains the required Lab Plan.
 - [ ] Slide 3 introduces the lab and its objectives.
-- [ ] Slide 4 describes reported problems accurately.
+- [ ] Slide 4 describes problems accurately.
 - [ ] Slide 5 explains the solutions implemented.
-- [ ] Subsequent slides contain practical examples and implementation details.
-- [ ] All practical deliverables are included in the designated presentation file.
-- [ ] Slide separators and code fences are correctly formatted.
-- [ ] Code blocks specify their programming languages.
-- [ ] The presentation follows the required visual and typography standards.
-- [ ] The content is technically accurate and relevant.
-- [ ] Slides are readable and not overcrowded.
-- [ ] No unrequested presenter information or unrelated content has been added.
+- [ ] Subsequent slides explain the practical implementation in order.
+
+### Readability and Overflow
+
+- [ ] Every slide communicates one main idea.
+- [ ] No slide contains excessive text.
+- [ ] No slide contains unnecessary repetition.
+- [ ] All text fits within the slide boundaries.
+- [ ] All code is readable and fully visible.
+- [ ] Tables and diagrams fit within their available space.
+- [ ] Font sizes remain appropriate for presentation viewing.
+- [ ] Content has been split into additional slides wherever necessary.
+- [ ] No content has been squeezed onto a slide merely to reduce the slide count.
+
+### Technical Quality
+
+- [ ] The file uses valid Marp Markdown.
+- [ ] YAML frontmatter and slide separators are correct.
+- [ ] Code blocks specify their languages.
+- [ ] Commands and code are technically accurate.
+- [ ] Essential implementation details are preserved.
+- [ ] No unsupported problems, results, or solutions have been invented.
+
+### Final Requirement
+
+**Never finish a presentation with known slide overflow or unreadable content.**
+
+When a slide is overcrowded, rewrite it more concisely or divide it into multiple slides.
+
+When possible, render the presentation and inspect the resulting slides. Fix any visible overflow, clipping, or readability problems before declaring the presentation complete.

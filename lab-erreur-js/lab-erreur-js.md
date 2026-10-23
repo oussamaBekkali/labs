@@ -3,211 +3,26 @@ marp: true
 theme: default
 paginate: true
 size: 16:9
-header: "Lab Erreur JS : Débogage JavaScript"
-footer: "by oussama bekkali"
 style: |
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
-
   section {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 23px;
-    padding: 42px 54px;
-    background-color: #0b1120;
-    color: #e2e8f0;
+    font-family: Inter, "Segoe UI", sans-serif;
+    background: #101827;
+    color: #e8eef7;
+    padding: 48px 64px;
+    font-size: 27px;
   }
-
   section.light {
-    background-color: #f8fafc;
-    color: #0f172a;
+    background: #f5f8fc;
+    color: #202b3c;
   }
-
-  section.lead {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  h1 {
-    font-size: 2.1em;
-    font-weight: 900;
-    color: #38bdf8;
-    margin-bottom: 0.3em;
-    letter-spacing: -0.02em;
-  }
-
-  section.light h1 {
-    color: #0284c7;
-  }
-
-  h2 {
-    font-size: 1.4em;
-    font-weight: 700;
-    color: #a5b4fc;
-    border-bottom: 2px solid #334155;
-    padding-bottom: 6px;
-    margin-top: 0;
-    margin-bottom: 0.45em;
-  }
-
-  section.light h2 {
-    color: #4338ca;
-    border-bottom: 2px solid #e2e8f0;
-  }
-
-  h3 {
-    font-size: 1.05em;
-    font-weight: 600;
-    color: #38bdf8;
-    margin-bottom: 0.25em;
-  }
-
-  section.light h3 {
-    color: #0369a1;
-  }
-
-  p, li {
-    line-height: 1.45;
-    color: #cbd5e1;
-  }
-
-  section.light p, section.light li {
-    color: #334155;
-  }
-
-  ul, ol {
-    margin-top: 0.25em;
-    margin-bottom: 0.45em;
-  }
-
-  li {
-    margin-bottom: 0.2em;
-  }
-
-  code {
-    font-family: 'JetBrains Mono', monospace;
-    background: #1e293b;
-    color: #38bdf8;
-    padding: 0.15em 0.35em;
-    border-radius: 5px;
-    font-size: 0.85em;
-  }
-
-  section.light code {
-    background: #e2e8f0;
-    color: #0369a1;
-  }
-
-  pre {
-    background: #0f172a !important;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 12px 16px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-  }
-
-  section.light pre {
-    background: #1e293b !important;
-    border: 1px solid #cbd5e1;
-  }
-
-  pre code {
-    background: transparent !important;
-    padding: 0;
-    color: #f1f5f9 !important;
-    font-size: 0.78em;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 0.4em;
-    margin-bottom: 0.4em;
-    font-size: 0.82em;
-  }
-
-  th {
-    background-color: #1e293b;
-    color: #38bdf8;
-    padding: 7px 10px;
-    font-weight: 700;
-    border-bottom: 2px solid #475569;
-    text-align: left;
-  }
-
-  section.light th {
-    background-color: #e2e8f0;
-    color: #0369a1;
-    border-bottom: 2px solid #cbd5e1;
-  }
-
-  td {
-    padding: 7px 10px;
-    border-bottom: 1px solid #334155;
-  }
-
-  section.light td {
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  .grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-
-  .card {
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 9px;
-    padding: 12px 16px;
-  }
-
-  section.light .card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.04);
-  }
-
-  .badge {
-    display: inline-block;
-    padding: 2px 7px;
-    border-radius: 5px;
-    font-size: 0.7em;
-    font-weight: 700;
-    text-transform: uppercase;
-    background: rgba(56, 189, 248, 0.15);
-    color: #38bdf8;
-    border: 1px solid rgba(56, 189, 248, 0.3);
-  }
-
-  .badge-danger {
-    background: rgba(239, 68, 68, 0.15);
-    color: #f87171;
-    border: 1px solid rgba(239, 68, 68, 0.3);
-  }
-
-  .badge-success {
-    background: rgba(34, 197, 94, 0.15);
-    color: #4ade80;
-    border: 1px solid rgba(34, 197, 94, 0.3);
-  }
-
-  footer {
-    font-size: 0.6em;
-    color: #64748b;
-  }
-
-  header {
-    font-size: 0.6em;
-    color: #64748b;
-  }
+  h1, h2 { color: #56c2d6; }
+  section.light h1, section.light h2 { color: #1769aa; }
+  strong { color: #73d6bd; }
+  section.light strong { color: #1769aa; }
+  pre { font-size: 0.76em; }
 ---
 
-<!-- _class: lead -->
-
-# Lab Erreur JS : Apprendre à lire et résoudre des erreurs JavaScript
+# Lab Erreur JS : Déboguer JavaScript
 
 ---
 
@@ -223,26 +38,11 @@ style: |
 
 ## Introduction
 
-### Contexte et Objectifs du Lab
-Ce lab a pour objectif de maîtriser l'art du débogage en environnement JavaScript moderne, en s'appuyant sur des cas réels survenus lors de la création d'une application de blog connectée à une API PHP.
+Ce lab étudie des erreurs JavaScript issues d’exemples d’une application de blog connectée à une API PHP.
 
-<div class="grid-2">
-<div class="card">
-
-### Compétences Visées
-- **Lire et décoder** les messages d'erreur et les traces de pile (*Call Stack*).
-- **Localiser rapidement** le fichier et la ligne exacte à l'origine du blocage.
-- **Utiliser les outils professionnels** : Chrome DevTools (Console, Network) et VS Code Debugger.
-- **Diagnostiquer les échanges API** et les réponses renvoyées par le backend PHP.
-</div>
-<div class="card">
-
-### Périmètre Technique
-- **Frontend** : JavaScript ES6+ asynchrone (`fetch`, `async/await`, promesses, manipulation DOM).
-- **Outils** : Google Chrome DevTools, Visual Studio Code (`launch.json`).
-- **Backend API** : Serveur PHP local renvoyant des réponses HTTP (JSON ou erreurs serveur).
-</div>
-</div>
+- Lire les messages et localiser leur origine.
+- Inspecter le code et les réponses réseau.
+- Corriger les causes liées aux données, modules et requêtes.
 
 ---
 
@@ -250,498 +50,297 @@ Ce lab a pour objectif de maîtriser l'art du débogage en environnement JavaScr
 
 ## Problems Encountered
 
-Cinq erreurs bloquantes majeures ont été identifiées lors de l'intégration du blog :
+Les exemples de code du lab couvrent cinq erreurs :
 
-1. **Tentative d'accès à une propriété inexistante :**
-   `TypeError: Cannot read properties of undefined (reading 'title')` lors de l'affichage d'un article avant la fin du chargement.
-
-2. **Appel d'une fonction hors de portée :**
-   `ReferenceError: fetchPosts is not defined` au clic sur le bouton de filtre par catégorie.
-
-3. **Échec de conversion de la réponse serveur en JSON :**
-   `SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON` suite à une erreur PHP renvoyant une page HTML au lieu de données JSON.
-
-4. **Interruption de la communication réseau :**
-   `TypeError: Failed to fetch` causée par un serveur local inactif ou un refus d'accès d'origine (*CORS*).
-
-5. **Itération sur une structure de données invalide :**
-   `TypeError: posts.map is not a function` provoqué par la réception d'un objet enveloppé ou paginé au lieu du tableau attendu.
+- Propriété lue sur une valeur absente.
+- Fonction inaccessible depuis un module JavaScript.
+- Réponse HTML interprétée comme du JSON.
+- Requête réseau bloquée ou serveur injoignable.
+- Réponse API différente du tableau attendu.
 
 ---
 
 ## Solutions Implemented
 
-Les actions correctives mises en oeuvre pour résoudre durablement chaque dysfonctionnement :
+Les exemples de correction montrent comment :
 
-| Erreur Identifiée | Cause Racine | Solution Appliquée |
-| :--- | :--- | :--- |
-| `TypeError (undefined)` | Propriété lue sur un objet non encore initialisé | Chaînage optionnel (`post?.author?.name`) et garde d'état |
-| `ReferenceError` | Fonction non exportée ou déclarée dans un bloc local | Réorganisation des portées et imports explicites ES6 |
-| `SyntaxError (< in JSON)` | Serveur PHP renvoyant une erreur 500 HTML | Vérification `response.ok` et correction du contrôleur PHP |
-| `Failed to fetch` | Serveur PHP éteint ou en-têtes CORS manquants | Démarrage du serveur et configuration `Access-Control-Allow-Origin` |
-| `posts.map is not a function` | Objet `{ data: [...] }` reçu au lieu d'un tableau direct | Contrôle `Array.isArray()` et extraction de `data` |
+- Vérifier les valeurs avant d’accéder à leurs propriétés.
+- Connecter les événements dans la portée du module.
+- Vérifier le statut HTTP avant de lire le JSON.
+- Diagnostiquer serveur et CORS avec les outils réseau.
+- Valider et extraire la structure des données reçues.
 
 ---
 
 <!-- _class: light -->
 
-## Méthodologie Universelle de Débogage
+## Une méthode de débogage
 
-Pour résoudre efficacement tout bogue JavaScript, une méthode structurée en quatre étapes s'impose :
-
-<div class="grid-2">
-<div class="card">
-
-### Étape 1 : Lire et Localiser
-- Identifier le **type de l'erreur** (`TypeError`, `ReferenceError`, `SyntaxError`).
-- Relever le **fichier source** et le **numéro de ligne** indiqués dans la console.
-- Remonter la pile d'appels (*Call Stack*) pour comprendre le chemin d'exécution.
-
-### Étape 2 : Inspecter l'État
-- Observer les valeurs réelles des variables à cet instant précis.
-- Utiliser la console interactive, des points d'arrêt (*Breakpoints*) ou `console.dir()`.
-</div>
-<div class="card">
-
-### Étape 3 : Émettre une Hypothèse et Corriger
-- Comparer la valeur observée à la valeur attendue par le code.
-- Vérifier si le problème provient du code JavaScript ou d'une réponse API tierce.
-- Appliquer un correctif ciblé et sécuriser les cas limites (*edge cases*).
-
-### Étape 4 : Valider et Tester
-- Rejouer le scénario nominal et les scénarios d'erreur (réseau coupé, données vides).
-- S'assurer de l'absence totale d'avertissements et d'erreurs résiduelles.
-</div>
-</div>
+1. Lire le type d’erreur et la ligne concernée.
+2. Inspecter les valeurs et l’état du programme.
+3. Formuler une hypothèse sur la cause.
+4. Corriger puis rejouer le scénario.
 
 ---
 
-## Outils de Débogage : VS Code et Google Chrome
+## Console et sources
 
-La combinaison de **VS Code** et du navigateur **Google Chrome** permet d'exécuter le code pas à pas sans surcharger les fichiers de `console.log`.
+Dans les DevTools du navigateur :
 
-<div class="grid-2">
-<div class="card">
+- La **Console** affiche les erreurs et les traces d’appel.
+- **Sources** permet d’ajouter des points d’arrêt.
+- Inspectez la pile d’appels et les variables au moment de l’erreur.
+- VS Code permet aussi un débogage pas à pas.
 
-### Configuration `.vscode/launch.json`
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Debug Blog Frontend",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}"
-    }
-  ]
+---
+
+<!-- _class: light -->
+
+## Diagnostiquer une requête API
+
+Dans l’onglet **Network**, sélectionnez la requête `fetch` :
+
+- Vérifiez l’URL et le statut HTTP.
+- Consultez les en-têtes et le contenu de la réponse.
+- Inspectez aussi Payload pour les données envoyées.
+- Une réponse HTML n’est pas un document JSON.
+
+---
+
+<!-- _class: light -->
+
+## Repères de statuts HTTP
+
+- `200` / `201` : réponse réussie / ressource créée.
+- `400` : requête invalide.
+- `404` : route ou ressource introuvable.
+- `422` : données refusées par la validation.
+- `500` : erreur interne du serveur.
+
+---
+
+## Erreur 1 : propriété absente
+
+Le code d’exemple lit l’auteur sans vérifier sa présence :
+
+```javascript
+document.getElementById("author-name").textContent =
+  article.author.name;
+```
+
+Si `author` est absent, l’accès à `.name` déclenche un `TypeError`.
+
+Voir [`error.js`](./code-examples/erreur-1/error.js).
+
+---
+
+<!-- _class: light -->
+
+## Corriger l’erreur 1
+
+Vérifier la réponse et prévoir une valeur de remplacement :
+
+```javascript
+if (!article || typeof article !== "object") return;
+
+document.getElementById("article-title").textContent =
+  article?.title ?? "Sans titre";
+document.getElementById("author-name").textContent =
+  article?.author?.name ?? "Auteur anonyme";
+```
+
+Voir la correction complète dans [`solution.js`](./code-examples/erreur-1/solution.js).
+
+---
+
+## Erreur 2 : fonction hors portée
+
+Un gestionnaire HTML inline ne voit pas automatiquement une fonction dans un module ES.
+
+```html
+<button onclick="fetchPosts('technologie')">
+  Voir Technologie
+</button>
+<script type="module" src="./js/app.js"></script>
+```
+
+Le module ne place pas `fetchPosts` sur `window`.
+
+Voir [`erreur.html`](./code-examples/erreur-2/erreur.html).
+
+---
+
+<!-- _class: light -->
+
+## Corriger l’erreur 2
+
+Associer l’événement depuis le module :
+
+```javascript
+document.querySelectorAll(".btn-category").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    fetchPosts(event.currentTarget.dataset.category);
+  });
+});
+```
+
+Cette approche évite de dépendre d’un appel inline global.
+
+Si un appel inline est indispensable, le module peut exposer la fonction via `window`.
+
+Voir [`solution.js`](./code-examples/erreur-2/solution.js).
+
+---
+
+## Erreur 3 : HTML lu comme JSON
+
+Une erreur PHP peut renvoyer une page HTML. `response.json()` échoue alors au parsing.
+
+```javascript
+const response = await fetch(
+  "http://localhost:8000/api/articles"
+);
+const articles = await response.json();
+```
+
+Le code de départ ne vérifie pas `response.ok`.
+
+Voir [`error.js`](./code-examples/erreur-3/error.js).
+
+---
+
+<!-- _class: light -->
+
+## Corriger l’erreur 3
+
+Vérifier le statut HTTP, le JSON et les erreurs dans un même flux :
+
+```javascript
+try {
+  const response = await fetch(url, {
+    headers: { Accept: "application/json" }
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  renderArticles(await response.json());
+} catch (error) {
+  console.error("Échec du chargement :", error.message);
+  showErrorMessageToUser("Impossible de charger les articles.");
 }
 ```
-</div>
-<div class="card">
 
-### Commandes d'Exécution Pas à Pas
-- **F5** : Démarrer ou Continuer l'exécution jusqu'au point d'arrêt suivant.
-- **F10 (Step Over)** : Passer à l'instruction suivante sans entrer dans la fonction.
-- **F11 (Step Into)** : Entrer à l'intérieur de la fonction appelée.
-- **Shift + F11 (Step Out)** : Sortir de la fonction en cours.
-- **Panneau Variables & Watch** : Suivre l'évolution des variables en temps réel.
-</div>
-</div>
+Inspecter aussi la réponse serveur et corriger sa cause, telle que la configuration de base de données.
+
+---
+
+## Erreur 4 : échec réseau ou CORS
+
+`Failed to fetch` peut signaler un serveur arrêté ou une origine non autorisée.
+
+- Frontend : `http://localhost:3000`
+- API : `http://localhost:8000`
+- Consultez Console et Network pour distinguer les causes.
+
+L’exemple initial d’envoi est dans [`error.js`](./code-examples/erreur-4/error.js).
 
 ---
 
 <!-- _class: light -->
 
-## Outils de Débogage : Google Chrome DevTools
+## Corriger l’erreur 4 : serveur
 
-Les outils pour développeurs de Chrome fournissent un diagnostic direct du runtime.
+Démarrer le serveur PHP dans le projet backend :
 
-<div class="grid-2">
-<div class="card">
+```bash
+php -S localhost:8000 -t public
+```
 
-### 1. La Console DevTools
-- **Filtres de sévérité** : `Errors` (rouge), `Warnings` (jaune), `Info` et `Verbose`.
-- **Traces interactives** : Chaque erreur offre un lien direct vers le fichier source incriminé.
-- **Option "Preserve log"** : Conserve les messages même lors d'une redirection ou d'un rechargement de page.
-- **Instruction `debugger;`** : Provoque un arrêt immédiat si les DevTools sont ouverts.
-</div>
-<div class="card">
+Pour Laravel, l’exemple fournit aussi :
 
-### 2. L'Onglet Sources
-- Pose de points d'arrêt classiques ou conditionnels directement sur les numéros de ligne.
-- **Scope View** : Examen des variables locales, de fermeture (*Closure*) et globales (*Window*).
-- **Call Stack** : Visualisation de l'empilement des fonctions menant à l'incident.
-</div>
-</div>
+```bash
+php artisan serve --port=8000
+```
+
+Voir [`start-server.sh`](./code-examples/erreur-4/start-server.sh).
 
 ---
 
-## Outils de Débogage : L'Onglet Network
+## Corriger l’erreur 4 : CORS
 
-L'onglet **Network** est l'outil indispensable dès qu'une application échange des données via `fetch()`.
+Autoriser explicitement l’origine frontend dans la réponse PHP :
 
-<div class="grid-2">
-<div class="card">
+```php
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, Accept");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 
-### Étapes d'Analyse d'un Appel API
-1. Filtrer l'affichage sur le type **Fetch/XHR**.
-2. Observer la colonne **Status** (code de réponse HTTP).
-3. Sélectionner la requête ciblée pour afficher ses détails :
-   - **Headers** : URL demandée, méthode HTTP (`GET`, `POST`), en-têtes envoyés et reçus.
-   - **Payload** : Données transmises au serveur dans le corps de la requête.
-   - **Preview / Response** : Données brutes renvoyées par le backend PHP.
-</div>
-<div class="card">
+if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+    http_response_code(200);
+    exit();
+}
+```
 
-### Détection Immédiate des Problèmes
-- **Ligne rouge / Status (failed)** : Le serveur est injoignable ou la requête a été bloquée par CORS.
-- **Status 404** : URL de l'API incorrecte ou route PHP introuvable.
-- **Status 500** : Crash interne côté serveur PHP.
-- **Type text/html au lieu de application/json** : Indice immédiat d'une erreur serveur inattendue.
-</div>
-</div>
+N’autorisez que les origines nécessaires. Voir [`cors.php`](./code-examples/erreur-4/cors.php).
 
 ---
 
 <!-- _class: light -->
 
-## Appels API et Serveur PHP : Comprendre la Réponse
+## Erreur 5 : `map` sur une réponse inattendue
 
-Lorsqu'une requête `fetch()` échoue, la cause racine se situe souvent sur le serveur backend PHP.
+L’API renvoie un objet avec les données dans `data`, pas un tableau direct :
 
-### Les Statuts HTTP Clés pour le Blog
-- **200 OK / 201 Created** : Requête traitée avec succès, le JSON attendu est disponible.
-- **400 Bad Request** : Données envoyées invalides ou incomplètes (ex: champ manquant dans le formulaire).
-- **404 Not Found** : La ressource ou la route `/api/articles` n'existe pas dans le script PHP.
-- **422 Unprocessable Content** : Échec de validation métier côté serveur PHP.
-- **500 Internal Server Error** : Exception PHP non interceptée, erreur SQL ou fichier de configuration absent.
+```json
+{
+  "status": "success",
+  "data": [{ "id": 1, "title": "Premier article" }],
+  "total": 1
+}
+```
 
-<div class="card" style="margin-top: 14px;">
-
-### Règle d'Or du Débogage Client-Serveur
-La méthode JavaScript `fetch()` **ne rejette pas** sa promesse en cas de code 404 ou 500. Elle considère que la communication réseau a eu lieu. C'est au code frontend de vérifier `response.ok` avant de traiter le contenu.
-</div>
+Appeler `posts.map()` sur l’objet provoque un `TypeError`.
 
 ---
 
-## Erreur 1 : `Cannot read properties of undefined`
+## Corriger l’erreur 5
 
-<span class="badge badge-danger">Problème de départ</span>
+Valider le tableau à la racine ou dans `data` avant l’affichage :
 
-### Situation Rencontrée
-Lors du chargement de la vue de détail d'un article de blog, la page reste partiellement vide et l'affichage se bloque brutalement.
+```javascript
+const result = await response.json();
+const postsList = Array.isArray(result)
+  ? result
+  : Array.isArray(result?.data) ? result.data : [];
 
-Le code initial est disponible dans [`erreur-1/error.js`](./code-examples/erreur-1/error.js). Si le champ `author` vaut `undefined` ou `null`, le moteur JavaScript interrompt immédiatement l'exécution.
+const html = postsList.map((post) => `
+  <article><h3>${post.title ?? "Titre indisponible"}</h3></article>
+`).join("");
+```
 
----
-
-<!-- _class: light -->
-
-## Erreur 1 : Lecture de l'Erreur et Outils
-
-<span class="badge">Lecture de l'erreur & Outils</span>
-
-### Message Affiché dans la Console
-> Uncaught TypeError: Cannot read properties of undefined (reading 'name')<br>
-> at displayArticleDetails (article.js:42:47)<br>
-> at async loadPage (article.js:12:3)
-
-<div class="grid-2">
-<div class="card">
-
-### Analyse des Informations Utiles
-- **Type** : `TypeError` (accès à une propriété sur une valeur primitive invalide).
-- **Propriété ciblée** : `'name'`.
-- **Cible réelle** : La variable précédant `.name`, c'est-à-dire `article.author`, vaut `undefined`.
-- **Localisation** : Fichier `article.js`, ligne 42, colonne 47.
-</div>
-<div class="card">
-
-### Outils Utilisés pour le Diagnostic
-- **Console DevTools** : Clic direct sur `article.js:42` pour ouvrir le code source.
-- **Sources / Breakpoints** : Placement d'un point d'arrêt ligne 41 pour inspecter l'objet `article` avant le plantage.
-- **Watch Expression** : Évaluation de `article.author` constatée à `undefined`.
-</div>
-</div>
-
----
-
-## Erreur 1 : Résolution et Vérification
-
-<span class="badge badge-success">Résolution</span>
-
-La solution complète, avec garde d'intégrité, chaînage optionnel et valeurs par défaut, est dans [`erreur-1/solution.js`](./code-examples/erreur-1/solution.js).
-
-### Vérification
-Recharger la page avec un article sans auteur assigné : le texte affiche *"Auteur anonyme"* sans générer aucune exception dans la console.
+La correction complète est dans [`solution.js`](./code-examples/erreur-5/solution.js).
 
 ---
 
 <!-- _class: light -->
 
-## Erreur 2 : `ReferenceError: fetchPosts is not defined`
+## Prévoir une liste vide
 
-<span class="badge badge-danger">Problème de départ</span>
+Informer l’utilisateur quand l’API ne renvoie aucun article :
 
-### Situation Rencontrée
-Dans l'interface du blog, l'utilisateur clique sur le bouton *"Filtrer par catégorie"*. Rien ne se passe à l'écran, et une erreur s'inscrit instantanément dans la console.
-
-Le code initial est séparé entre [`erreur.html`](./code-examples/erreur-2/erreur.html) et [`app.js`](./code-examples/erreur-2/app.js).
-
-Puisque `app.js` est chargé en tant que **module ES6** (`type="module"`), ses fonctions sont confinées à la portée du module et ne sont pas rattachées à l'objet global `window`.
-
----
-
-## Erreur 2 : Lecture de l'Erreur et Outils
-
-<span class="badge">Lecture de l'erreur & Outils</span>
-
-### Message Affiché dans la Console
-> Uncaught ReferenceError: fetchPosts is not defined<br>
-> at HTMLButtonElement.onclick (index.html:24:1)
-
-<div class="grid-2">
-<div class="card">
-
-### Analyse des Informations Utiles
-- **Type** : `ReferenceError` (tentative d'utilisation d'un identifiant inconnu dans la portée courante).
-- **Identifiant** : `fetchPosts`.
-- **Contexte** : Appelé depuis l'attribut inline `onclick` qui s'exécute dans le contexte global de la fenêtre (`window`).
-</div>
-<div class="card">
-
-### Outils Utilisés pour le Diagnostic
-- **Linter VS Code** : Alerte sur les fonctions non référencées globalement.
-- **Console DevTools** : Test de saisie `window.fetchPosts` renvoyant `undefined`.
-- **Panneau Scope dans Sources** : Confirmation que la fonction réside dans la portée *Module* et non *Global*.
-</div>
-</div>
+```javascript
+if (postsList.length === 0) {
+  document.querySelector("#feed").textContent =
+    "Aucun article publié pour le moment.";
+  return;
+}
+```
 
 ---
 
 <!-- _class: light -->
 
-## Erreur 2 : Résolution et Vérification
-
-<span class="badge badge-success">Résolution</span>
-
-Les solutions (écouteur `addEventListener` et alternative d'attachement à `window`) sont dans [`erreur-2/solution.js`](./code-examples/erreur-2/solution.js).
-
-### Vérification
-Cliquer sur chaque bouton de filtre : la liste des articles se met à jour et la console confirme l'appel avec le bon paramètre sans aucune erreur.
-
----
-
-## Erreur 3 : `SyntaxError: Unexpected token '<'`
-
-<span class="badge badge-danger">Problème de départ</span>
-
-### Situation Rencontrée
-L'application tente de charger la liste des derniers articles via `fetch("http://localhost:8000/api/articles")`. La méthode `response.json()` échoue immédiatement et le blog n'affiche aucun contenu.
-
-Le code initial est disponible dans [`erreur-3/error.js`](./code-examples/erreur-3/error.js).
-
-Le script frontend s'exécute sans vérifier l'état de la réponse, alors que le serveur PHP a rencontré une défaillance interne.
-
----
-
-<!-- _class: light -->
-
-## Erreur 3 : Lecture de l'Erreur et Outils
-
-<span class="badge">Lecture de l'erreur & Outils</span>
-
-### Message Affiché dans la Console
-> Uncaught (in promise) SyntaxError: Unexpected token '<', `<!DOCTYPE ...` is not valid JSON<br>
-> at loadArticles (articles.js:4:31)
-
-<div class="grid-2">
-<div class="card">
-
-### Analyse des Informations Utiles
-- **Type** : `SyntaxError` lors du parsing JSON.
-- **Caractère fautif** : Le symbole `<`.
-- **Origine logique** : Le contenu reçu débute par `<` (ex: `<!DOCTYPE html>` ou `<br /><b>Fatal error</b>`), indiquant une page HTML d'erreur et non du JSON.
-</div>
-<div class="card">
-
-### Outils et Démarche de Diagnostic
-1. Ouvrir l'onglet **Network** dans Chrome DevTools.
-2. Repérer la ligne `/api/articles` marquée en rouge avec le code **500**.
-3. Cliquer sur l'onglet **Response** : Découverte du message d'erreur PHP direct :
-   *`Fatal error: Uncaught PDOException: Access denied for user...`*
-</div>
-</div>
-
----
-
-## Erreur 3 : Résolution et Vérification
-
-<span class="badge badge-success">Résolution</span>
-
-La solution frontend (vérification HTTP, parsing protégé et message utilisateur) est dans [`erreur-3/solution.js`](./code-examples/erreur-3/solution.js).
-
-### Étape 2 : Corriger le Problème Backend PHP
-Corriger les identifiants de base de données dans le fichier `.env` ou la configuration PHP.
-
----
-
-<!-- _class: light -->
-
-## Erreur 4 : `TypeError: Failed to fetch` (Réseau / CORS)
-
-<span class="badge badge-danger">Problème de départ</span>
-
-### Situation Rencontrée
-Lors de l'envoi d'un nouvel article via un formulaire, le navigateur bloque la requête immédiatement sans renvoyer aucun code de statut HTTP chiffré.
-
-Le code initial est disponible dans [`erreur-4/error.js`](./code-examples/erreur-4/error.js).
-
-La requête ne parvient pas au contrôleur PHP ou le navigateur refuse de lire la réponse.
-
----
-
-## Erreur 4 : Lecture de l'Erreur et Outils
-
-<span class="badge">Lecture de l'erreur & Outils</span>
-
-### Message Affiché dans la Console
-> Uncaught (in promise) TypeError: Failed to fetch<br>
-> at publishArticle (editor.js:14:26)<br>
-> Access to fetch at `http://localhost:8000/api/articles` from origin `http://localhost:3000`<br>
-> has been blocked by CORS policy: No `Access-Control-Allow-Origin` header is present.
-
-<div class="grid-2">
-<div class="card">
-
-### Analyse des Informations
-- **TypeError: Failed to fetch** : Échec réseau de bas niveau.
-- Deux causes fréquentes :
-  - **Serveur inactif** : Le serveur PHP local n'est pas lancé (`ERR_CONNECTION_REFUSED`).
-  - **Violation CORS** : Le port frontend (3000) et le port backend (8000) diffèrent sans autorisation explicite.
-</div>
-<div class="card">
-
-### Outils Utilisés
-- **Console DevTools** : Examen de la notice d'interdiction CORS.
-- **Onglet Network** : Requête affichée avec le statut `(failed)` et méthode préalable `OPTIONS`.
-- **Terminal VS Code** : Contrôle de l'état du processus PHP.
-</div>
-</div>
-
----
-
-<!-- _class: light -->
-
-## Erreur 4 : Résolution et Vérification
-
-<span class="badge badge-success">Résolution</span>
-
-### Étape 1 : Démarrer le Serveur Backend PHP
-Dans le terminal du projet backend :
-Commandes de démarrage : [`erreur-4/start-server.sh`](./code-examples/erreur-4/start-server.sh).
-
-### Étape 2 : Configurer les En-têtes CORS Côté PHP
-Ajouter en tête du point d'entrée API (`index.php` ou middleware PHP) :
-Exemple de configuration PHP : [`erreur-4/cors.php`](./code-examples/erreur-4/cors.php).
-
----
-
-## Erreur 5 : `TypeError: posts.map is not a function`
-
-<span class="badge badge-danger">Problème de départ</span>
-
-### Situation Rencontrée
-La requête API s'est achevée avec un code `200 OK`, mais la fonction d'affichage des articles déclenche immédiatement une erreur fatale dans la console.
-
-Le code initial est disponible dans [`erreur-5/error.js`](./code-examples/erreur-5/error.js).
-
----
-
-<!-- _class: light -->
-
-## Erreur 5 : Lecture de l'Erreur et Outils
-
-<span class="badge">Lecture de l'erreur & Outils</span>
-
-### Message Affiché dans la Console
-> Uncaught (in promise) TypeError: posts.map is not a function<br>
-> at renderBlogFeed (feed.js:8:22)
-
-<div class="grid-2">
-<div class="card">
-
-### Analyse des Informations Utiles
-- **Type** : `TypeError`.
-- **Explication** : La méthode `.map()` n'existe que sur le prototype des objets `Array`.
-- **Dédution** : La variable `posts` est un `Object`, une chaîne, ou vaut `null`.
-</div>
-<div class="card">
-
-### Diagnostic dans DevTools
-- Saisie dans la console : `console.log(posts)` révèle une réponse contenant `status`, `data` et `total` (exemple dans [`erreur-5/response.json`](./code-examples/erreur-5/response.json)).
-- Les articles sont encapsulés dans la propriété `posts.data`.
-</div>
-</div>
-
----
-
-## Erreur 5 : Résolution et Vérification
-
-<span class="badge badge-success">Résolution</span>
-
-La solution complète (validation du type, extraction et affichage du résultat) est dans [`erreur-5/solution.js`](./code-examples/erreur-5/solution.js).
-
----
-
-<!-- _class: light -->
-
-## Matrice de Synthèse des 5 Erreurs
-
-| Erreur JavaScript | Nature | Outil Clé | Bonne Pratique de Résolution |
-| :--- | :--- | :--- | :--- |
-| `Cannot read properties of undefined` | Donnée manquante | Sources / Breakpoint | Chaînage optionnel `?.` et valeurs de repli `??` |
-| `ReferenceError: x is not defined` | Portée / Import | Console / Linter | Événements `addEventListener` et imports ES6 |
-| `SyntaxError: Unexpected token '<'` | Erreur serveur HTML | Network -> Response | Contrôler `response.ok` et déboguer le PHP |
-| `TypeError: Failed to fetch` | Réseau / CORS | Network -> Headers | Démarrer le serveur et autoriser les origines CORS |
-| `TypeError: x.map is not a function` | Structure inattendue | Console (`console.dir`) | Contrôler `Array.isArray()` et extraire `data` |
-
----
-
-## Bonnes Pratiques pour un Code Robuste
-
-Pour prévenir l'apparition de ces anomalies lors du développement d'un blog :
-
-<div class="grid-2">
-<div class="card">
-
-### 1. Robustesse des Appels Asynchrones
-- Toujours encadrer les requêtes `fetch` dans un bloc `try / catch`.
-- Vérifier `if (!response.ok)` avant toute tentative de lecture de données.
-- Spécifier systématiquement l'en-tête `Accept: application/json`.
-</div>
-<div class="card">
-
-### 2. Sécurisation des Données Reçues
-- Ne jamais supposer la présence d'une clé : utiliser `object?.property`.
-- Toujours valider les tableaux avec `Array.isArray(variable)`.
-- Prévoir des états visuels clairs dans le DOM : *Chargement*, *Succès*, *Erreur explicite*.
-</div>
-</div>
-
----
-
-<!-- _class: light -->
-
-## Checklist Finale de Validation du Débogage
-
-Avant de considérer une correction comme terminée et prête pour la production :
-
-- [ ] **Message d'erreur compris** : Le type et le sens exact de l'anomalie ont été identifiés.
-- [ ] **Cause racine isolée** : La défaillance a été distinguée entre bug de syntaxe, problème de portée, bug réseau ou erreur backend PHP.
-- [ ] **Outil approprié mobilisé** : Console pour les exceptions, Sources/VS Code pour le pas à pas, Network pour les flux HTTP.
-- [ ] **Correctif ciblé appliqué** : Le code est sécurisé contre les valeurs nulles, non définies ou structures inattendues.
-- [ ] **Console propre** : Aucun avertissement ni message rouge résiduel n'apparaît lors des tests.
-- [ ] **Cas limites testés** : L'application réagit proprement en cas de coupure réseau, d'erreur serveur ou de base de données vide.
+## À retenir
+
+- Le message d’erreur indique souvent le type et l’emplacement du problème.
+- Network aide à inspecter les statuts et les réponses API.
+- Vérifiez les données avant de les afficher ou de les transformer.
+- Testez aussi les cas d’échec, pas uniquement le scénario nominal.
