@@ -1,11 +1,13 @@
-name: Deploy Lab Erreur JS to GitHub Pages
+name: Deploy Marp labs to GitHub Pages
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'lab-erreur-js/**'
+      - 'README.md'
+      - 'lab-*/**'
+      - '.github/scripts/build-pages.cjs'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
@@ -15,41 +17,46 @@ permissions:
   id-token: write
 
 concurrency:
-  group: 'pages'
+  group: github-pages
   cancel-in-progress: false
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install build tools
+        run: >-
+          npm install --prefix "$RUNNER_TEMP/pages-tools"
+          --no-save --no-package-lock
+          @marp-team/marp-cli@4.2.3
+          gray-matter@4.0.3
+          marked@15.0.7
+
+      - name: Build and validate eligible presentations
+        env:
+          PAGES_TOOLS_DIR: ${{ runner.temp }}/pages-tools
+        run: node .github/scripts/build-pages.cjs
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    needs: build
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Build Marp presentation
-        run: |
-          mkdir -p dist
-          npx --yes @marp-team/marp-cli@latest --no-stdin "lab-erreur-js/lab-erreur-js.md" --html -o dist/index.html
-
-      - name: Validate build output
-        run: |
-          if [ ! -f "dist/index.html" ]; then
-            echo "Error: dist/index.html was not generated" >&2
-            exit 1
-          fi
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'dist'
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

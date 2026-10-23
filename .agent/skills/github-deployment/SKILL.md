@@ -1,185 +1,69 @@
-
 ---
 name: github-deployment
-description: Deploy individual Marp presentations, Markdown documents, or static HTML labs from a repository to GitHub Pages. Configure GitHub Actions, preserve the existing folder structure, and validate the published output. Use when the user requests hosting, publishing, or deployment automation.
+description: "Configure or update GitHub Pages deployment for Marp labs. Discover every lab Markdown file with valid YAML front matter containing marp: true, render all eligible presentations, and generate a homepage from the root README."
 ---
 
 # GitHub Deployment Skill
 
 ## Purpose
 
-Deploy individual labs from a repository containing multiple projects.
+Build and publish a GitHub Pages site containing the root README homepage and every valid Marp presentation in the repository's lab directories. Do not deploy ordinary Markdown documents or standalone HTML lab websites.
 
-Supported lab types:
-- Marp presentations written in Markdown.
-- Ordinary Markdown documents.
-- Static HTML websites using `index.html`, CSS, JavaScript, and assets.
+## 1. Inspect Before Changing
 
-Use GitHub Pages and GitHub Actions. Preserve the existing project structure.
+1. Inspect the repository structure, current branch, worktree, root `README.md`, and every file in `.github/workflows/`.
+2. Identify top-level lab directories (currently named `lab-*`) and inspect their Markdown front matter.
+3. Treat a Markdown file as eligible only when it has valid YAML front matter with the Boolean value `marp: true`.
+4. Exclude ordinary Markdown, malformed or non-Marp front matter, HTML-only labs, `.agent/`, `.git/`, and development-only files.
+5. Include every eligible presentation. If a lab contains multiple presentations, publish all of them and group them clearly on the homepage.
+6. Preserve existing unrelated workflows and source files.
 
-## 1. Analyze the Repository
+## 2. Build the Site
 
-Before making changes:
+Use `.github/workflows/deploy-pages.yml` and `.github/scripts/build-pages.cjs` for the GitHub Actions build.
 
-1. Inspect the repository structure.
-2. Identify the lab the user wants to deploy.
-3. Determine whether it is a Marp presentation, ordinary Markdown document, or HTML website.
-4. Inspect existing `.github/workflows/` files.
-5. Check the target lab's files and required assets.
-6. Ask which lab to deploy if the target is ambiguous.
+- Trigger deployment on pushes to the configured branch when the README, lab content, or build configuration changes, and support manual `workflow_dispatch`.
+- Scan each top-level `lab-*` directory on every build; do not hard-code presentation filenames.
+- Render every eligible presentation to HTML with the official Marp CLI.
+- Generate `dist/index.html` from the root `README.md` without modifying the README. Retain local links only when their target is included in the published site; link to all eligible presentations using repository-relative URLs.
+- Preserve local assets required by presentations and keep each presentation and its assets in a predictable, separate output path.
+- Publish only `dist/`: the generated homepage, rendered presentation HTML, and required presentation assets. Do not copy ordinary Markdown, source `index.html` websites, `.agent/`, `.git/`, or unrelated files.
+- Keep all generated and temporary files separate from source files. Fail the build if no valid presentations are found or an eligible presentation fails to render.
 
-Never assume the repository root is the target.
+## 3. GitHub Pages Workflow
 
-## 2. Deployment Strategy
+The workflow must:
 
-Prefer GitHub Actions for labs inside subfolders.
+1. Check out the repository and set up the required runtime.
+2. Install pinned Marp CLI and Markdown/front-matter parsing tools.
+3. Detect, render, and validate eligible presentations.
+4. Upload only the generated output with `actions/upload-pages-artifact`.
+5. Deploy with `actions/deploy-pages`.
 
-Create or update a workflow in:
-
-`.github/workflows/deploy-pages.yml`
-
-The workflow must publish only the selected lab, not the entire repository.
-
-Preserve all original lab folders and filenames. Use a temporary output directory for generated deployment files.
-
-Configure deployment to run:
-- When changes are pushed to the configured branch.
-- Manually through `workflow_dispatch`, when appropriate.
-
-Avoid duplicate workflows and inspect existing configuration before modifying it.
-
-## 3. Handle Each Lab Type
-
-### A. Marp Presentation
-
-Identify a Marp presentation using its front matter and Marp directives, such as `marp: true`.
-
-1. Locate the intended Markdown presentation.
-2. Install or invoke the Marp CLI through the workflow.
-3. Convert the presentation to HTML.
-4. Include the required presentation assets and themes.
-5. Publish the generated HTML as the website entry point.
-
-Use the official Marp CLI and follow its supported command-line options.
-
-If a lab contains several presentations, ask which one to publish.
-
-Do not publish the Markdown source as a substitute for the rendered presentation.
-
-### B. Ordinary Markdown Document
-
-For a Markdown document that is not a Marp presentation:
-
-1. Convert the Markdown into HTML.
-2. Include a simple, readable HTML document structure.
-3. Preserve headings, lists, links, code blocks, tables, and other supported Markdown formatting.
-4. Include basic styling for readability.
-5. Publish the resulting HTML as `index.html`.
-
-Use a reliable Markdown-to-HTML converter, such as Marked, and escape or sanitize untrusted HTML appropriately.
-
-Do not treat every `.md` file as a Marp presentation.
-
-If several Markdown files exist, identify the intended document rather than choosing arbitrarily.
-
-### C. HTML Website
-
-For a lab containing `index.html`:
-
-1. Copy the target website's deployable files to the output directory.
-2. Preserve the relative paths of CSS, JavaScript, images, fonts, and other required assets.
-3. Include only the files needed to run the website.
-4. Exclude unrelated labs, `.git/`, `.agent/`, and development-only files.
-5. Verify that `index.html` exists at the root of the deployment output.
-
-Do not rebuild or convert an existing HTML website unnecessarily.
+Use least-privilege permissions (`contents: read`, `pages: write`, and `id-token: write`), the `github-pages` environment, and deployment concurrency. Keep the existing configured branch unless the user requests a change.
 
 ## 4. GitHub Pages Compatibility
 
-The deployed site must work at a GitHub Pages project URL, which commonly has the form:
+- Use relative links so the site works at `https://<owner>.github.io/<repository>/`.
+- Verify homepage links point only to generated presentations or the homepage; external links may remain.
+- Resolve presentation asset paths relative to the rendered page and copy only required assets.
+- Never publish original Markdown as a substitute for rendered slides.
 
-`https://<owner>.github.io/<repository>/`
+## 5. Validation and Reporting
 
-Check for:
-- Absolute paths that break under the repository subpath.
-- Broken relative links and asset references.
-- Links between lab pages that point to unpublished content.
-- Missing images, stylesheets, scripts, or generated files.
-- Routes that depend on a server.
+Before reporting success:
 
-Do not assume the repository root is the website root.
+- Confirm each included source has valid YAML front matter with `marp: true` and has a non-empty rendered HTML output.
+- Confirm ordinary Markdown files and HTML-only labs are excluded.
+- Confirm `dist/index.html` is generated from the root README and lists only eligible labs/presentations.
+- Confirm output contains no source Markdown, unrelated HTML websites, `.agent/`, `.git/`, or development-only files.
+- Report included labs and their presentations, excluded labs with reasons, changed files, workflow triggers, and local validation results.
+- Distinguish a successful local build from a completed remote deployment. Do not claim deployment until the GitHub Actions run or published URL has been verified.
 
-## 5. Workflow Requirements
+## 6. Working Rules
 
-The GitHub Actions workflow must:
-
-1. Check out the repository.
-2. Set up any required runtime.
-3. Install or invoke the tools needed for the selected lab type.
-4. Generate the deployment output in a temporary directory.
-5. Validate the generated output.
-6. Upload the output using `actions/upload-pages-artifact`.
-7. Deploy it using `actions/deploy-pages`.
-
-Use stable versions of the official GitHub Pages actions and follow their documentation.
-
-Apply least-privilege permissions, including the permissions required for Pages deployment and OIDC authentication.
-
-Configure the `github-pages` environment and appropriate deployment concurrency.
-
-Do not invent build commands or modify unrelated project files.
-
-## 6. GitHub Pages Setup
-
-Explain the required GitHub settings:
-
-1. Open the repository on GitHub.
-2. Navigate to Settings → Pages.
-3. Set the publishing source to GitHub Actions.
-4. Push the workflow to the configured branch.
-5. Open the Actions tab and inspect the workflow run.
-6. Verify the deployment and open the published URL.
-
-Do not claim the site is published until its deployment status or URL has been verified.
-
-## 7. Validation and Troubleshooting
-
-Check:
-- The selected lab exists.
-- The correct file is selected.
-- Marp presentations render to HTML.
-- Ordinary Markdown documents convert to readable HTML.
-- HTML websites retain their required assets.
-- `index.html` exists at the deployment output root.
-- The workflow YAML is valid.
-- The workflow deploys only the selected lab.
-- Relative links work under the GitHub Pages URL.
-- No secrets or unrelated files are published.
-
-When deployment fails, inspect the actual error and fix the smallest confirmed cause.
-
-Clearly distinguish local checks from a successful remote deployment.
-
-## 8. Working Rules
-
-- Keep solutions simple and suitable for a student learning web development.
-- Preserve the existing repository and lab structure.
-- Explain each file created or modified.
-- Avoid unnecessary dependencies and configuration.
-- Never delete or relocate unrelated labs.
-- Never overwrite an existing workflow without inspecting it.
-- Never commit secrets or credentials.
+- Preserve original lab files and repository structure.
+- Inspect existing workflows before updating them; do not overwrite unrelated configuration.
+- Do not push changes, modify remote settings, or claim to have deployed without the user's confirmation and actual verification.
 - Ask before destructive changes or significant side effects.
-- Do not claim to have pushed code, changed GitHub settings, or deployed a site without actually doing so.
-
-## 9. Final Response
-
-After completing the configuration, report:
-
-1. Which lab was selected.
-2. Its detected type.
-3. The deployment method.
-4. The files created or modified.
-5. The required GitHub settings.
-6. The expected or verified deployment URL.
-7. Validation results and any remaining limitations.
+- Explain each created or modified file and disclose remaining limitations.
