@@ -8,6 +8,22 @@ Chaque laboratoire est concu pour offrir un cadre d'apprentissage rigoureux et p
 
 ---
 
+## Presentations Marp publiees
+
+Les presentations suivantes sont accessibles sur GitHub Pages apres la reussite du deploiement :
+
+- [Lab 01 - Comprendre Laravel](https://oussamaBekkali.github.io/labs/lab-01-comprendre-laravel/presentation.html)
+- [Lab 02 - Architecture MVC](https://oussamaBekkali.github.io/labs/lab-02-architecture-mvc/presentation.html)
+- [Lab Agent](https://oussamaBekkali.github.io/labs/lab-agent/presentation.html)
+- [Lab Erreur JS](https://oussamaBekkali.github.io/labs/lab-erreur-js/lab-erreur-js.html)
+- [Lab Git](https://oussamaBekkali.github.io/labs/lab-git/git.html)
+- [Lab Markdown](https://oussamaBekkali.github.io/labs/lab-markdown/markdown.html)
+- [Lab Marp](https://oussamaBekkali.github.io/labs/lab-marp/lab-marp.html)
+- [Lab Prompt Task](https://oussamaBekkali.github.io/labs/lab-prompt-task/prompt.html)
+- [Lab Starter](https://oussamaBekkali.github.io/labs/lab-starter/lab-starter.html)
+
+---
+
 ## Catalogue des Labs
 
 ### 1. Framework Laravel et Backend PHP
