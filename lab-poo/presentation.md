@@ -5,11 +5,11 @@ paginate: true
 size: 16:9
 style: |
   section {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 25px;
+    padding: 48px 64px;
     background: #101827;
     color: #e8eef7;
-    font-family: "Segoe UI", Arial, sans-serif;
-    font-size: 28px;
-    padding: 48px 64px;
   }
   section.light {
     background: #f5f8fc;
@@ -22,172 +22,188 @@ style: |
   pre { font-size: 0.72em; }
 ---
 
-# PHP OOP Lab
+# lab-poo
+
+**Student:** to be completed  
+**Instructor:** to be completed
+
+PHP Object-Oriented Programming: six practical concepts
 
 ---
 
 <!-- _class: light -->
 
-## Lab Plan
+## Presentation Plan
 
-1. Introduction
-2. Problems Encountered
-3. Solutions Implemented
-
----
-
-## Introduction
-
-Explore six object-oriented programming concepts in PHP.
-
-- Understand the role of each concept.
-- Test executable PHP code.
-- Adapt the examples to the actual technical project.
+1. Introduction & Technical Stack
+2. Definitions
+3. Problem
+4. Solution
 
 ---
 
-<!-- _class: light -->
+## Introduction & Technical Stack
 
-## Problems Encountered
+- PHP CLI for small, executable examples.
+- Laravel project in this repository requires PHP 8.3 or later.
+- Exercises are standalone and use no additional dependencies.
+- A fictional product catalog provides a consistent learning scenario.
 
-The stated need is to study PHP concepts that are not yet covered in the tutorials.
+### Quick Start
 
-Other concrete difficulties: **[To be completed by the student]**.
-
----
-
-## Solutions Implemented
-
-Proposed solution: **[To be completed by the student]**.
-
-The lab examples are learning materials; they do not describe a solution already integrated into the technical project.
-
----
-
-<!-- _class: light -->
-
-## Quick Start: Run PHP
-
-Check that PHP is available in the terminal:
+From the `lab-poo` directory:
 
 ```powershell
-php -v
-php .\hello.php
+php --version
+php hello-world.php
+php abstract-class\exemple.php
 ```
-
-The script prints `Hello, OOP in PHP!`.
 
 ---
 
-## Abstract Class: The CatalogItem Model
+<!-- _class: light -->
 
-An abstract class provides a shared base and cannot be instantiated directly.
+## Hello World
+
+```php
+<?php
+
+declare(strict_types=1);
+
+echo "Hello, PHP!\n";
+```
+
+Run it with `php hello-world.php`.
+
+---
+
+## Definitions — Abstract Classes and Interfaces
+
+- **Abstract class:** a base template that cannot be instantiated directly (`abstract class CatalogItem`).
+- **Interface:** a contract that lists methods a class must provide (`implements Identifiable`).
+- Use an abstract class for shared state or behavior; use an interface for a shared capability.
+
+---
+
+<!-- _class: light -->
+
+## Definitions — Inheritance and Polymorphism
+
+- **Inheritance:** a child class reuses or specializes a parent (`ProductRecord extends CatalogRecord`).
+- **Polymorphism:** the same method call can produce different behavior depending on the object (`$method->fee()`).
+- A shared parent type or interface lets code work with different implementations.
+
+---
+
+## Definitions — Encapsulation and Static Members
+
+- **Encapsulation:** protect object state and expose controlled operations (`private int $quantity`).
+- **Static property:** class-level state shared by the class (`private static int $nextNumber`).
+- **Static method:** called on the class rather than an object (`CatalogCode::next()`).
+
+---
+
+<!-- _class: light -->
+
+## Problem
+
+The lab brief identifies a learning gap: these six PHP OOP concepts have not yet been covered in the tutorials.
+
+Learners need to understand each concept and practice using it before applying it to a technical project.
+
+This is an educational need from the brief, not a claim about a production incident or the student's personal experience.
+
+---
+
+## Solution
+
+Practice the six concepts through short, runnable examples:
+
+- Abstract classes provide a reusable template.
+- Interfaces define a contract.
+- Inheritance reuses parent behavior.
+- Polymorphism allows varied behavior through a shared type.
+- Encapsulation protects object state.
+- Static members belong to the class.
+
+---
+
+<!-- _class: light -->
+
+## Demonstration — Abstract Class
 
 ```php
 abstract class CatalogItem
 {
-    abstract protected function details(): string;
+    abstract public function finalPrice(): float;
 }
 ```
 
-Concrete classes specialize the model.
+- The base type defines a required method.
+- Concrete item classes provide their own price calculation.
+- Run `php abstract-class\exemple.php`.
+
+---
+
+## Demonstration — Interface and Inheritance
+
+```php
+interface Identifiable
+{
+    public function identifier(): string;
+}
+
+final class ProductRecord extends CatalogRecord
+{
+    // Inherits shared catalog behavior.
+}
+```
+
+- An interface states a capability; inheritance reuses a parent class.
+- Run `php interfaces\exemple.php` and `php inheritance\exemple.php`.
 
 ---
 
 <!-- _class: light -->
 
-## Interface: The Describable Contract
-
-An interface declares a method that implementing classes must provide.
+## Demonstration — Polymorphism
 
 ```php
-interface Describable
+function printShippingFee(ShippingMethod $method): void
 {
-    public function description(): string;
+    echo $method->name() . ': ' . $method->fee();
 }
 ```
 
-In this example, `CatalogItem` implements this contract.
+The same function can accept standard shipping or store pickup and call the same methods.
 
 ---
 
-## Inheritance: Specialize the Model
-
-`Book` inherits the shared model and provides its own details.
+## Demonstration — Encapsulation and Static Members
 
 ```php
-class Book extends CatalogItem
-{
-    public function __construct(
-        string $name,
-        private string $author
-    ) {
-        parent::__construct($name);
-    }
-}
+$stock->remove(2);
+echo CatalogCode::next();
 ```
+
+- Encapsulation changes stock through a validating method.
+- A static method generates a class-level code without an object.
+- Run the `encapsulation` and `static-members` exercises.
 
 ---
 
 <!-- _class: light -->
 
-## Polymorphism: Same Call, Different Details
+## Practical Exercises
 
-`Book` and `Course` each provide their own implementation of `details()`.
-
-```php
-foreach ($items as $item) {
-    echo $item->description();
-}
-```
-
-The same method call produces a description suited to each article type.
-
----
-
-## Encapsulation: Protect the Name
-
-The property is private; outside code accesses it through a public method.
-
-```php
-class CatalogItem
-{
-    private string $name;
-
-    public function name(): string
-    {
-        return $this->name;
-    }
-}
-```
-
----
-
-<!-- _class: light -->
-
-## Static Members: Count Articles
-
-The counter belongs to the class, not to a particular object.
-
-```php
-private static int $createdCount = 0;
-
-public static function createdCount(): int
-{
-    return self::$createdCount;
-}
-```
-
-Call it with `CatalogItem::createdCount()`.
-
----
-
-## Run the Complete Example
-
-Run the standalone PHP mini-catalog:
+From `lab-poo`, run:
 
 ```powershell
-php .\oop_example.php
+php interfaces\exemple.php
+php inheritance\exemple.php
+php polymorphism\exemple.php
+php encapsulation\exemple.php
+php static-members\exemple.php
 ```
 
-Review the descriptions and article count, then adapt the domain to the technical project.
+Each example has a step-by-step tutorial and a follow-up challenge.
