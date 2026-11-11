@@ -13,6 +13,12 @@ The priority is **readability, visual clarity, and technical accuracy**, not fit
 
 Never create overcrowded slides. Use additional slides whenever necessary.
 
+## Presentation Language
+
+- Write all presentation content in English by default.
+- Use English even when the lab instructions or user's prompt are in another language.
+- Use another language only when the user explicitly requests it.
+
 ## 1. Mandatory Slide Structure
 
 Every presentation must follow this order.

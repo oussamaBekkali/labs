@@ -22,7 +22,7 @@ style: |
   pre { font-size: 0.76em; }
 ---
 
-# Lab Erreur JS : Déboguer JavaScript
+# JavaScript Error Lab
 
 ---
 
@@ -38,11 +38,11 @@ style: |
 
 ## Introduction
 
-Ce lab étudie des erreurs JavaScript issues d’exemples d’une application de blog connectée à une API PHP.
+This lab studies JavaScript errors from a blog app connected to a PHP API.
 
-- Lire les messages et localiser leur origine.
-- Inspecter le code et les réponses réseau.
-- Corriger les causes liées aux données, modules et requêtes.
+- Read the error message and locate the source.
+- Inspect code and network responses.
+- Fix issues caused by missing data, module scope, and requests.
 
 ---
 
@@ -50,131 +50,122 @@ Ce lab étudie des erreurs JavaScript issues d’exemples d’une application de
 
 ## Problems Encountered
 
-Les exemples de code du lab couvrent cinq erreurs :
+The examples cover five common problems:
 
-- Propriété lue sur une valeur absente.
-- Fonction inaccessible depuis un module JavaScript.
-- Réponse HTML interprétée comme du JSON.
-- Requête réseau bloquée ou serveur injoignable.
-- Réponse API différente du tableau attendu.
+- Reading a property on an undefined value.
+- Calling a function that is not available in a module.
+- Parsing HTML as JSON.
+- A blocked network request or unreachable server.
+- An unexpected API response structure.
 
 ---
 
 ## Solutions Implemented
 
-Les exemples de correction montrent comment :
+The fixes show how to:
 
-- Vérifier les valeurs avant d’accéder à leurs propriétés.
-- Connecter les événements dans la portée du module.
-- Vérifier le statut HTTP avant de lire le JSON.
-- Diagnostiquer serveur et CORS avec les outils réseau.
-- Valider et extraire la structure des données reçues.
-
----
-
-<!-- _class: light -->
-
-## Une méthode de débogage
-
-1. Lire le type d’erreur et la ligne concernée.
-2. Inspecter les valeurs et l’état du programme.
-3. Formuler une hypothèse sur la cause.
-4. Corriger puis rejouer le scénario.
-
----
-
-## Console et sources
-
-Dans les DevTools du navigateur :
-
-- La **Console** affiche les erreurs et les traces d’appel.
-- **Sources** permet d’ajouter des points d’arrêt.
-- Inspectez la pile d’appels et les variables au moment de l’erreur.
-- VS Code permet aussi un débogage pas à pas.
+- Check values before reading properties.
+- Attach listeners in the module scope.
+- Verify the HTTP status before parsing JSON.
+- Diagnose server and CORS issues with browser tools.
+- Validate the response structure before rendering it.
 
 ---
 
 <!-- _class: light -->
 
-## Diagnostiquer une requête API
+## Debugging method
 
-Dans l’onglet **Network**, sélectionnez la requête `fetch` :
+1. Read the error type and the affected line.
+2. Inspect values and runtime state.
+3. Form a hypothesis about the cause.
+4. Fix the issue and test again.
 
-- Vérifiez l’URL et le statut HTTP.
-- Consultez les en-têtes et le contenu de la réponse.
-- Inspectez aussi Payload pour les données envoyées.
-- Une réponse HTML n’est pas un document JSON.
+---
+
+## Console and Sources
+
+In browser DevTools:
+
+- **Console** shows messages and stack traces.
+- **Sources** lets you add breakpoints.
+- Check the call stack and variables at the failure point.
 
 ---
 
 <!-- _class: light -->
 
-## Repères de statuts HTTP
+## Inspect an API request
 
-- `200` / `201` : réponse réussie / ressource créée.
-- `400` : requête invalide.
-- `404` : route ou ressource introuvable.
-- `422` : données refusées par la validation.
-- `500` : erreur interne du serveur.
+In the **Network** tab, review the `fetch` request:
+
+- Check the URL and HTTP status.
+- Read the headers and response body.
+- Inspect the payload sent by the browser.
+- An HTML response is not JSON.
 
 ---
 
-## Erreur 1 : propriété absente
+## HTTP status basics
 
-Le code d’exemple lit l’auteur sans vérifier sa présence :
+- `200` / `201`: request succeeded / resource created.
+- `400`: invalid request.
+- `404`: route or resource not found.
+- `422`: validation rejected the payload.
+- `500`: server error.
+
+---
+
+## Error 1: missing property
+
+The code reads `author` without checking it exists:
 
 ```javascript
 document.getElementById("author-name").textContent =
   article.author.name;
 ```
 
-Si `author` est absent, l’accès à `.name` déclenche un `TypeError`.
-
-Voir [`error.js`](./code-examples/erreur-1/error.js).
+If `author` is missing, the access to `.name` throws a `TypeError`.
 
 ---
 
 <!-- _class: light -->
 
-## Corriger l’erreur 1
+## Fix error 1
 
-Vérifier la réponse et prévoir une valeur de remplacement :
+Check the response and provide a fallback value:
 
 ```javascript
 if (!article || typeof article !== "object") return;
 
 document.getElementById("article-title").textContent =
-  article?.title ?? "Sans titre";
+  article?.title ?? "Untitled";
 document.getElementById("author-name").textContent =
-  article?.author?.name ?? "Auteur anonyme";
+  article?.author?.name ?? "Anonymous author";
 ```
-
-Voir la correction complète dans [`solution.js`](./code-examples/erreur-1/solution.js).
 
 ---
 
-## Erreur 2 : fonction hors portée
+## Error 2: function out of scope
 
-Un gestionnaire HTML inline ne voit pas automatiquement une fonction dans un module ES.
+An inline HTML handler does not automatically see a function in an ES module.
 
 ```html
-<button onclick="fetchPosts('technologie')">
-  Voir Technologie
+<button onclick="fetchPosts('technology')">
+  Show Technology
 </button>
 <script type="module" src="./js/app.js"></script>
 ```
 
-Le module ne place pas `fetchPosts` sur `window`.
-
-Voir [`erreur.html`](./code-examples/erreur-2/erreur.html).
+The module does not attach `fetchPosts` to `window`.
 
 ---
 
 <!-- _class: light -->
 
-## Corriger l’erreur 2
+## Fix error 2
 
-Associer l’événement depuis le module :
+Attach the event listener inside the module:
 
 ```javascript
 document.querySelectorAll(".btn-category").forEach((button) => {
@@ -184,36 +175,28 @@ document.querySelectorAll(".btn-category").forEach((button) => {
 });
 ```
 
-Cette approche évite de dépendre d’un appel inline global.
-
-Si un appel inline est indispensable, le module peut exposer la fonction via `window`.
-
-Voir [`solution.js`](./code-examples/erreur-2/solution.js).
+This avoids relying on a global inline call.
 
 ---
 
-## Erreur 3 : HTML lu comme JSON
+## Error 3: HTML is read as JSON
 
-Une erreur PHP peut renvoyer une page HTML. `response.json()` échoue alors au parsing.
+A PHP error page can be returned instead of JSON. Then `response.json()` fails.
 
 ```javascript
-const response = await fetch(
-  "http://localhost:8000/api/articles"
-);
+const response = await fetch("http://localhost:8000/api/articles");
 const articles = await response.json();
 ```
 
-Le code de départ ne vérifie pas `response.ok`.
-
-Voir [`error.js`](./code-examples/erreur-3/error.js).
+The original version does not check `response.ok`.
 
 ---
 
 <!-- _class: light -->
 
-## Corriger l’erreur 3
+## Fix error 3
 
-Vérifier le statut HTTP, le JSON et les erreurs dans un même flux :
+Validate the status before parsing JSON:
 
 ```javascript
 try {
@@ -223,50 +206,44 @@ try {
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   renderArticles(await response.json());
 } catch (error) {
-  console.error("Échec du chargement :", error.message);
-  showErrorMessageToUser("Impossible de charger les articles.");
+  console.error("Load failed:", error.message);
+  showErrorMessageToUser("Unable to load articles.");
 }
 ```
 
-Inspecter aussi la réponse serveur et corriger sa cause, telle que la configuration de base de données.
-
 ---
 
-## Erreur 4 : échec réseau ou CORS
+## Error 4: network failure or CORS
 
-`Failed to fetch` peut signaler un serveur arrêté ou une origine non autorisée.
+`Failed to fetch` can mean a stopped server or an unauthorized origin.
 
-- Frontend : `http://localhost:3000`
-- API : `http://localhost:8000`
-- Consultez Console et Network pour distinguer les causes.
-
-L’exemple initial d’envoi est dans [`error.js`](./code-examples/erreur-4/error.js).
+- Frontend: `http://localhost:3000`
+- API: `http://localhost:8000`
+- Use the Console and Network tabs to distinguish causes.
 
 ---
 
 <!-- _class: light -->
 
-## Corriger l’erreur 4 : serveur
+## Fix error 4
 
-Démarrer le serveur PHP dans le projet backend :
+Start the PHP server before making requests:
 
 ```bash
 php -S localhost:8000 -t public
 ```
 
-Pour Laravel, l’exemple fournit aussi :
+For Laravel, the equivalent is:
 
 ```bash
 php artisan serve --port=8000
 ```
 
-Voir [`start-server.sh`](./code-examples/erreur-4/start-server.sh).
-
 ---
 
-## Corriger l’erreur 4 : CORS
+## CORS fix
 
-Autoriser explicitement l’origine frontend dans la réponse PHP :
+Allow the frontend origin explicitly in the PHP response:
 
 ```php
 header("Access-Control-Allow-Origin: http://localhost:3000");
@@ -279,31 +256,29 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 }
 ```
 
-N’autorisez que les origines nécessaires. Voir [`cors.php`](./code-examples/erreur-4/cors.php).
-
 ---
 
 <!-- _class: light -->
 
-## Erreur 5 : `map` sur une réponse inattendue
+## Error 5: unexpected response shape
 
-L’API renvoie un objet avec les données dans `data`, pas un tableau direct :
+The API can return an object with `data`, not a direct array.
 
 ```json
 {
   "status": "success",
-  "data": [{ "id": 1, "title": "Premier article" }],
+  "data": [{ "id": 1, "title": "First article" }],
   "total": 1
 }
 ```
 
-Appeler `posts.map()` sur l’objet provoque un `TypeError`.
+Calling `posts.map()` on that object throws a `TypeError`.
 
 ---
 
-## Corriger l’erreur 5
+## Fix error 5
 
-Valider le tableau à la racine ou dans `data` avant l’affichage :
+Validate the array at the root or inside `data`:
 
 ```javascript
 const result = await response.json();
@@ -312,35 +287,30 @@ const postsList = Array.isArray(result)
   : Array.isArray(result?.data) ? result.data : [];
 
 const html = postsList.map((post) => `
-  <article><h3>${post.title ?? "Titre indisponible"}</h3></article>
+  <article><h3>${post.title ?? "Title unavailable"}</h3></article>
 `).join("");
 ```
-
-La correction complète est dans [`solution.js`](./code-examples/erreur-5/solution.js).
 
 ---
 
 <!-- _class: light -->
 
-## Prévoir une liste vide
+## Handle empty results
 
-Informer l’utilisateur quand l’API ne renvoie aucun article :
+If the API returns no articles, show a clear fallback message:
 
 ```javascript
 if (postsList.length === 0) {
-  document.querySelector("#feed").textContent =
-    "Aucun article publié pour le moment.";
+  document.querySelector("#feed").textContent = "No articles published yet.";
   return;
 }
 ```
 
 ---
 
-<!-- _class: light -->
+## Key takeaways
 
-## À retenir
-
-- Le message d’erreur indique souvent le type et l’emplacement du problème.
-- Network aide à inspecter les statuts et les réponses API.
-- Vérifiez les données avant de les afficher ou de les transformer.
-- Testez aussi les cas d’échec, pas uniquement le scénario nominal.
+- Error messages often reveal both the cause and location.
+- Network tools help inspect status codes and payloads.
+- Validate data before rendering or transforming it.
+- Test failure cases as well as the happy path.

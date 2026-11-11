@@ -22,7 +22,7 @@ style: |
   pre { font-size: 0.75em; }
 ---
 
-# Lab 02 : Comprendre l’Architecture MVC
+# Lab 02: Understand the MVC Architecture
 
 ---
 
@@ -38,11 +38,11 @@ style: |
 
 ## Introduction
 
-Ce lab explique l’architecture Model–View–Controller (MVC) et son usage dans Laravel.
+This lab explains the Model–View–Controller (MVC) architecture and its use in Laravel.
 
-- Comprendre la séparation des responsabilités.
-- Identifier les rôles du modèle, de la vue et du contrôleur.
-- Suivre une requête HTTP dans une application Laravel.
+- Understand responsibility separation.
+- Identify the roles of the model, view, and controller.
+- Follow an HTTP request through a Laravel application.
 
 ---
 
@@ -50,141 +50,141 @@ Ce lab explique l’architecture Model–View–Controller (MVC) et son usage da
 
 ## Problems Encountered
 
-Aucun incident technique de lab n’est rapporté.
+No technical lab incident is reported.
 
-Le matériel décrit le code non structuré comme contexte : lorsqu’un fichier mélange SQL, logique métier et HTML, il devient difficile à modifier.
+The material describes unstructured code as the context: when one file mixes SQL, business logic, and HTML, it becomes harder to change.
 
 ---
 
 ## Solutions Implemented
 
-MVC répartit le travail entre des composants aux responsabilités distinctes :
+MVC splits work across components with distinct responsibilities:
 
-- Le modèle travaille avec les données et les règles métier.
-- La vue présente les données.
-- Le contrôleur coordonne la requête et la réponse.
-
----
-
-<!-- _class: light -->
-
-## Le modèle
-
-Le modèle représente les données du domaine et leur accès.
-
-- Dans Laravel, Eloquent relie les modèles aux tables.
-- Les modèles peuvent définir des relations entre entités.
-- Le modèle ne génère pas l’interface HTML.
-
----
-
-## La vue
-
-La vue présente les données à l’utilisateur.
-
-- Laravel utilise Blade pour les vues côté serveur.
-- Une vue contient du HTML et des directives de présentation.
-- Les données sont préparées avant le rendu.
-- Une vue n’interroge pas directement la base de données.
+- The model works with data and business rules.
+- The view presents the data.
+- The controller coordinates the request and response.
 
 ---
 
 <!-- _class: light -->
 
-## Le contrôleur
+## The model
 
-Le contrôleur reçoit une requête et coordonne son traitement.
+The model represents the domain data and its access.
 
-1. Reçoit les données après le routage.
-2. Valide les entrées selon le besoin.
-3. Demande les données au modèle.
-4. Retourne une vue ou une autre réponse.
+- In Laravel, Eloquent connects models to tables.
+- Models can define relationships between entities.
+- The model does not generate the HTML interface.
 
 ---
 
-## Cycle d’une requête MVC
+## The view
+
+The view presents data to the user.
+
+- Laravel uses Blade for server-side views.
+- A view contains HTML and presentation directives.
+- Data is prepared before rendering.
+- A view does not query the database directly.
+
+---
+
+<!-- _class: light -->
+
+## The controller
+
+The controller receives a request and coordinates its processing.
+
+1. Receives data after routing.
+2. Validates inputs as needed.
+3. Requests data from the model.
+4. Returns a view or another response.
+
+---
+
+## MVC request flow
 
 ```text
-Navigateur → Route → Contrôleur
+Browser → Route → Controller
                          ↓
-                      Modèle
+                      Model
                          ↕
-                   Base de données
+                   Database
                          ↓
-Contrôleur → Vue → Réponse HTTP → Navigateur
+Controller → View → HTTP Response → Browser
 ```
 
-Le contrôleur coordonne ; chaque couche conserve son rôle.
+The controller coordinates the flow; each layer keeps its role.
 
 ---
 
 <!-- _class: light -->
 
-## Où trouver les composants ?
+## Where to find the components
 
-| Composant | Emplacement Laravel |
+| Component | Laravel location |
 | :-- | :-- |
-| Modèle | `app/Models/` |
-| Contrôleur | `app/Http/Controllers/` |
-| Vue Blade | `resources/views/` |
-| Routes web | `routes/web.php` |
+| Model | `app/Models/` |
+| Controller | `app/Http/Controllers/` |
+| Blade view | `resources/views/` |
+| Web routes | `routes/web.php` |
 
 ---
 
-## Garder le contrôleur léger
+## Keep the controller light
 
-Un contrôleur trop chargé concentre des tâches sans rapport.
+A controller that does too much centralizes unrelated tasks.
 
-- Extraire les règles métier complexes du contrôleur.
-- Éviter les longues méthodes de traitement.
-- Déléguer l’accès aux données aux modèles ou services appropriés.
-
----
-
-<!-- _class: light -->
-
-## Garder la vue dédiée à la présentation
-
-Une vue doit afficher les données, pas gérer leur persistance.
-
-- Éviter les requêtes de base de données dans Blade.
-- Limiter les vues aux conditions et boucles d’affichage simples.
-- Préparer les données avant le rendu.
-
----
-
-## Éviter un modèle anémique
-
-Un modèle vide peut laisser toute la logique métier dans les contrôleurs.
-
-- Placer les comportements liés aux données dans la couche appropriée.
-- Utiliser relations et scopes Eloquent lorsque cela convient.
-- Garder les responsabilités explicites.
+- Extract complex business rules from the controller.
+- Avoid long processing methods.
+- Delegate data access to the appropriate models or services.
 
 ---
 
 <!-- _class: light -->
 
-## Bénéfices de MVC
+## Keep the view focused on presentation
 
-- Le code est plus simple à localiser et maintenir.
-- Les responsabilités facilitent le travail en parallèle.
-- Les composants peuvent être testés séparément.
-- Une modification d’une couche perturbe moins les autres.
+A view should display data, not manage persistence.
+
+- Avoid database queries in Blade.
+- Keep views limited to simple conditions and loops.
+- Prepare the data before rendering.
 
 ---
 
-## À retenir
+## Avoid an anemic model
 
-- Le modèle traite les données et règles du domaine.
-- La vue affiche les informations préparées.
-- Le contrôleur orchestre le traitement HTTP.
-- La séparation des responsabilités aide la maintenance.
+An empty model can leave all business logic in the controllers.
+
+- Place data-related behaviors in the appropriate layer.
+- Use Eloquent relationships and scopes when appropriate.
+- Keep responsibilities explicit.
 
 ---
 
 <!-- _class: light -->
 
-## Pour continuer
+## Benefits of MVC
 
-Les exercices d’application se trouvent dans [`practical.md`](./practical.md).
+- Code is easier to locate and maintain.
+- Responsibilities make parallel work easier.
+- Components can be tested separately.
+- A change in one layer affects the others less.
+
+---
+
+## Key takeaways
+
+- The model handles domain data and rules.
+- The view displays prepared information.
+- The controller orchestrates HTTP processing.
+- Separation of responsibilities improves maintainability.
+
+---
+
+<!-- _class: light -->
+
+## Next steps
+
+The practical exercises are in [`practical.md`](./practical.md).

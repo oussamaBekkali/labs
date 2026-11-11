@@ -152,7 +152,7 @@ Resolve any reported conflicts before continuing.
 
 ---
 
-## À retenir
+## Key takeaways
 
 - Git tracks project history on your computer.
 - GitHub hosts repositories and supports collaboration.

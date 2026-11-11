@@ -22,7 +22,7 @@ style: |
   pre { font-size: 0.75em; }
 ---
 
-# Découverte de Marp
+# Discover Marp
 
 ---
 
@@ -38,13 +38,13 @@ style: |
 
 ## Introduction
 
-Marp transforme des fichiers Markdown en présentations.
+Marp turns Markdown files into presentations.
 
-- Structurer les diapositives et leurs titres.
-- Ajouter du code, des images et des styles.
-- Prévisualiser puis exporter le diaporama.
+- Structure slides and headings.
+- Add code, images, and styles.
+- Preview and export the deck.
 
-Outils : Marp Core, Marp CLI et l’extension Marp pour VS Code.
+Tools: Marp Core, Marp CLI, and the Marp extension for VS Code.
 
 ---
 
@@ -52,35 +52,35 @@ Outils : Marp Core, Marp CLI et l’extension Marp pour VS Code.
 
 ## Problems Encountered
 
-Aucun incident bloquant n’est rapporté pour ce lab.
+No blocking incident is reported for this lab.
 
-Le matériel présente des points de vigilance courants : contenu trop dense, images mal dimensionnées, directives mal comprises et contraste insuffisant.
+The material highlights common risks: dense content, poorly sized images, misunderstood directives, and weak contrast.
 
 ---
 
 ## Solutions Implemented
 
-Le lab enseigne des pratiques pour maîtriser ces contraintes :
+The lab teaches practical safeguards:
 
-- Fractionner les idées sur plusieurs diapositives.
-- Dimensionner les images selon leur usage.
-- Distinguer les directives globales et locales.
-- Vérifier contraste et rendu avant diffusion.
+- Split ideas across multiple slides.
+- Scale images to their purpose.
+- Separate global and local directives.
+- Check contrast and rendering before sharing.
 
 ---
 
 <!-- _class: light -->
 
-## Anatomie d’un fichier Marp
+## Marp file anatomy
 
-- Le front matter YAML configure le diaporama.
-- `marp: true` active le rendu Marp.
-- `---` sépare les diapositives.
-- Le contenu des slides reste du Markdown.
+- YAML front matter configures the deck.
+- `marp: true` enables rendering.
+- `---` separates slides.
+- Slide content stays in Markdown.
 
 ---
 
-## Configurer le front matter
+## Configure the front matter
 
 ```yaml
 ---
@@ -91,109 +91,109 @@ size: 16:9
 ---
 ```
 
-Ajoutez un thème, la pagination et le format souhaités.
+Add a theme, pagination, and desired formatting.
 
 ---
 
 <!-- _class: light -->
 
-## Séparer les diapositives
+## Separate slides
 
-Une ligne `---` démarre une nouvelle diapositive :
+A `---` line starts a new slide:
 
 ```markdown
-## Première idée
+## First idea
 
-Contenu de la première slide.
+Content of the first slide.
 
 ---
 
-## Idée suivante
+## Next idea
 ```
 
-Un séparateur net facilite aussi la lecture du fichier source.
+Clear separators also improve source readability.
 
 ---
 
-## Structurer les titres
+## Structure titles
 
 ```markdown
-# Titre principal
-## Titre de diapositive
-### Sous-section
+# Main title
+## Slide title
+### Subsection
 ```
 
-Gardez une hiérarchie cohérente et un titre clair par slide.
+Keep a consistent hierarchy and one clear idea per slide.
 
 ---
 
 <!-- _class: light -->
 
-## Garder les listes concises
+## Keep lists concise
 
-- Utilisez les puces pour regrouper des éléments liés.
-- Utilisez une liste numérotée pour les étapes.
-- Scindez une longue liste plutôt que de réduire le texte.
-- Limitez chaque slide à une idée principale.
+- Use bullets for related points.
+- Use numbered lists for steps.
+- Split long lists rather than shrinking text.
+- Limit each slide to one main idea.
 
 ---
 
-## Ajouter du code
+## Add code
 
-Indiquez le langage pour activer la coloration syntaxique.
+Specify the language for syntax highlighting.
 
 ```javascript
-const message = "Bonjour";
+const message = "Hello";
 console.log(message);
 ```
 
-Montrez uniquement les lignes utiles à l’explication.
+Show only the lines needed for the explanation.
 
 ---
 
 <!-- _class: light -->
 
-## Dimensionner une image
+## Size images correctly
 
-Marp accepte des attributs de taille dans la syntaxe d’image :
+Marp accepts image sizing attributes:
 
 ```markdown
 ![w:450px](images/schema.png)
 ![h:300px](images/capture.png)
 ```
 
-Adaptez la dimension au contenu et à l’espace de la slide.
+Adjust image size to the available slide space.
 
 ---
 
-## Utiliser une image de fond
+## Use a background image
 
 ```markdown
 ![bg](images/background.jpg)
 ```
 
-Une image peut aussi occuper une partie de la diapositive :
+A background can also occupy part of the slide:
 
 ```markdown
 ![bg right:35%](images/illustration.jpg)
 ```
 
-Vérifiez que le texte reste lisible sur le fond choisi.
+Keep text readable over the chosen background.
 
 ---
 
 <!-- _class: light -->
 
-## Directives globales et locales
+## Global and local directives
 
-Les directives globales définissent des valeurs pour les slides suivantes :
+Global directives set values for following slides:
 
 ```markdown
 <!-- paginate: true -->
 <!-- theme: gaia -->
 ```
 
-Une directive préfixée `_` s’applique à la diapositive courante :
+A directive prefixed with `_` applies to the current slide:
 
 ```markdown
 <!-- _class: invert -->
@@ -201,9 +201,9 @@ Une directive préfixée `_` s’applique à la diapositive courante :
 
 ---
 
-## Personnaliser un thème
+## Customize a theme
 
-Le front matter accepte des règles CSS pour la présentation.
+The front matter can include CSS rules.
 
 ```yaml
 style: |
@@ -215,31 +215,40 @@ style: |
   }
 ```
 
-Utilisez peu de styles et vérifiez leur contraste.
+Use a few styles and keep contrast strong.
 
 ---
+
+## Key takeaway
+
+Marp works best when the file is simple, structured, and readable.
+
+- Clear headings
+- Short lists
+- Focused code blocks
+- Controlled styling
 
 <!-- _class: light -->
 
-## Prévisualiser dans VS Code
+## Preview in VS Code
 
-L’extension **Marp for VS Code** permet d’éditer le Markdown et de prévisualiser les slides.
+The **Marp for VS Code** extension lets you edit Markdown and preview slides.
 
-- Vérifiez le rendu après les changements.
-- Repérez les débordements et le texte trop dense.
-- Contrôlez les images et leur chemin relatif.
+- Check the rendering after changes.
+- Detect overflow and overly dense text.
+- Verify image paths and relative references.
 
 ---
 
-## Exporter avec Marp CLI
+## Export with Marp CLI
 
-Installer l’outil si nécessaire :
+Install the tool if needed:
 
 ```bash
 npm install -g @marp-team/marp-cli
 ```
 
-Exporter en HTML, PDF ou PowerPoint :
+Export to HTML, PDF, or PowerPoint:
 
 ```bash
 marp lab-marp.md --html -o lab-marp.html
@@ -251,21 +260,21 @@ marp lab-marp.md --pptx -o lab-marp.pptx
 
 <!-- _class: light -->
 
-## Prévisualiser avec rechargement
+## Live preview with reload
 
-Pour servir les fichiers du dossier et surveiller les changements :
+Serve the folder and watch for source changes:
 
 ```bash
 marp -s -w .
 ```
 
-Le CLI régénère l’aperçu lorsque les sources sont modifiées.
+The CLI refreshes the preview when the source changes.
 
 ---
 
-## À retenir
+## Key takeaway
 
-- Marp garde les présentations éditables en Markdown.
-- Des slides focalisées facilitent la lecture.
-- Une prévisualisation aide à repérer les problèmes de mise en page.
-- Choisissez un export adapté à votre mode de diffusion.
+- Marp keeps presentations editable in Markdown.
+- Focused slides improve readability.
+- Previewing helps catch layout issues early.
+- Choose an export format that matches your delivery method.

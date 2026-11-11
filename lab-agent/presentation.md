@@ -18,7 +18,7 @@ style: |
   }
 ---
 
-# Créer et tester des Skills avec des agents IA
+# Create and Test Skills with AI Agents
 
 ---
 
@@ -34,11 +34,11 @@ style: |
 
 ## Introduction
 
-**Objectif :** créer des Skills réutilisables qui guident les agents IA sur une tâche précise.
+**Objective:** create reusable skills that guide AI agents on a specific task.
 
-- Définir un périmètre et un livrable clairs.
-- Structurer des instructions en étapes vérifiables.
-- Comparer un même Skill dans Antigravity et Copilot pour VS Code.
+- Define a clear scope and deliverable.
+- Structure instructions into verifiable steps.
+- Compare the same skill in Antigravity and GitHub Copilot for VS Code.
 
 ---
 
@@ -46,54 +46,54 @@ style: |
 
 ## Problems Encountered
 
-- Aucun problème technique bloquant n’est rapporté.
-- Les essais avec Antigravity et Copilot ne sont pas documentés.
-- Leur activation et leurs résultats restent donc à vérifier.
+- No blocking technical issue is reported.
+- Trials with Antigravity and Copilot are not documented.
+- Their activation and results therefore remain to be verified.
 
 ---
 
 ## Solutions Implemented
 
-La méthode du lab définit comment concevoir et évaluer un Skill :
+The lab method defines how to design and evaluate a skill:
 
-- Préciser le déclencheur, le périmètre et le résultat attendu.
-- Décomposer le travail en étapes et critères vérifiables.
-- Tester la même tâche dans les deux environnements.
-- Documenter les écarts avant toute conclusion.
+- Specify the trigger, scope, and expected output.
+- Break the work into steps and verifiable criteria.
+- Test the same task in both environments.
+- Document differences before drawing conclusions.
 
-**Statut :** les essais restent à effectuer.
+**Status:** the tests remain to be performed.
 
 ---
 
 <!-- _class: light -->
 
-## Anatomie d’un Skill
+## Anatomy of a Skill
 
-Un Skill regroupe des instructions réutilisables pour une tâche ciblée.
+A skill groups reusable instructions for a targeted task.
 
-- **Métadonnées :** identifier le Skill.
-- **Objectif :** décrire la tâche visée.
-- **Règles et workflow :** guider l’exécution.
-- **Validation :** vérifier le résultat produit.
+- **Metadata:** identify the skill.
+- **Objective:** describe the task to be completed.
+- **Rules and workflow:** guide execution.
+- **Validation:** verify the produced result.
 
 ---
 
-## Exemples dans le dépôt
+## Examples in the repository
 
 - `.agent/skills/lab-creator/skill.md`
-  - Exemple de Skill pour créer des labs.
+  - Example skill for creating labs.
 - `.github/skills/lab-adaptation/SKILL.md`
-  - Exemple de Skill pour adapter des présentations.
+  - Example skill for adapting presentations.
 
-Ces deux fichiers montrent des emplacements propres à leurs agents.
+These two files show the appropriate locations for each agent.
 
 ---
 
 <!-- _class: light -->
 
-## Déclarer les métadonnées
+## Declare the metadata
 
-Le front matter identifie le Skill et résume son rôle.
+The front matter identifies the skill and summarizes its role.
 
 ```yaml
 ---
@@ -102,13 +102,13 @@ description: Creates organized educational labs.
 ---
 ```
 
-Le contenu doit respecter le format attendu par l’agent.
+The content must respect the format expected by the agent.
 
 ---
 
-## Organiser les instructions
+## Organize the instructions
 
-Des sections distinctes rendent le Skill plus facile à suivre.
+Separate sections make the skill easier to follow.
 
 ```markdown
 # Lab Creator Skill
@@ -119,70 +119,70 @@ Des sections distinctes rendent le Skill plus facile à suivre.
 ## Validation
 ```
 
-Chaque section répond à un besoin différent.
+Each section answers a different need.
 
 ---
 
 <!-- _class: light -->
 
-## Définir la tâche et le livrable
+## Define the task and deliverable
 
-- Choisir une tâche récurrente et son public.
-- Spécifier les fichiers, le format, la langue et le niveau.
-- Rédiger des règles précises et vérifiables.
+- Choose a recurring task and target audience.
+- Specify the files, format, language, and level.
+- Write precise and verifiable rules.
 
 ---
 
-## Décrire une exécution fiable
+## Describe a reliable execution
 
-- Ordonner les étapes selon le travail réel.
-- Définir comment valider le livrable.
-- Signaler les informations manquantes au lieu de les supposer.
-- Enregistrer le Skill à l’emplacement approprié.
+- Order the steps according to the real workflow.
+- Define how to validate the deliverable.
+- Flag missing information instead of assuming it.
+- Save the skill in the appropriate location.
 
 ---
 
 <!-- _class: light -->
 
-## Comparer les deux environnements
+## Compare the two environments
 
-1. Utiliser le même dépôt et la même tâche.
-2. Lancer l’essai dans Antigravity.
-3. Reproduire la demande dans Copilot pour VS Code.
-4. Examiner les deux livrables avec les mêmes critères.
+1. Use the same repository and task.
+2. Run the test in Antigravity.
+3. Reproduce the request in GitHub Copilot for VS Code.
+4. Review both deliverables against the same criteria.
 
 ---
 
-## Vérifier les résultats
+## Verify the results
 
-| Critère | Antigravity | Copilot |
+| Criterion | Antigravity | Copilot |
 | :-- | :--: | :--: |
-| Skill activé pour la tâche | À tester | À tester |
-| Étapes et règles respectées | À vérifier | À vérifier |
-| Livrable conforme au format | À vérifier | À vérifier |
-| Instructions claires à réutiliser | À évaluer | À évaluer |
+| Skill activated for the task | To test | To test |
+| Steps and rules followed | To verify | To verify |
+| Deliverable matches the format | To verify | To verify |
+| Clear reusable instructions | To evaluate | To evaluate |
 
 ---
 
 <!-- _class: light -->
 
-## Documenter et améliorer
+## Document and improve
 
-Pour chaque essai, consigner :
+For each test, record:
 
-- La tâche et l’environnement utilisés.
-- Le résultat et les écarts constatés.
-- Les changements apportés au Skill.
+- The task and environment used.
+- The result and observed differences.
+- The changes made to the skill.
 
-Répéter les essais après une modification importante.
+Repeat the tests after any major modification.
 
 ---
 
-## Résultat attendu
+## Expected result
 
-Le Skill doit guider la production d’un livrable conforme et vérifiable dans les deux environnements.
+The skill should guide the creation of a compliant and verifiable deliverable in both environments.
 
-- Rendre visibles les limites et les informations manquantes.
-- Réviser les consignes lorsque les essais révèlent des écarts.
+- Make limitations and missing information visible.
+- Revise the instructions when the tests reveal differences.
 
-**Statut du lab :** méthode et grille définies ; essais à documenter.
+**Lab status:** method and checklist defined; tests still to be documented.

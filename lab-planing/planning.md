@@ -1,183 +1,159 @@
 ---
 marp: true
 theme: default
-size: 16:9
 paginate: true
-
+size: 16:9
 style: |
   section {
-    background: #FFFFFF;
-    color: #333333;
+    background: #ffffff;
+    color: #1f2937;
     font-family: Arial, sans-serif;
     padding: 50px 65px;
     font-size: 23px;
   }
 
   h1 {
-    color: #1D4ED8;
+    color: #1d4ed8;
     font-size: 38px;
     font-weight: 700;
   }
 
   h2 {
-    color: #2563EB;
+    color: #2563eb;
     font-size: 27px;
   }
 
-  h3 {
-    color: #1E40AF;
-  }
-
   strong {
-    color: #1D4ED8;
+    color: #1d4ed8;
   }
 
-  section.title {
-    text-align: center;
-    justify-content: center;
-    background: #FFFFFF;
-  }
-
-  section.title h1 {
-    color: #1D4ED8;
-    font-size: 48px;
-  }
-
-  section.title h2 {
-    color: #334155;
-    font-size: 28px;
-  }
-
-  section.title p {
-    color: #475569;
-  }
-
-  section::after {
-    color: #64748B;
-    font-size: 14px;
+  section.light {
+    background: #f8fafc;
+    color: #0f172a;
   }
 ---
 
-<!-- _class: title -->
-
-![OFPPT](images/logo-ofppt.png) ![Solicode](images/logo-solicode.png)
-
-# LAB PLANNING
-
-## Préparer et présenter un Lab technique
-
-### Plan générique de présentation des Labs
-
-**Réalisé par :** Medkour Ibrahim
-
-**Encadré par :** ES-Saraj Fouad
-
-**Centre :** SoliCode Tanger
-
+# Lab Planning
 
 ---
 
-# Plan de la présentation
+<!-- _class: light -->
 
-1. **Page de garde** — Présentation du Lab.
-2. **Plan** — Les parties de la présentation.
-3. **Stack technique** — Technologies et outils utilisés.
-4. **Définitions** — Mots et notions importantes.
-5. **Problème et besoin** — Problème à résoudre et utilité du Lab.
-6. **Solution et pratique** — Étapes de travail, exemples et tests.
-7. **Résultats et conclusion** — Résultat final et compétences acquises.
+## Lab Plan
 
+1. Introduction
+2. Problems Encountered
+3. Solutions Implemented
 
 ---
 
-# Stack technique
+## Introduction
 
-Les technologies et les outils utilisés :
+This lab defines a reusable structure for technical presentations.
 
-| Technologie / Outil | Rôle |
-|---|---|
-| **PHP** | Développement Backend |
-| **Markdown** | Rédaction du contenu |
-| **Marp** | Création des présentations |
-| **VS Code** | Édition du code et des fichiers |
-| **Git** | Gestion des versions |
-| **GitHub** | Hébergement et partage du projet |
-
-### Objectif
-
-Présenter les outils utilisés et comprendre le rôle de chaque technologie.
+- Organize content in a predictable sequence.
+- Keep the message clear and easy to follow.
+- Apply the same approach across multiple labs.
 
 ---
 
-# 4. Définitions
+<!-- _class: light -->
 
-- **Lab :** Activité pratique pour apprendre et appliquer des connaissances.
+## Problems Encountered
 
-- **Plan générique :** Structure commune pour organiser et présenter les Labs.
+A generic lab often suffers from:
 
-- **Stack technique :** Ensemble des technologies et des outils utilisés dans un Lab.
-
-- **Template :** Modèle réutilisable pour préparer les présentations.
-
----
-
-# 5. Problème et besoin
-
-## Problème
-
-- Chaque Lab peut avoir une présentation différente.
-- Certaines informations importantes peuvent être oubliées.
-- La préparation peut prendre beaucoup de temps.
-
-## Besoin
-
-- Utiliser une structure commune pour tous les Labs.
-- Organiser les informations clairement.
-- Faciliter la préparation des présentations.
-
-## Pourquoi ce Lab est utile ?
-
-Il permet de préparer les Labs avec une méthode simple et organisée.
-
+- inconsistent structure between presentations.
+- missing context or key technical details.
+- time lost preparing the same format repeatedly.
 
 ---
 
-# 6. Solution et pratique
-## Étapes du travail
-1. Identifier les parties nécessaires.
-2. Organiser les parties dans un ordre logique.
-3. Définir le contenu de chaque partie.
-4. Créer le plan générique de 7 slides.
-5. Appliquer le plan à un exemple.
-## Exemple pratique : Lab PHP
-- Slide 1 : Page de garde.
-- Slide 2 : Plan.
-- Slide 3 : Stack PHP.
-- Slide 4 : Définitions PHP.
-- Slide 5 : Problème et besoin.
-- Slide 6 : Code et tests.
-- Slide 7 : Résultats et conclusion.
+## Solutions Implemented
 
-## Vérification
+The lab proposes a simple and reusable plan:
 
-Appliquer le même plan à un autre Lab pour vérifier qu'il est réutilisable.
+- define a clear presentation order.
+- separate context, problems, and solutions.
+- keep the structure uniform across labs.
 
 ---
 
-# 7. Résultats et conclusion
+<!-- _class: light -->
 
-### Résultats
+## Recommended structure
 
-- Création d'un plan générique de 7 parties.
-- Organisation claire des informations.
-- Création d'une structure réutilisable pour les Labs.
+1. Cover and title
+2. Lab plan
+3. Technical context
+4. Definitions
+5. Problems and needs
+6. Implementation and examples
+7. Results and conclusion
 
-### Ce que j'ai appris
+---
 
-- Organiser un Lab.
-- Présenter les informations dans un ordre logique.
-- Comprendre le rôle de chaque partie.
+## Technical stack
 
-### Conclusion
+The presentation may use:
 
-Ce Lab m'a permis de comprendre comment préparer et présenter un Lab de manière claire et organisée.
+- **PHP** for backend examples.
+- **Markdown** for source documentation.
+- **Marp** for responsive slide decks.
+- **VS Code** for editing and preview.
+- **Git** and **GitHub** for version control and sharing.
+
+---
+
+<!-- _class: light -->
+
+## Definitions
+
+- **Lab**: a practical activity for learning by doing.
+- **Presentation plan**: the sequence used to explain a topic.
+- **Technical stack**: the tools and technologies involved.
+- **Template**: a reusable structure for new labs.
+
+---
+
+## Practical workflow
+
+1. Identify the necessary sections.
+2. Organize them in a logical order.
+3. Write each section with a clear purpose.
+4. Reuse the same structure for future labs.
+
+---
+
+<!-- _class: light -->
+
+## Example of application
+
+A lab can follow this sequence:
+
+- introduction
+- technical context
+- problem
+- solution
+- implementation steps
+- result and conclusion
+
+This keeps the presentation consistent and understandable.
+
+---
+
+## Expected result
+
+A reusable planning model helps teams create better learning materials.
+
+- faster preparation
+- clearer explanations
+- more consistent lab quality
+
+---
+
+## Key takeaway
+
+Good lab planning is not about complexity; it is about clarity.
+
+A strong structure helps both the teacher and the learner.

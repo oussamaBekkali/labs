@@ -22,7 +22,7 @@ style: |
   pre { font-size: 0.75em; }
 ---
 
-# Lab 01 : Comprendre Laravel
+# Lab 01: Understand Laravel
 
 ---
 
@@ -38,11 +38,11 @@ style: |
 
 ## Introduction
 
-Ce lab présente Laravel, un framework web open source écrit en PHP.
+This lab introduces Laravel, an open-source PHP web framework.
 
-- Comprendre son rôle dans la création d’applications web.
-- Découvrir MVC, Artisan, Eloquent et Blade.
-- Situer les routes et les migrations dans le projet.
+- Understand its role in building web applications.
+- Discover MVC, Artisan, Eloquent, and Blade.
+- Place routes and migrations in the project structure.
 
 ---
 
@@ -50,89 +50,89 @@ Ce lab présente Laravel, un framework web open source écrit en PHP.
 
 ## Problems Encountered
 
-Aucun problème technique bloquant n’est rapporté pour ce lab.
+No blocking technical issue is reported for this lab.
 
-Le code PHP non structuré est présenté comme motivation : mélanger HTML, SQL et logique complique la maintenance.
+Unstructured PHP code is presented as the motivation: mixing HTML, SQL, and logic makes maintenance harder.
 
 ---
 
 ## Solutions Implemented
 
-Le lab présente Laravel comme cadre de travail structuré :
+The lab presents Laravel as a structured development framework:
 
-- MVC répartit les responsabilités de l’application.
-- Artisan automatise les tâches courantes du projet.
-- Eloquent et Blade fournissent des outils pour les données et les vues.
-
----
-
-<!-- _class: light -->
-
-## Pourquoi utiliser un framework ?
-
-Sans structure, un script peut mélanger affichage, traitement et accès aux données.
-
-- Les responsabilités deviennent difficiles à séparer.
-- Les changements sont plus difficiles à maintenir.
-- Un framework fournit des conventions et composants réutilisables.
-
----
-
-## Laravel en bref
-
-- Framework web full-stack open source en PHP.
-- Suit des conventions pour réduire la configuration répétitive.
-- Fournit des outils pour le routage, les données et les vues.
-- Vise un développement d’applications organisé et expressif.
+- MVC separates the responsibilities of the application.
+- Artisan automates common project tasks.
+- Eloquent and Blade provide tools for data and views.
 
 ---
 
 <!-- _class: light -->
 
-## MVC : trois responsabilités
+## Why use a framework?
 
-- **Modèle :** données et règles métier.
-- **Vue :** présentation des informations.
-- **Contrôleur :** coordonne la requête, les données et la réponse.
+Without structure, a script can mix presentation, processing, and database access.
 
-Laravel utilise notamment Eloquent et Blade pour ces composants.
+- Responsibilities become difficult to separate.
+- Changes are harder to maintain.
+- A framework provides conventions and reusable components.
 
 ---
 
-## Cycle d’une requête Laravel
+## Laravel in brief
+
+- Full-stack open-source PHP web framework.
+- Follows conventions to reduce repetitive configuration.
+- Provides tools for routing, data, and views.
+- Encourages organized and expressive application development.
+
+---
+
+<!-- _class: light -->
+
+## MVC: three responsibilities
+
+- **Model:** data and business rules.
+- **View:** presentation of information.
+- **Controller:** coordinates the request, data, and response.
+
+Laravel uses Eloquent and Blade mainly for these components.
+
+---
+
+## Laravel request flow
 
 ```text
-Navigateur → Route → Middleware → Contrôleur
+Browser → Route → Middleware → Controller
                                   ↓
-                           Modèle / Eloquent
+                           Model / Eloquent
                                   ↓
-                            Base de données
+                            Database
                                   ↓
-Contrôleur → Vue Blade → Réponse HTTP
+Controller → Blade View → HTTP Response
 ```
 
-La route dirige la requête ; le contrôleur prépare la réponse.
+The route directs the request; the controller prepares the response.
 
 ---
 
 <!-- _class: light -->
 
-## Artisan : commandes du projet
+## Artisan: project commands
 
-Artisan est l’interface en ligne de commande de Laravel.
+Artisan is Laravel's command-line interface.
 
 ```bash
 php artisan make:model Article
 php artisan migrate
 ```
 
-Les commandes disponibles dépendent de la version et du projet Laravel.
+The available commands depend on the Laravel version and project.
 
 ---
 
-## Eloquent : interroger les données
+## Eloquent: querying data
 
-Un modèle Eloquent permet d’interroger une table avec une API PHP.
+An Eloquent model can query a table through a PHP API.
 
 ```php
 $users = User::where('active', true)
@@ -140,15 +140,15 @@ $users = User::where('active', true)
     ->get();
 ```
 
-Eloquent utilise des requêtes liées pour les valeurs, mais les entrées doivent toujours être validées.
+Eloquent uses parameterized queries for values, but inputs should always be validated.
 
 ---
 
 <!-- _class: light -->
 
-## Blade : afficher une liste
+## Blade: display a list
 
-Blade fournit des directives pour afficher des données transmises à la vue.
+Blade provides directives for rendering data passed to the view.
 
 ```blade
 @foreach ($articles as $article)
@@ -159,55 +159,55 @@ Blade fournit des directives pour afficher des données transmises à la vue.
 @endforeach
 ```
 
-L’échappement de `{{ }}` aide à afficher le texte sans interpréter son HTML.
+Escaping `{{ }}` helps display text without interpreting HTML.
 
 ---
 
-## Migrations et seeders
+## Migrations and seeders
 
-- Les migrations décrivent les changements de schéma de la base.
-- Elles permettent de partager ces changements via le code.
-- Les seeders insèrent des données d’exemple ou de test.
-
----
-
-<!-- _class: light -->
-
-## L’écosystème Laravel
-
-- **Composer :** gestion des dépendances PHP.
-- **Routing et middleware :** traitement des requêtes HTTP.
-- **Eloquent et migrations :** accès et évolution des données.
-- **Blade :** rendu de vues côté serveur.
+- Migrations describe database schema changes.
+- They make it possible to share those changes through code.
+- Seeders insert sample or test data.
 
 ---
 
 <!-- _class: light -->
 
-## Outils de l’écosystème
+## The Laravel ecosystem
 
-- **Breeze et Jetstream :** options de démarrage pour l’authentification.
-- **Sanctum :** authentification pour applications et API.
-- **Livewire :** interfaces interactives avec Laravel.
-- **Inertia :** relie Laravel à des frameworks frontend.
-
-Les fonctionnalités varient selon les versions et les besoins du projet.
-
----
-
-## À retenir
-
-- Laravel structure le développement d’applications web en PHP.
-- MVC sépare données, présentation et coordination.
-- Artisan, Eloquent, Blade et les migrations répondent à des besoins distincts.
+- **Composer:** PHP dependency management.
+- **Routing and middleware:** HTTP request processing.
+- **Eloquent and migrations:** data access and schema evolution.
+- **Blade:** server-side rendering for views.
 
 ---
 
 <!-- _class: light -->
 
-## Pour continuer
+## Ecosystem tools
 
-Le lab détaille les concepts et les exercices dans :
+- **Breeze and Jetstream:** starter options for authentication.
+- **Sanctum:** authentication for apps and APIs.
+- **Livewire:** interactive interfaces with Laravel.
+- **Inertia:** connects Laravel to frontend frameworks.
+
+Features vary by version and project needs.
+
+---
+
+## Key takeaways
+
+- Laravel structures PHP web application development.
+- MVC separates data, presentation, and coordination.
+- Artisan, Eloquent, Blade, and migrations serve distinct needs.
+
+---
+
+<!-- _class: light -->
+
+## Next steps
+
+The lab covers the concepts and exercises in:
 
 - [`introduction.md`](./introduction.md)
 - [`definition.md`](./definition.md)
