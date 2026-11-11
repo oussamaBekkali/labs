@@ -21,3 +21,9 @@ Share reusable code between multiple classes without duplicating behavior.
 ## Lab Objective
 
 Understand and test each concept through a practical example connected to the technical project.
+
+## Practice Examples
+
+Run the standalone examples in [`practice/`](./practice/) to inspect an
+uncaught exception, a missing namespace import, and a class that does not use
+its trait. Each intentional error has a matching solution.
