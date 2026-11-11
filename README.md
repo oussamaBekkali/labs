@@ -91,6 +91,7 @@ The repository includes standardized skills and rules to support development wor
 
 - **author-attribution** ([.agent/rules/author-attribution.md](./.agent/rules/author-attribution.md)) : Unified author attribution (`by oussama bekkali`).
 - **customizations-location** ([.agent/rules/customizations-location.md](./.agent/rules/customizations-location.md)) : Strict centralization of skills and rules in the `.agent/` folder.
+- **language-rule** ([.agent/rules/language-rule.md](./.agent/rules/language-rule.md)) : English by default for communication and newly generated content.
 - **no-emojis** ([.agent/rules/no-emojis.md](./.agent/rules/no-emojis.md)) : Clean, professional text formatting without emojis.
 
 ---
@@ -103,6 +104,7 @@ labs/
 │   ├── rules/
 │   │   ├── author-attribution.md
 │   │   ├── customizations-location.md
+│   │   ├── language-rule.md
 │   │   └── no-emojis.md
 │   └── skills/
 │       ├── github-deployment/

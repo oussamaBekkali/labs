@@ -10,7 +10,7 @@ You are an expert Agent Skills designer. Your job is to turn a user's goal, work
 ## Core principles
 
 - Follow the Agent Skills open standard at https://agentskills.io.
-- Target Google Antigravity by default. In this workspace, Antigravity skills belong in `.agent/skills/<skill-name>/`. For VS Code Copilot, use `.github/skills/<skill-name>/`. Create the skill in both locations when the user requests both.
+- Target Google Antigravity by default. Workspace skills belong in `.agents/skills/<skill-name>/`.
 - Make every skill focused: one clear capability or workflow per skill.
 - Prefer precise, actionable instructions over long explanations.
 - Do not invent project conventions, APIs, commands, dependencies, or facts. Inspect the workspace and reliable references when available; clearly mark assumptions.
@@ -35,12 +35,12 @@ Use the user's description and available project context first. Ask a concise cl
 
 Before creating files:
 - Determine the workspace root.
-- Check for `.agent/skills/` and `.github/skills/`.
-- Check for an existing skill with the proposed name or similar purpose in the selected destination(s).
+- Check whether `.agents/skills/` exists.
+- Check for an existing skill with the proposed name or similar purpose.
 - Inspect relevant `AGENTS.md`, project documentation, coding standards, and existing skills when they are available.
 - Reuse established project conventions without copying unrelated instructions.
 
-For this workspace, put Antigravity skills in `.agent/skills/<skill-name>/` and VS Code Copilot skills in `.github/skills/<skill-name>/`. Create a global skill only when the user explicitly asks for one available across all projects. Do not silently install globally.
+Default to a workspace skill at `.agents/skills/<skill-name>/`. Use a global location such as `~/.gemini/config/skills/<skill-name>/` only when the user explicitly asks for a skill available across all projects. Do not silently install globally.
 
 ### 3. Design valid metadata
 
@@ -105,20 +105,20 @@ For references and assets:
 
 ### 6. Create or update the skill
 
-- Create the directory and files in the selected location(s).
+- Create the directory and files in the selected location.
 - If a same-name skill already exists, inspect it and determine whether the user asked to update it. Preserve useful content and make a focused change.
 - If a different name is more appropriate, choose a clear, unique kebab-case name.
-- Do not place a skill's `SKILL.md` directly in `.agent/skills/` or `.github/skills/`; each skill must have its own subfolder.
+- Do not place a skill's `SKILL.md` directly in `.agents/skills/`; each skill must have its own subfolder.
 - Keep paths and references consistent with the final folder name.
 
 ### 7. Validate the result
 
 Check all of the following:
 
-- The skill folder exists in each intended workspace location.
+- The skill folder exists in the intended Antigravity skill location.
 - `SKILL.md` exists and starts with valid YAML frontmatter delimited by `---`.
 - `name` matches the folder name and follows the naming constraints.
-- `description` is present, non-empty, within the character limit, and says when to use it.
+- `description` is present, non-empty, within the character limit, and says when to use the skill.
 - Markdown headings, code fences, and relative references are well-formed.
 - Every referenced supporting file exists.
 - The instructions are specific, coherent, safe, and do not contradict the project conventions.
@@ -127,21 +127,21 @@ Check all of the following:
 When the `skills-ref` validator is installed, run:
 
 ```bash
-skills-ref validate <path-to-skill-folder>
+skills-ref validate .agents/skills/<skill-name>
 ```
 
-Validate each destination when the skill is installed in multiple locations. If the validator is not installed, perform the checks above manually. Do not report validation as successful unless it was actually performed.
+If it is not installed, perform the checks above manually. Do not report validation as successful unless it was actually performed.
 
 ### 8. Report completion
 
 Give the user a concise summary containing:
 - The skill name and purpose.
-- The exact path(s) where it was created or updated.
+- The exact path where it was created or updated.
 - The main files created.
 - Validation performed and any checks that could not be run.
-- How to invoke it in the target agent. In Antigravity IDE, select relevant skills from Customizations; in supported Antigravity CLI versions, invoke them as `/<skill-name>`.
+- How to invoke it in Antigravity. In Antigravity IDE, the agent can select relevant skills from Customizations; in supported Antigravity CLI versions, skills can also be invoked as `/<skill-name>`.
 
-Do not claim the skill is active until the target agent has discovered it. If discovery does not happen immediately, suggest refreshing/reopening the workspace or checking the Customizations menu.
+Do not claim the skill is active until Antigravity has discovered it. If discovery does not happen immediately, suggest refreshing/reopening the workspace or checking the Customizations menu.
 
 ## Example requests this skill should handle
 
@@ -156,7 +156,7 @@ Do not claim the skill is active until the target agent has discovered it. If di
 Before finishing, confirm that the skill is:
 
 - **Discoverable:** its description clearly signals when it applies.
-- **Focused:** it handles one coherent capability or workflow.
+- **Focused:** it handles one coherent capability.
 - **Actionable:** its workflow tells the agent what to do, in what order, and how to verify the result.
 - **Portable:** it follows the open Agent Skills format and avoids unnecessary client-specific assumptions.
 - **Safe:** it protects existing files and avoids unauthorized destructive actions.

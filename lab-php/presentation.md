@@ -6,7 +6,7 @@ size: 16:9
 style: |
   section {
     font-family: "Segoe UI", Arial, sans-serif;
-    font-size: 28px;
+    font-size: 26px;
     padding: 48px 64px;
     background: #101827;
     color: #e8eef7;
@@ -22,208 +22,168 @@ style: |
   pre { font-size: 0.72em; }
 ---
 
-# PHP Concepts Lab
+# lab-php
+
+**Student:** bekkali oussama
+**Instructor:** essarraj fouad
+
+Practical exercises on exceptions, namespaces, and traits.
 
 ---
 
 <!-- _class: light -->
 
-## Lab Plan
+## Presentation Plan
 
-1. Introduction
-2. Problems Encountered
-3. Solutions Implemented
-
----
-
-## Introduction
-
-In the previous technical project, we struggled to read and understand error messages.
-
-This lab explores PHP and Laravel concepts to help us understand failures and organize code:
-
-- Error and exception handling
-- Namespaces
-- Traits
+1. Introduction & Technical Stack
+2. Definitions
+3. Problem
+4. Solution
 
 ---
 
-<!-- _class: light -->
+## Introduction & Technical Stack
 
-## Problems Encountered
+- Three PHP concepts: exceptions, namespaces, and traits.
+- Laravel project in this repository: PHP 8.3 minimum.
+- Exceptions and traits: PHP CLI, no dependencies.
+- Namespaces: the project's Composer autoloader and existing Laravel model.
+- Example data is fictional and for learning only.
 
-During the previous technical project, we struggled to read and understand errors.
+### Quick Start
 
-- Error messages were difficult to interpret.
-- Identifying what failed was challenging.
-- This made choosing an appropriate response harder.
+From the `lab-php` directory:
 
----
-
-## Solutions Implemented
-
-This lab studies techniques that address these difficulties:
-
-- Read exception details to locate the failure.
-- Use namespaces to identify classes and their dependencies.
-- Use traits to share reusable behavior.
-
-These are learning objectives, not claims of changes to the project.
-
----
-
-<!-- _class: light -->
-
-## Errors and Exceptions
-
-An exception signals an unexpected condition during execution.
-
-- `throw` raises an exception.
-- `try` wraps code that may fail.
-- `catch` handles a matching exception type.
-- `Throwable` is PHP’s common interface for errors and exceptions.
-
----
-
-## Reading an Error Message
-
-Use the available details to investigate the failure.
-
-1. Identify the error or exception type.
-2. Read the message for context.
-3. Check the reported file and line.
-4. Follow the stack trace to the calling code.
-
-Do not hide an error before understanding its cause.
-
----
-
-<!-- _class: light -->
-
-## Category Lookup in Laravel
-
-The project’s category model can look up a record by ID.
-
-```php
-$category = Category::findOrFail($id);
+```powershell
+php --version
+php hello-world.php
 ```
 
-If no category matches, Laravel raises a model-not-found exception and returns a 404 response by default.
+---
+
+<!-- _class: light -->
+
+## Hello World
+
+The first script verifies that PHP CLI can run a file.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+echo "Hello, PHP!\n";
+```
+
+Command: `php hello-world.php`
 
 ---
 
-## When to Catch an Exception
+## Definitions — Exceptions and Namespaces
 
-Catch an exception when the application can handle it meaningfully.
-
-- Match the specific exception type.
-- Provide a clear, appropriate response.
-- Avoid swallowing unexpected failures.
-- Laravel already handles `findOrFail` with a 404 response.
+- **Exception:** an object that signals an abnormal situation. `throw` raises it; `try/catch` handles it.
+- **Namespace:** a context that organizes class names, such as `App\Models\Category`.
+- **Import:** `use App\Models\Category;` makes the class available by its short name.
+- A namespace organizes names; it does not load a PHP file by itself.
 
 ---
 
 <!-- _class: light -->
 
-## Namespace: Organize Classes
+## Definition — Trait
 
-A namespace gives a class a unique, structured name.
-
-- It groups related classes.
-- It prevents collisions between identical short names.
-- `use` imports a class for convenient reference.
+- A **trait** is a block of methods that can be reused by multiple classes.
+- `use Timestampable;` adds this behavior to a class.
+- Unlike inheritance, a trait does not define an "is a" relationship between classes.
+- Use it only for behavior that is genuinely shared.
 
 ---
 
-## Namespace in the Category Controller
+## Problem
 
-The project controller declares its namespace and imports its dependencies.
+PHP code can become harder to maintain when:
+
+- invalid input is not handled through a clear exception path;
+- classes are difficult to organize or their names conflict;
+- multiple classes duplicate behavior that should be shared.
+
+This is the general technical problem addressed by the lab, not a claim about the student's own project.
+
+---
+
+<!-- _class: light -->
+
+## Solution
+
+- **Exceptions:** detect invalid situations and handle them with `try/catch`.
+- **Namespaces:** organize classes and avoid name conflicts, using the project's Composer autoload.
+- **Traits:** share behavior across classes without forcing an inheritance relationship.
+
+These are the techniques practiced in this lab; they are not presented as changes already implemented in the application.
+
+---
+
+## Demonstration — Exception
 
 ```php
-namespace App\Http\Controllers;
+try {
+    $subtotal = calculateSubtotal(15.0, 0);
+} catch (InvalidQuantityException $exception) {
+    echo $exception->getMessage();
+}
+```
 
+- A zero quantity raises a named exception.
+- The `catch` block handles it and prints an explicit message.
+- The complete example is in `exceptions/exemple.php`.
+
+---
+
+<!-- _class: light -->
+
+## Demonstration — Namespace
+
+```php
 use App\Models\Category;
-use Illuminate\Contracts\View\View;
+
+require_once __DIR__ . '/../../Laravel/vendor/autoload.php';
+
+$category = new Category(['name' => 'Accessories']);
+echo $category::class . PHP_EOL;
 ```
 
-The imports make the model and return type explicit.
+- Composer maps `App\` to `Laravel/app/`.
+- `use` imports the existing `App\Models\Category` model.
+- The example prints its class name without using the database.
+- See `namespaces/exemple.php`.
 
 ---
 
-<!-- _class: light -->
+## Demonstration — Trait
 
-## Composer Maps Namespaces
-
-Composer’s PSR-4 configuration connects namespaces to project folders.
-
-```json
+```php
+final class Product
 {
-    "App\\": "app/",
-    "Tests\\": "tests/"
+    use Timestampable;
 }
 ```
 
-`App\Models\Category` maps to `app/Models/Category.php`.
-
----
-
-## Trait: Reuse Behavior
-
-A trait lets classes share methods without a shared parent class.
-
-- Declare a trait with `trait`.
-- Include it in a class with `use`.
-- A class can use multiple traits.
+- `Product` reuses methods from the `Timestampable` trait.
+- `CatalogCategory` uses the same behavior in the complete example.
+- The standalone example is in `traits/exemple.php`.
 
 ---
 
 <!-- _class: light -->
 
-## Traits in the User Model
+## Practical Exercises
 
-The Laravel user model uses traits for reusable features.
+From `lab-php`, run:
 
-```php
-use HasFactory, Notifiable;
+```powershell
+php exceptions\exemple.php
+php namespaces\exemple.php
+php traits\exemple.php
 ```
 
-`HasFactory` supports model factories; `Notifiable` provides notification behavior.
-
----
-
-## Trait in the Category Tests
-
-The category feature tests use `RefreshDatabase`.
-
-```php
-class CategoryTest extends TestCase
-{
-    use RefreshDatabase;
-}
-```
-
-The trait helps prepare a clean database for the tests.
-
----
-
-<!-- _class: light -->
-
-## Run the Category Tests
-
-The existing tests cover the category list and empty state.
-
-```bash
-cd Laravel
-php artisan test --filter=CategoryTest
-```
-
-Run them to check the behavior while exploring the project.
-
----
-
-## Key Takeaways
-
-- Read error details before deciding how to respond.
-- Namespaces make class organization and dependencies clearer.
-- Traits share behavior between otherwise separate classes.
-- Laravel uses all three concepts in the project.
+Each example prints a verifiable result and can be modified to test a variation.
