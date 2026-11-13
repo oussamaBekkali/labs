@@ -1,35 +1,35 @@
 ---
 name: marp
-description: "Rédiger, structurer ou corriger des présentations Marp en Markdown, avec des diapositives lisibles et un frontmatter valide."
+description: "Write, structure, and fix Marp presentations in Markdown with readable slides and valid front matter."
 ---
 
-# Présentations Marp
+# Marp presentations
 
-Utiliser cette skill pour créer ou modifier un fichier de présentation Marp (`.md`).
+Use this skill to create or modify a Marp presentation file (`.md`).
 
 ## Structure
 
-- Commencer par un frontmatter YAML valide avec `marp: true`, un thème, la pagination et le format `16:9`.
-- Séparer chaque diapositive par `---`.
-- Pour un lab, suivre cet ordre :
-  1. Titre du lab et identification de l'étudiant et de l'encadrant.
-  2. Plan de présentation.
-  3. Introduction et stack technique.
-  4. Définitions des notions clés.
-  5. Problème réel fourni par l'étudiant.
-  6. Solution et démonstrations; ajouter des diapositives pratiques si nécessaire.
-- Pour le plan d'un lab, utiliser les rubriques : Introduction & Stack Technique, Définitions, Problème, Solution.
-- Ne pas ajouter de conclusion ou de remerciements; terminer par la solution ou le livrable.
+- Start with valid YAML front matter with `marp: true`, a theme, pagination, and the `16:9` format.
+- Separate each slide with `---`.
+- For a lab, follow this order:
+  1. Lab title and identification of the student and supervisor.
+  2. Presentation outline.
+  3. Introduction and technical stack.
+  4. Definitions of key concepts.
+  5. Real problem provided by the student.
+  6. Solution and demonstrations; add practical slides if needed.
+- For a lab plan, use the sections: Introduction & Technical Stack, Definitions, Problem, Solution.
+- Do not add a conclusion or thank-you message; end with the solution or deliverable.
 
-## Exactitude et contenu
+## Accuracy and content
 
-- Rédiger en français et adapter le contenu aux sources du lab.
-- Ne pas inventer le problème ou la solution de l'étudiant. Lui demander ces informations avant de rédiger les diapositives correspondantes; à défaut, laisser des emplacements explicites à compléter.
-- Pour un lab technique, inclure un Quick Start et un Hello World fonctionnel. Déclarer le langage de chaque bloc de code et vérifier que les commandes et exemples correspondent à l'environnement réel.
-- Expliquer clairement les termes techniques; ne pas présumer que le public les connaît.
+- Write in English and adapt the content to the lab sources.
+- Do not invent the student’s problem or solution. Ask for this information before drafting the corresponding slides; otherwise, leave explicit placeholders to complete.
+- For a technical lab, include a Quick Start and a functional Hello World. Declare the language for each code block and verify that the commands and examples match the real environment.
+- Clearly explain technical terms; do not assume the audience already knows them.
 
-## Lisibilité
+## Readability
 
-- Maintenir une hiérarchie visuelle cohérente, un contraste suffisant et une quantité de texte adaptée à chaque diapositive.
-- Alterner les diapositives sombres et claires lorsque le thème le permet; utiliser `<!-- _class: light -->` pour une diapositive claire.
-- Déclarer le langage des blocs de code (`bash`, `php`, `html`, etc.) et aligner explicitement les colonnes des tableaux Markdown.
+- Maintain a consistent visual hierarchy, sufficient contrast, and an appropriate amount of text on each slide.
+- Alternate dark and light slides when the theme allows it; use `<!-- _class: light -->` for a light slide.
+- Declare the language for code blocks (`bash`, `php`, `html`, etc.) and align Markdown table columns explicitly.

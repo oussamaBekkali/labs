@@ -24,8 +24,8 @@ style: |
 
 # lab-poo
 
-**Student:** to be completed  
-**Instructor:** to be completed
+**Student:** Bekkali Oussama
+**Instructor:** Essarraj Fouad
 
 PHP Object-Oriented Programming: six practical concepts
 
